@@ -1,0 +1,631 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘制图像," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="清单 3-7 演示了字节到图像的场景，从您提供的字节生成图像。因此，将这些字节传递给CGBitmapContextCreate()作为第一个参数。这告诉Quartz不要分配内存，而是使用您提供的数据作为新上下文的初始内容。 除了这个小小的变化，代码清单 3-7 中的代码现在应该看起来很熟悉。它从上下文创建一个图像，将CGImageRef转换为UIImage，并返回该新的图像实例。 能够在两个方向上">
+<meta name="keywords" content="绘制图像">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.7-从字节数据创建图像">
+<meta property="og:url" content="http://chengdong.top/2017/01/27/3-7-Creating-Images-from-Bytes/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="清单 3-7 演示了字节到图像的场景，从您提供的字节生成图像。因此，将这些字节传递给CGBitmapContextCreate()作为第一个参数。这告诉Quartz不要分配内存，而是使用您提供的数据作为新上下文的初始内容。 除了这个小小的变化，代码清单 3-7 中的代码现在应该看起来很熟悉。它从上下文创建一个图像，将CGImageRef转换为UIImage，并返回该新的图像实例。 能够在两个方向上">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3.7-从字节数据创建图像">
+<meta name="twitter:description" content="清单 3-7 演示了字节到图像的场景，从您提供的字节生成图像。因此，将这些字节传递给CGBitmapContextCreate()作为第一个参数。这告诉Quartz不要分配内存，而是使用您提供的数据作为新上下文的初始内容。 除了这个小小的变化，代码清单 3-7 中的代码现在应该看起来很熟悉。它从上下文创建一个图像，将CGImageRef转换为UIImage，并返回该新的图像实例。 能够在两个方向上">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/01/27/3-7-Creating-Images-from-Bytes/"/>
+
+
+
+
+
+  <title> 3.7-从字节数据创建图像 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/01/27/3-7-Creating-Images-from-Bytes/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                3.7-从字节数据创建图像
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-27T09:04:11+08:00">
+                2017-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>清单 3-7 演示了字节到图像的场景，从您提供的字节生成图像。因此，将这些字节传递给<code>CGBitmapContextCreate()</code>作为第一个参数。这告诉Quartz不要分配内存，而是使用您提供的数据作为新上下文的初始内容。</p>
+<p>除了这个小小的变化，代码清单 3-7 中的代码现在应该看起来很熟悉。它从上下文创建一个图像，将<code>CGImageRef</code>转换为<code>UIImage</code>，并返回该新的图像实例。</p>
+<p>能够在两个方向上转换数据：从图像到数据，从数据到图像。意味着您可以将图像处理集成到绘图例程中，并在<code>UIView</code>中使用结果。</p>
+<p>清单 3-7 将字节转换为图像</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span> *ImageFromBytes(<span class="built_in">NSData</span> *data, <span class="built_in">CGSize</span> targetSize)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Check data</span></span><br><span class="line">	<span class="keyword">int</span> width = targetSize.width;</span><br><span class="line">	<span class="keyword">int</span> height = targetSize.height;</span><br><span class="line">	<span class="keyword">if</span> (data.length &lt; (width * height * <span class="number">4</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error: Got %d bytes. Expected %d bytes"</span>,data.length, width * height * <span class="number">4</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Create a color space</span></span><br><span class="line">	<span class="built_in">CGColorSpaceRef</span> colorSpace = <span class="built_in">CGColorSpaceCreateDeviceRGB</span>();</span><br><span class="line">	<span class="keyword">if</span> (colorSpace == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error creating RGB colorspace"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Create the bitmap context</span></span><br><span class="line">	Byte *bytes = (Byte *) data.bytes;</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">CGBitmapContextCreate</span>(</span><br><span class="line">		bytes, width, height,</span><br><span class="line">		BITS_PER_COMPONENT, <span class="comment">// 8 bits per component</span></span><br><span class="line">		width * ARGB_COUNT, <span class="comment">// 4 bytes in ARGB</span></span><br><span class="line">		colorSpace,</span><br><span class="line">		(<span class="built_in">CGBitmapInfo</span>) kCGImageAlphaPremultipliedFirst);</span><br><span class="line">	<span class="built_in">CGColorSpaceRelease</span>(colorSpace );</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error. Could not create context"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Convert to image</span></span><br><span class="line">	<span class="built_in">CGImageRef</span> imageRef = <span class="built_in">CGBitmapContextCreateImage</span>(context);</span><br><span class="line">	<span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWithCGImage:imageRef];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Clean up</span></span><br><span class="line">	<span class="built_in">CGContextRelease</span>(context);</span><br><span class="line">	<span class="built_in">CFRelease</span>(imageRef);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘制图像/" rel="tag"># 绘制图像</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/26/3-6-Retrieving-Image-Data/" rel="next" title="3.6-检索图像数据">
+                <i class="fa fa-chevron-left"></i> 3.6-检索图像数据
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/28/3-8-Drawing-and-Auto-Layout/" rel="prev" title="3.8-绘图和自动布局">
+                3.8-绘图和自动布局 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

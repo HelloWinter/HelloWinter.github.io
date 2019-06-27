@@ -1,0 +1,693 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="蒙版，模糊和动画," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="尽管在计算上需要花费昂贵的代价，但是模糊是必不可少的绘图工具。 它使您能够在应用蒙版时软化边界的过渡效果和在建立令人眼花缭乱的视觉效果时形成伪深度感。 您将在图7-3中看到一个例子。 被称为“散景”，这种效果是指图像中的焦点外元素的美学效果。 模糊模拟照相镜头捕捉景深的方式来创建多维表现。  图7-3模糊构建复杂而有趣的深度效果。 虽然模糊是许多绘图算法的一部分，并且在iOS 7 UI中也起到非常">
+<meta name="keywords" content="蒙版，模糊和动画">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7.4-模糊">
+<meta property="og:url" content="http://chengdong.top/2017/03/14/7-4-Blurring/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="尽管在计算上需要花费昂贵的代价，但是模糊是必不可少的绘图工具。 它使您能够在应用蒙版时软化边界的过渡效果和在建立令人眼花缭乱的视觉效果时形成伪深度感。 您将在图7-3中看到一个例子。 被称为“散景”，这种效果是指图像中的焦点外元素的美学效果。 模糊模拟照相镜头捕捉景深的方式来创建多维表现。  图7-3模糊构建复杂而有趣的深度效果。 虽然模糊是许多绘图算法的一部分，并且在iOS 7 UI中也起到非常">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/03/14/7-4-Blurring/图7-3.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/14/7-4-Blurring/图7-4.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/14/7-4-Blurring/图7-5.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7.4-模糊">
+<meta name="twitter:description" content="尽管在计算上需要花费昂贵的代价，但是模糊是必不可少的绘图工具。 它使您能够在应用蒙版时软化边界的过渡效果和在建立令人眼花缭乱的视觉效果时形成伪深度感。 您将在图7-3中看到一个例子。 被称为“散景”，这种效果是指图像中的焦点外元素的美学效果。 模糊模拟照相镜头捕捉景深的方式来创建多维表现。  图7-3模糊构建复杂而有趣的深度效果。 虽然模糊是许多绘图算法的一部分，并且在iOS 7 UI中也起到非常">
+<meta name="twitter:image" content="http://chengdong.top/2017/03/14/7-4-Blurring/图7-3.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/03/14/7-4-Blurring/"/>
+
+
+
+
+
+  <title> 7.4-模糊 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/03/14/7-4-Blurring/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                7.4-模糊
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-14T16:57:10+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>尽管在计算上需要花费昂贵的代价，但是模糊是必不可少的绘图工具。 它使您能够在应用蒙版时软化边界的过渡效果和在建立令人眼花缭乱的视觉效果时形成伪深度感。 您将在图7-3中看到一个例子。 被称为“散景”，这种效果是指图像中的焦点外元素的美学效果。 模糊模拟照相镜头捕捉景深的方式来创建多维表现。</p>
+<p><img src="/2017/03/14/7-4-Blurring/图7-3.jpg" alt="图7-3"></p>
+<p>图7-3模糊构建复杂而有趣的深度效果。</p>
+<p>虽然模糊是许多绘图算法的一部分，并且在iOS 7 UI中也起到非常重要作用，但其实现位于Core Graphics和UIKit API之外。 在写这本书的时候，苹果公司还没有发布自己的iOS 7模糊的API。 苹果工程师建议使用Core Image和Accelerate的图像处理解决方案进行第三方开发。</p>
+<p>清单7-3使用了Core Image方法。 它是最初使用iOS 6推出的。这个实现很简单，只需几行代码，速度和开销就可以接受。</p>
+<p>当然<em>可以接受的</em>是一个相对的术语。 我鼓励您花时间在基于设备的绘图任务上，以确保它们不会重载GUI。（记住，大多数绘图是线程安全的！）就是因为这些方面，模糊是一个特别昂贵的操作。 我发现Core Image和Accelerate解决方案倾向于使用与设备相同的开销运行。Core Image更容易阅读; 这是我在这里囊括的那个。</p>
+<p>除了使用性能监控工具，您还可以在代码中使用简单的计时检查。 存储绘制前的当前日期，并检查绘图结束后的经过时间间隔。 以下是一个例子：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDate</span> *date = [<span class="built_in">NSDate</span> date];</span><br><span class="line"><span class="comment">// Perform drawing task here</span></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Elapsed time: %f”,</span></span><br><span class="line"><span class="string">	[[NSDate date] timeIntervalSinceDate:date]);</span></span><br></pre></td></tr></table></figure>
+<p>记住大多数绘图是线程安全的。 只要有可能，将你的模糊程序移出主线程。 存储能复用的结果，无论是在内存中还是本地缓存到沙箱中。</p>
+<blockquote>
+<p>Note</p>
+<p>高斯滤波器的模糊输出大于输入图像，以适应所有方面的模糊。 清单7-3中的Crop过滤器将恢复原始维度。</p>
+</blockquote>
+<p>清单7-3Core Image模糊</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span> *GaussianBlurImage(</span><br><span class="line">	<span class="built_in">UIImage</span> *image, <span class="built_in">NSInteger</span> radius)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!image) COMPLAIN_AND_BAIL_NIL(</span><br><span class="line">		<span class="string">@"Mask cannot be nil"</span>, <span class="literal">nil</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Create Core Image blur filter</span></span><br><span class="line">	<span class="built_in">CIFilter</span> *blurFilter =</span><br><span class="line">		[<span class="built_in">CIFilter</span> filterWithName:<span class="string">@"CIGaussianBlur"</span>];</span><br><span class="line">	[blurFilter setValue:@(radius) forKey:<span class="string">@"inputRadius"</span>];</span><br><span class="line">	<span class="comment">// Pass the source image as the input</span></span><br><span class="line">	[blurFilter setValue:[<span class="built_in">CIImage</span> imageWithCGImage:</span><br><span class="line">		image.CGImage] forKey:<span class="string">@"inputImage"</span>];</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CIFilter</span> *crop =</span><br><span class="line">		[<span class="built_in">CIFilter</span> filterWithName: <span class="string">@"CICrop"</span>];</span><br><span class="line">	[crop setDefaults];</span><br><span class="line">	[crop setValue:blurFilter.outputImage</span><br><span class="line">		forKey:<span class="string">@"inputImage"</span>];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Apply crop</span></span><br><span class="line">	<span class="built_in">CGFloat</span> scale = [[<span class="built_in">UIScreen</span> mainScreen] scale];</span><br><span class="line">	<span class="built_in">CGFloat</span> w = image.size.width * scale;</span><br><span class="line">	<span class="built_in">CGFloat</span> h = image.size.height * scale;</span><br><span class="line">	<span class="built_in">CIVector</span> *v = [<span class="built_in">CIVector</span> vectorWithX:<span class="number">0</span> Y:<span class="number">0</span> Z:w W:h];</span><br><span class="line">	[crop setValue:v forKey:<span class="string">@"inputRectangle"</span>];</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGImageRef</span> cgImageRef =</span><br><span class="line">		[[<span class="built_in">CIContext</span> contextWithOptions:<span class="literal">nil</span>]</span><br><span class="line">			createCGImage:crop.outputImage</span><br><span class="line">			fromRect:crop.outputImage.extent];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Render the cropped, blurred results</span></span><br><span class="line">	<span class="built_in">UIGraphicsBeginImageContextWithOptions</span>(</span><br><span class="line">		image.size, <span class="literal">NO</span>, <span class="number">0.0</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Flip for Quartz drawing</span></span><br><span class="line">	FlipContextVertically(image.size);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Draw the image</span></span><br><span class="line">	<span class="built_in">CGContextDrawImage</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>(),</span><br><span class="line">		SizeMakeRect(image.size), cgImageRef);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Retrieve the final image</span></span><br><span class="line">	<span class="built_in">UIImage</span> *blurred =</span><br><span class="line">		<span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line">	<span class="built_in">UIGraphicsEndImageContext</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> blurred;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模糊绘图块"><a href="#模糊绘图块" class="headerlink" title="模糊绘图块"></a>模糊绘图块</h3><p>清单7-4再次返回到封装了一系列绘图命令的Objective-C块。 在这种情况下，解决方案会使绘图操作模糊，并将其绘制到当前的上下文中。</p>
+<p>为了实现这一点，该功能必须模拟透明层。 它不能直接使用透明层，因为没有办法拦截该素材，使其模糊，然后将其直接传递给上下文。 相反，该函数使用<code>DrawIntoImage()</code>将其块绘制到一个新的图像中（见清单7-1），使它变得模糊（使用清单7-3），然后将结果绘制到活动上下文。</p>
+<p>您将看到图7-3中的清单7-4的结果。 该图像由两个绘制随机圆的请求组成。 第一个是使用一个模糊的块应用的，第二个没有：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DrawAndBlur(<span class="number">4</span>, ^&#123;[<span class="keyword">self</span> drawRandomCircles:<span class="number">20</span></span><br><span class="line">	withHue:targetColor into:targetRect];&#125;);</span><br><span class="line">[<span class="keyword">self</span> drawRandomCircles:<span class="number">20</span></span><br><span class="line">	withHue:targetColor into:targetRect];</span><br></pre></td></tr></table></figure>
+<p>清单7-4将模糊应用于绘图块</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Return the current context size</span></span><br><span class="line"><span class="built_in">CGSize</span> GetUIKitContextSize()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="built_in">CGSizeZero</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGSize</span> size = <span class="built_in">CGSizeMake</span>(</span><br><span class="line">		<span class="built_in">CGBitmapContextGetWidth</span>(context),</span><br><span class="line">		<span class="built_in">CGBitmapContextGetHeight</span>(context));</span><br><span class="line">	<span class="built_in">CGFloat</span> scale = [<span class="built_in">UIScreen</span> mainScreen].scale;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">CGSizeMake</span>(size.width / scale,</span><br><span class="line">		size.height / scale);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Draw blurred block</span></span><br><span class="line"><span class="keyword">void</span> DrawAndBlur(<span class="built_in">CGFloat</span> radius, DrawingStateBlock block)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!block) <span class="keyword">return</span>; <span class="comment">// Nothing to do</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>) COMPLAIN_AND_BAIL(</span><br><span class="line">		<span class="string">@"No context to draw into"</span>, <span class="literal">nil</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Draw and blur the image</span></span><br><span class="line">	<span class="built_in">UIImage</span> *baseImage = DrawIntoImage(</span><br><span class="line">		GetUIKitContextSize(), block);</span><br><span class="line">	<span class="built_in">UIImage</span> *blurred = GaussianBlurImage(baseImage, radius);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Draw the results</span></span><br><span class="line">	[blurred drawAtPoint:<span class="built_in">CGPointZero</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模糊的蒙版"><a href="#模糊的蒙版" class="headerlink" title="模糊的蒙版"></a>模糊的蒙版</h3><p>当您模糊蒙版时，您将为绘图创建更柔和的边缘。 图7-4显示了使用圆角矩形Bezier路径的正常轮廓和已被模糊(其轮廓)的图形绘制图像的结果（参见示例7-2）。 在顶部图像中，路径已填充但未模糊。 在底部图像中，<code>DrawAndBlur()</code>请求软化填充路径的边缘。</p>
+<p>软化边缘使图形能够平滑地融合到屏幕上。 这种技术也称为<em>羽化</em>。 在羽化中，边缘蒙版被软化以在绘制的图像与其背景之间创建更平滑的过渡。</p>
+<p><img src="/2017/03/14/7-4-Blurring/图7-4.jpg" alt="图7-4"></p>
+<p>图7-4模糊蒙版创建更柔和的边缘。 <em>Public domain images courtesy of the National Park Service.</em></p>
+<p>示例7-2绘制模糊的蒙版</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIBezierPath</span> *path = [<span class="built_in">UIBezierPath</span></span><br><span class="line">	bezierPathWithRoundedRect:inset cornerRadius:<span class="number">32</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">UIImage</span> *mask = DrawIntoImage(targetRect.size, ^&#123;</span><br><span class="line">	FillRect(targetRect, [<span class="built_in">UIColor</span> blackColor]);</span><br><span class="line">	DrawAndBlur(<span class="number">8</span>, ^&#123;[path fill:[<span class="built_in">UIColor</span> whiteColor]];&#125;); <span class="comment">// blurred</span></span><br><span class="line">	<span class="comment">// [path fill:[UIColor whiteColor]]; // non-blurred</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ApplyMaskToContext(mask);</span><br><span class="line">[agate drawInRect:targetRect];</span><br></pre></td></tr></table></figure>
+<h3 id="模糊射灯"><a href="#模糊射灯" class="headerlink" title="模糊射灯"></a>模糊射灯</h3><p>将“光”绘制到上下文中是模糊的另一个常见用例。 在这种情况下，您的目标是减轻像素，可选择添加颜色，并混合光线，而不遮挡已经绘制到上下文的项目。 图7-5显示了几种方法。 正如你所看到的，他们之间的差异是相当微妙的。</p>
+<p><img src="/2017/03/14/7-4-Blurring/图7-5.jpg" alt="图7-5"></p>
+<p>图7-5模糊模拟照射在背景表面上的光。</p>
+<p>图7-5中的所有四个示例都包含一个填充有浅色半透明绿色的圆形路径。 除了右下角的圆圈的每个样本，使用以下代码模糊：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">path = [<span class="built_in">UIBezierPath</span> bezierPathWithOvalInRect:rect];</span><br><span class="line">PushDraw(^&#123;</span><br><span class="line">	<span class="built_in">CGContextSetBlendMode</span>(<span class="built_in">UIGraphicsGetCurrentContext</span>(),</span><br><span class="line">		blendMode);</span><br><span class="line">	DrawAndBlur(<span class="number">8</span>, ^&#123;[path fill:spotlightColor];&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>左上角的示例使用正常混合模式，右上角的示例使用硬灯模式，左下角的示例使用柔光模式。 以下是一些注意事项：</p>
+<ul>
+<li>右上角的<code>kCGBlendModeHardLight</code>样本产生最细微的照明，将最简单的亮点添加到原始背景。</li>
+<li>左下角的<code>kCGBlendModeSoftLight</code>示例最为漫长，突出显示。</li>
+<li>左上角的<code>kCGBlendModeNormal</code>样本落在这两个之间。光场的中心实际上与右下方的样本匹配，没有模糊的样本，也是使用正常混合绘制的。</li>
+</ul>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/蒙版，模糊和动画/" rel="tag"># 蒙版，模糊和动画</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/13/7-3-Complex-Masking/" rel="next" title="7.3-复杂蒙版">
+                <i class="fa fa-chevron-left"></i> 7.3-复杂蒙版
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/15/7-5-Drawing-Reflections/" rel="prev" title="7.5-绘制反射">
+                7.5-绘制反射 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊绘图块"><span class="nav-number">1.</span> <span class="nav-text">模糊绘图块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊的蒙版"><span class="nav-number">2.</span> <span class="nav-text">模糊的蒙版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模糊射灯"><span class="nav-number">3.</span> <span class="nav-text">模糊射灯</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

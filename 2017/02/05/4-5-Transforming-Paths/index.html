@@ -1,0 +1,670 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="路径的基础知识," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Bezier路径的applyTransform:方法通过应用作为方法参数传递的仿射变换矩阵来转换所有路径的点和控制点。此更改发生在适当位置，并将更新调用路径。例如，在应用以下缩放变换后，整个myPath路径缩小： 1[myPath applyTransform:CGAffineTransformMakeScale(0.5f, 0.5f)]; 如果您希望保留原始路径，请创建副本并将变换应用于副本。这">
+<meta name="keywords" content="路径的基础知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4.5-变换路径">
+<meta property="og:url" content="http://chengdong.top/2017/02/05/4-5-Transforming-Paths/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="Bezier路径的applyTransform:方法通过应用作为方法参数传递的仿射变换矩阵来转换所有路径的点和控制点。此更改发生在适当位置，并将更新调用路径。例如，在应用以下缩放变换后，整个myPath路径缩小： 1[myPath applyTransform:CGAffineTransformMakeScale(0.5f, 0.5f)]; 如果您希望保留原始路径，请创建副本并将变换应用于副本。这">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/02/05/4-5-Transforming-Paths/图4-7.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/05/4-5-Transforming-Paths/图4-8.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4.5-变换路径">
+<meta name="twitter:description" content="Bezier路径的applyTransform:方法通过应用作为方法参数传递的仿射变换矩阵来转换所有路径的点和控制点。此更改发生在适当位置，并将更新调用路径。例如，在应用以下缩放变换后，整个myPath路径缩小： 1[myPath applyTransform:CGAffineTransformMakeScale(0.5f, 0.5f)]; 如果您希望保留原始路径，请创建副本并将变换应用于副本。这">
+<meta name="twitter:image" content="http://chengdong.top/2017/02/05/4-5-Transforming-Paths/图4-7.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/02/05/4-5-Transforming-Paths/"/>
+
+
+
+
+
+  <title> 4.5-变换路径 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/02/05/4-5-Transforming-Paths/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                4.5-变换路径
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-05T15:08:55+08:00">
+                2017-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Bezier路径的<code>applyTransform:</code>方法通过应用作为方法参数传递的仿射变换矩阵来转换所有路径的点和控制点。此更改发生在适当位置，并将更新调用路径。例如，在应用以下缩放变换后，整个<code>myPath</code>路径缩小：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[myPath applyTransform:<span class="built_in">CGAffineTransformMakeScale</span>(<span class="number">0.5</span>f, <span class="number">0.5</span>f)];</span><br></pre></td></tr></table></figure>
+<p>如果您希望保留原始路径，请创建副本并将变换应用于副本。这使您可以执行多个更改，而原始项目保持原样：</p>
+<p><code>`</code> objc<br>UIBezierPath *pathCopy = [myPath copy];<br>[pathCopy applyTransform: CGAffineTransformMakeScale(0.5f, 0.5f)];<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">您不能通过应用identity转换来“还原”路径。它产生一个“无操作”结果（路径保持不变），而不是一个复原的结果（路径返回到原来的状态）。</span><br><span class="line"></span><br><span class="line">### 原始问题</span><br><span class="line">应用变换不总是产生您期望的结果。以图4-7为例。我创建了一个路径并对其应用了旋转：</span><br><span class="line"></span><br><span class="line">``` objc</span><br><span class="line">[path applyTransform:CGAffineTransformMakeRotation(M_PI / 9)];</span><br></pre></td></tr></table></figure></p>
+<p>图4-7中的左侧图像显示了您可能期望发生的情况，其中图像围绕其中心旋转20度。右图显示了当你不控制变换的起点时，实际发生的情况。该路径围绕当前坐标系的原点旋转。</p>
+<p><img src="/2017/02/05/4-5-Transforming-Paths/图4-7.jpg" alt="图4-7"></p>
+<p>图4-7原点未明确设置为路径中心的旋转会产生意外的结果。</p>
+<p>幸运的是，确保旋转和缩放比预期的方式更容易。清单4-4详细介绍了<code>ApplyCenteredPathTransform()</code>，该函数用于设置仿射变换，然后重置坐标系。这些额外的步骤产生了您期望的结果。</p>
+<p>清单4-4围绕其中心旋转路径</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Translate path’s origin to its center before applying the transform</span></span><br><span class="line"><span class="keyword">void</span> ApplyCenteredPathTransform(<span class="built_in">UIBezierPath</span> *path, <span class="built_in">CGAffineTransform</span> transform)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGPoint</span> center = PathBoundingCenter(path);</span><br><span class="line">	<span class="built_in">CGAffineTransform</span> t = <span class="built_in">CGAffineTransformIdentity</span>;</span><br><span class="line">	t = <span class="built_in">CGAffineTransformTranslate</span>(t, center.x, center.y);</span><br><span class="line">	t = <span class="built_in">CGAffineTransformConcat</span>(transform, t);</span><br><span class="line">	t = <span class="built_in">CGAffineTransformTranslate</span>(t, -center.x, -center.y);</span><br><span class="line">	[path applyTransform:t];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Rotate path around its center</span></span><br><span class="line"><span class="keyword">void</span> RotatePath(<span class="built_in">UIBezierPath</span> *path, <span class="built_in">CGFloat</span> theta)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGAffineTransform</span> t = <span class="built_in">CGAffineTransformMakeRotation</span>(theta);</span><br><span class="line">	ApplyCenteredPathTransform(path, t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="其他变换"><a href="#其他变换" class="headerlink" title="其他变换"></a>其他变换</h3><p>与旋转一样，如果要缩放对象，请确保将变换应用于路径bounds的中心。图4-8显示了一个在每个维度上将路径缩放85％的转换。创建此缩放以及许多其他方便的转换的函数如清单4-5所示。</p>
+<p><img src="/2017/02/05/4-5-Transforming-Paths/图4-8.jpg" alt="图4-8"></p>
+<p>图4-8小的绿色的图相对于原始的图缩放了（0.85,0.85）</p>
+<p>清单4-4和4-5实现了Quartz绘图任务所需的许多最常见的变换。除了旋转和缩放选项之外，这些功能使您能够将路径移动到各个位置，并将项目镜像到某个位置。原点居中确保每个变换以最常规的预期方式发生。</p>
+<p>清单4-5应用变换</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Scale path to sx, sy</span></span><br><span class="line"><span class="keyword">void</span> ScalePath(<span class="built_in">UIBezierPath</span> *path, <span class="built_in">CGFloat</span> sx, <span class="built_in">CGFloat</span> sy)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGAffineTransform</span> t = <span class="built_in">CGAffineTransformMakeScale</span>(sx, sy);	ApplyCenteredPathTransform(path, t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Offset a path</span></span><br><span class="line"><span class="keyword">void</span> OffsetPath(<span class="built_in">UIBezierPath</span> *path, <span class="built_in">CGSize</span> offset)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGAffineTransform</span> t = <span class="built_in">CGAffineTransformMakeTranslation</span>(</span><br><span class="line">		offset.width, offset.height);</span><br><span class="line">	ApplyCenteredPathTransform(path, t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Move path to a new origin</span></span><br><span class="line"><span class="keyword">void</span> MovePathToPoint(<span class="built_in">UIBezierPath</span> *path, <span class="built_in">CGPoint</span> destPoint)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGRect</span> bounds = PathBoundingBox(path);</span><br><span class="line">	<span class="built_in">CGSize</span> vector =PointsMakeVector(bounds.origin, destPoint);</span><br><span class="line">	OffsetPath(path, vector);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Center path around a new point</span></span><br><span class="line"><span class="keyword">void</span> MovePathCenterToPoint(</span><br><span class="line">	<span class="built_in">UIBezierPath</span> *path, <span class="built_in">CGPoint</span> destPoint)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGRect</span> bounds = PathBoundingCenter(path);</span><br><span class="line">	<span class="built_in">CGSize</span> vector = PointsMakeVector(bounds.origin, destPoint);</span><br><span class="line">	vector.width -= bounds.size.width / <span class="number">2.0</span>f;</span><br><span class="line">	vector.height -= bounds.size.height / <span class="number">2.0</span>f;</span><br><span class="line">	OffsetPath(path, vector);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Flip horizontally</span></span><br><span class="line"><span class="keyword">void</span> MirrorPathHorizontally(<span class="built_in">UIBezierPath</span> *path)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGAffineTransform</span> t = <span class="built_in">CGAffineTransformMakeScale</span>(<span class="number">-1</span>, <span class="number">1</span>);</span><br><span class="line">	ApplyCenteredPathTransform(path, t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Flip vertically</span></span><br><span class="line"><span class="keyword">void</span> MirrorPathVertically(<span class="built_in">UIBezierPath</span> *path)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGAffineTransform</span> t = <span class="built_in">CGAffineTransformMakeScale</span>(<span class="number">1</span>, <span class="number">-1</span>);</span><br><span class="line">	ApplyCenteredPathTransform(path, t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/路径的基础知识/" rel="tag"># 路径的基础知识</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/04/4-4-Retrieving-Path-Bounds-and-Centers/" rel="next" title="4.4-检索路径的Bounds and Centers">
+                <i class="fa fa-chevron-left"></i> 4.4-检索路径的Bounds and Centers
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/06/4-6-Fitting-Bezier-Paths/" rel="prev" title="4.6-拟合贝塞尔路径">
+                4.6-拟合贝塞尔路径 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#其他变换"><span class="nav-number">1.</span> <span class="nav-text">其他变换</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

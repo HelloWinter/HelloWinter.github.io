@@ -1,0 +1,639 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘图上下文," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="iOS的绘图通常使用的技术主要来源于UIKit和QuartzCore框架。 它们由现代化的Objective-C接口（来自UIKit框架）以及早期的基于C语言的函数和Core Foundation样式的对象（来自QuartzCore框架）组成。 这些不同的项目可并存在于你的代码中。 下面是一个示例，显示了一个UIKit方式的绘图操作，和一个Quartz方式的绘图操作： // Draw a roun">
+<meta name="keywords" content="绘图上下文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.1-框架">
+<meta property="og:url" content="http://chengdong.top/2017/01/07/1-1-Frameworks/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="iOS的绘图通常使用的技术主要来源于UIKit和QuartzCore框架。 它们由现代化的Objective-C接口（来自UIKit框架）以及早期的基于C语言的函数和Core Foundation样式的对象（来自QuartzCore框架）组成。 这些不同的项目可并存在于你的代码中。 下面是一个示例，显示了一个UIKit方式的绘图操作，和一个Quartz方式的绘图操作： // Draw a roun">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-16T02:49:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.1-框架">
+<meta name="twitter:description" content="iOS的绘图通常使用的技术主要来源于UIKit和QuartzCore框架。 它们由现代化的Objective-C接口（来自UIKit框架）以及早期的基于C语言的函数和Core Foundation样式的对象（来自QuartzCore框架）组成。 这些不同的项目可并存在于你的代码中。 下面是一个示例，显示了一个UIKit方式的绘图操作，和一个Quartz方式的绘图操作： // Draw a roun">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/01/07/1-1-Frameworks/"/>
+
+
+
+
+
+  <title> 1.1-框架 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/01/07/1-1-Frameworks/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                1.1-框架
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-07T22:31:35+08:00">
+                2017-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>iOS的绘图通常使用的技术主要来源于UIKit和QuartzCore框架。 它们由现代化的Objective-C接口（来自UIKit框架）以及早期的基于C语言的函数和Core Foundation样式的对象（来自QuartzCore框架）组成。 这些不同的项目可并存在于你的代码中。 下面是一个示例，显示了一个UIKit方式的绘图操作，和一个Quartz方式的绘图操作：</p>
+<pre><code class="objc"><span class="comment">// Draw a rounded rectangle in UIKit</span>
+ <span class="built_in">UIBezierPath</span> *bezierPath = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:inset cornerRadius:<span class="number">12</span>];
+ [bezierPath stroke];
+
+<span class="comment">// Fill an ellipse in Quartz</span>
+<span class="built_in">CGContextFillEllipseInRect</span>(context, rect);
+</code></pre>
+<p>QuartzCore框架通常被称为Quartz或Quartz 2D。 后者是苹果公司的原生2D渲染和抗锯齿API的官方名称。 它也是在苹果主要的绘图参考开发库：“Quartz 2D编程指南”中使用的名称。</p>
+<p>这个框架的使用范围比Quartz 2D名称字面定义的更加广泛。 QuartzCore框架实现了合成，渲染，以及许多其他的图形特性。 例如，QuartzCore APIs包括实现动画，平铺和Core Image滤镜（即使Core Image确切来说是一个独立的框架）。</p>
+<p>对于iOS开发人员来说，Quartz通常以其内部实现名称Core Graphics而更为人所知。 这本书在全文中使用了相同意思可以互换的Quartz和Core Graphics两个名称。 大多数基于C的API是以两个字母的CG前缀开始，这是源自Core Graphics首字母的名称。 从几何结构体（<code>CGRect</code>和<code>CGPoint</code>）到对象（<code>CGColorRef</code>，<code>CGImageRef</code>和<code>CGDataProviderRef</code>），Quartz提供了庞大而且丰富多样的绘图技术。</p>
+<p>Quartz及其前身已经存在了很长时间。 甚至可追溯到上世纪80年代，在Diaplay PostScript为NeXTStep操作系统提供图形技术支持时。 Quartz已经使用了与现代PDF非常相似的内部成像模型。</p>
+<p>在每个iOS版本更新中，苹果都将绘图API进一步向Objective-C转移，简化、增强和一步步优化程序绘图。 然而，Core Graphics的函数在日常绘图开发中仍然发挥着重要作用。 虽然较新的基于UIKit的常用绘图技术取代了许多常见的基于Core Graphics的任务，但它们并没有完全取代它们。 所以在现阶段，准备好在日常工作中同时使用两个框架吧。</p>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘图上下文/" rel="tag"># 绘图上下文</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/06/chapter-1-Drawing-Contexts/" rel="next" title="（第1章）绘图上下文">
+                <i class="fa fa-chevron-left"></i> （第1章）绘图上下文
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/08/1-2-When-to-Draw/" rel="prev" title="1.2-什么时候需要绘图">
+                1.2-什么时候需要绘图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,664 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘图上下文," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="每个iOS的绘图操作都从一个上下文开始。从概念上讲，上下文非常类似于空白页面的纸张或空画布。他们代表着用于绘图的iOS目标。它们包含有关绘图介质状态的所有信息，例如，画布是以何种方式旋转或变换的，可以在画布上绘制什么样的颜色，可以在任何点绘制的细节的程度，等等。 在iOS中，您主要使用两种绘图上下文：位图上下文和PDF上下文。Core Image框架提供第三种上下文类型，用于执行图像处理任务而不是">
+<meta name="keywords" content="绘图上下文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.3-上下文">
+<meta property="og:url" content="http://chengdong.top/2017/01/09/1-3-Contexts/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="每个iOS的绘图操作都从一个上下文开始。从概念上讲，上下文非常类似于空白页面的纸张或空画布。他们代表着用于绘图的iOS目标。它们包含有关绘图介质状态的所有信息，例如，画布是以何种方式旋转或变换的，可以在画布上绘制什么样的颜色，可以在任何点绘制的细节的程度，等等。 在iOS中，您主要使用两种绘图上下文：位图上下文和PDF上下文。Core Image框架提供第三种上下文类型，用于执行图像处理任务而不是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-16T02:49:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.3-上下文">
+<meta name="twitter:description" content="每个iOS的绘图操作都从一个上下文开始。从概念上讲，上下文非常类似于空白页面的纸张或空画布。他们代表着用于绘图的iOS目标。它们包含有关绘图介质状态的所有信息，例如，画布是以何种方式旋转或变换的，可以在画布上绘制什么样的颜色，可以在任何点绘制的细节的程度，等等。 在iOS中，您主要使用两种绘图上下文：位图上下文和PDF上下文。Core Image框架提供第三种上下文类型，用于执行图像处理任务而不是">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/01/09/1-3-Contexts/"/>
+
+
+
+
+
+  <title> 1.3-上下文 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/01/09/1-3-Contexts/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                1.3-上下文
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-09T21:38:49+08:00">
+                2017-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>每个iOS的绘图操作都从一个上下文开始。从概念上讲，上下文非常类似于空白页面的纸张或空画布。他们代表着用于绘图的iOS目标。它们包含有关绘图介质状态的所有信息，例如，画布是以何种方式旋转或变换的，可以在画布上绘制什么样的颜色，可以在任何点绘制的细节的程度，等等。</p>
+<p>在iOS中，您主要使用两种绘图上下文：位图上下文和PDF上下文。Core Image框架提供第三种上下文类型，用于执行图像处理任务而不是绘图。</p>
+<h3 id="位图上下文"><a href="#位图上下文" class="headerlink" title="位图上下文"></a>位图上下文</h3><p>位图上下文本质上是矩形数据数组。该数据的大小取决于每个图像元素（或“像素”）表示的颜色的种类。如图1-4左图所示，<em>Device RGB</em>每像素使用三个或四个字节，这取决于位图是不透明（3字节）还是透明的（4字节）。</p>
+<p>一个不透明的位图会忽略半透明值，优化存储。半透明图像使用所谓的<em>alpha</em>值。该值存储在与实际颜色或亮度信息不同的字节中。它指的是每个像素的半透明度。<em>Device RGB</em>的颜色信息以3字节存储，每个字节对应一个红色，绿色或蓝色值。</p>
+<p>如图1-4右侧所示，<em>Device Gray</em>图像每个像素使用1或2个字节。为每个像素存储一个亮度字节，并且可选地存储一个透明度字节。</p>
+<h3 id="PDF上下文"><a href="#PDF上下文" class="headerlink" title="PDF上下文"></a>PDF上下文</h3><p>从开发人员的角度来看，PDF上下文的工作方式与位图上下文非常相似。可使用相同的命令和函数绘制它们。您可以像绘制视图或图像一样设置颜色并绘制形状和文本。但是，存在一定差异。</p>
+<p>PDF上下文在其“后台存储”中包含矢量数据，以独立于分辨率的方式描述绘图。位图上下文是栅格化的。它们使用像素阵列来存储绘制到其中的数据。</p>
+<p>PDF上下文也可能包含多个页面。您可以建立一个边界矩形，来指定每个PDF页面的默认大小和位置。空矩形（<code>CGRectZero</code>）默认为标准A（字母）页。 这是8.5*11英寸，或612*792点。（第2章讨论点和像素之间的差异。）</p>
+<p>PDF图像内部存储为基于矢量的命令序列。这提供了在位图图形中看不到的固有的与分辨率无关的特性。苹果在其文档中写道，“PDF文件是与分辨率的大小无关的 - 它们绘制的大小可以无限增加或减少，而不牺牲图像细节。而位图图像的用户感知质量与用户所要看到的位图的分辨率息息相关“。</p>
+<p>您可以像绘制位图上下文一样绘制这些上下文。差异主要在于它们的目标（文件和数据表示）以及何时开始一个新的页面。</p>
+<p>除了位图上下文和PDF上下文之外，您还可能遇到Core Image上下文。</p>
+<h3 id="Core-Image上下文"><a href="#Core-Image上下文" class="headerlink" title="Core Image上下文"></a>Core Image上下文</h3><p>Core Image框架可以帮助您极快地处理图像。 它提供将数字图像处理和计算机视觉应用于图像源的例程。有了它，您可以将过滤器、链式过滤器一起使用，实现特征检测（查找面部和眼睛），并分析图像以进行自动调整。</p>
+<p>Core Image上下文是特定于将Core Image对象渲染到Quartz 2D和OpenGL的图像上下文。通过板载图形处理单元（GPU）加速，Core Image上下文与Core Video像素缓冲区集成。Core Image使用自己的颜色风格（<code>CIColor</code>）和图像（<code>CIImage</code>），它们已针对Core Image的快速过滤和图像处理功能进行了优化。</p>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘图上下文/" rel="tag"># 绘图上下文</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/08/1-2-When-to-Draw/" rel="next" title="1.2-什么时候需要绘图">
+                <i class="fa fa-chevron-left"></i> 1.2-什么时候需要绘图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/09/1-4-Establishing-Contexts-in-UIKit/" rel="prev" title="1.4-使用UIKit建立上下文">
+                1.4-使用UIKit建立上下文 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#位图上下文"><span class="nav-number">1.</span> <span class="nav-text">位图上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PDF上下文"><span class="nav-number">2.</span> <span class="nav-text">PDF上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Core-Image上下文"><span class="nav-number">3.</span> <span class="nav-text">Core Image上下文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

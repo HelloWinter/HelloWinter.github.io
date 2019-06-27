@@ -1,0 +1,641 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="蒙版，模糊和动画," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="图7-2中的蒙版产生的结果比基本的路径剪切复杂得多。 每个灰度蒙版不仅决定了每个像素可以被绘制的位置，还决定了该像素的绘制程度。 由于蒙版元素的范围从白色到黑色，它们的灰度级别描述了像素对最终图像的贡献程度。  图7-2灰度蒙版中的层次建立了如何绘制像素。Public domain images courtesy of the National Park Service. 这些蒙版通过更新上下文状">
+<meta name="keywords" content="蒙版，模糊和动画">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7.3-复杂蒙版">
+<meta property="og:url" content="http://chengdong.top/2017/03/13/7-3-Complex-Masking/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="图7-2中的蒙版产生的结果比基本的路径剪切复杂得多。 每个灰度蒙版不仅决定了每个像素可以被绘制的位置，还决定了该像素的绘制程度。 由于蒙版元素的范围从白色到黑色，它们的灰度级别描述了像素对最终图像的贡献程度。  图7-2灰度蒙版中的层次建立了如何绘制像素。Public domain images courtesy of the National Park Service. 这些蒙版通过更新上下文状">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/03/13/7-3-Complex-Masking/图7-2.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7.3-复杂蒙版">
+<meta name="twitter:description" content="图7-2中的蒙版产生的结果比基本的路径剪切复杂得多。 每个灰度蒙版不仅决定了每个像素可以被绘制的位置，还决定了该像素的绘制程度。 由于蒙版元素的范围从白色到黑色，它们的灰度级别描述了像素对最终图像的贡献程度。  图7-2灰度蒙版中的层次建立了如何绘制像素。Public domain images courtesy of the National Park Service. 这些蒙版通过更新上下文状">
+<meta name="twitter:image" content="http://chengdong.top/2017/03/13/7-3-Complex-Masking/图7-2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/03/13/7-3-Complex-Masking/"/>
+
+
+
+
+
+  <title> 7.3-复杂蒙版 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/03/13/7-3-Complex-Masking/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                7.3-复杂蒙版
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-13T16:56:52+08:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>图7-2中的蒙版产生的结果比基本的路径剪切复杂得多。 每个灰度蒙版不仅决定了每个像素可以被绘制的位置，还决定了该像素的绘制程度。 由于蒙版元素的范围从白色到黑色，它们的灰度级别描述了像素对最终图像的贡献程度。</p>
+<p><img src="/2017/03/13/7-3-Complex-Masking/图7-2.jpg" alt="图7-2"></p>
+<p>图7-2灰度蒙版中的层次建立了如何绘制像素。<em>Public domain images courtesy of the National Park Service.</em></p>
+<p>这些蒙版通过更新上下文状态来工作。 使用<code>CGContextCliptoMask()</code>函数将您提供的蒙版映射到当前上下文的矩形中：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="built_in">CGContextClipToMask</span> (</span><br><span class="line">	<span class="built_in">CGContextRef</span> c,</span><br><span class="line">	<span class="built_in">CGRect</span> rect,</span><br><span class="line">	<span class="built_in">CGImageRef</span> mask</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对于复杂的绘图，请在<code>GState</code>块内执行蒙版。 您可以在蒙版调用时保存并恢复上下文<code>GState</code>以临时应用蒙版。 这使您能够将上下文恢复到其未应用蒙版的条件以进一步绘制任务，如下例所示：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PushDraw(^&#123;</span><br><span class="line">	ApplyMaskToContext(mask); <span class="comment">// See Listing 7-2</span></span><br><span class="line">	[image drawInRect:targetRect];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上下文蒙版确定绘制的像素和绘制的程度。 蒙版中的黑色像素完全遮蔽。没有数据可以通过。 白色像素允许所有数据通过。 纯黑色和纯白色之间的灰色级别将相应的Alpha值应用于绘画。 例如，中等灰色绘画时具有50％透明度。 使用黑白蒙版，蒙版数据必须使用灰度级源图像。 （实现此功能还有第二种方法，本章稍后将会看到。）</p>
+<p>清单7-2演示了如何将灰度蒙版应用于当前上下文。 此功能通过将蒙版转换为无alpha的灰色空间开始（请参见第3章）。 它计算上下文大小，以便蒙版在整个上下文中被拉伸（参见第1章）。</p>
+<p>要应用蒙版，您必须在Quartz空间中，否则蒙版将被倒置应用。 该功能翻转上下文，添加蒙版，然后将上下文翻转回UIKit坐标以适应下一步的绘图命令。 这个flip–apply–flip顺序从上到下应用蒙版，正如你画的一样。</p>
+<p>如果您正在寻找灵感，一个简单的“Photoshop蒙版”网络搜索将返回大量预置的黑白蒙版，可以在iOS应用程序中使用。 确保检查个人许可条款，但您会发现许多蒙版已被放置在公共领域，或提供免版税的使用条款。</p>
+<p>清单7-2将蒙版应用于上下文</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> ApplyMaskToContext(<span class="built_in">UIImage</span> *mask)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!mask)</span><br><span class="line">		COMPLAIN_AND_BAIL(<span class="string">@"Mask image cannot be nil"</span>, <span class="literal">nil</span>);</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>) COMPLAIN_AND_BAIL(</span><br><span class="line">		<span class="string">@"No context to apply mask to"</span>, <span class="literal">nil</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Ensure that mask is grayscale</span></span><br><span class="line">	<span class="built_in">UIImage</span> *gray = GrayscaleVersionOfImage(mask);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Determine the context size</span></span><br><span class="line">	<span class="built_in">CGSize</span> size = <span class="built_in">CGSizeMake</span>(</span><br><span class="line">		<span class="built_in">CGBitmapContextGetWidth</span>(context),</span><br><span class="line">		<span class="built_in">CGBitmapContextGetHeight</span>(context));</span><br><span class="line">	<span class="built_in">CGFloat</span> scale = [<span class="built_in">UIScreen</span> mainScreen].scale;</span><br><span class="line">	<span class="built_in">CGSize</span> contextSize = <span class="built_in">CGSizeMake</span>(</span><br><span class="line">		size.width / scale, size.height / scale);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Update the GState for masking</span></span><br><span class="line">	FlipContextVertically(contextSize);</span><br><span class="line">	<span class="built_in">CGContextClipToMask</span>(context,</span><br><span class="line">		SizeMakeRect(contextSize), gray.CGImage);</span><br><span class="line">	FlipContextVertically(contextSize);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/蒙版，模糊和动画/" rel="tag"># 蒙版，模糊和动画</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/12/7-2-Simple-Masking/" rel="next" title="7.2-简单蒙版">
+                <i class="fa fa-chevron-left"></i> 7.2-简单蒙版
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/14/7-4-Blurring/" rel="prev" title="7.4-模糊">
+                7.4-模糊 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

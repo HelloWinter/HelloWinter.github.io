@@ -1,0 +1,681 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘制渐变," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在继续深入渐变之前，本章需要退后一步，覆盖一个重要的Quartz绘图功能。 此特性在本章中的示例中使用，值得解释。 如果您使用Photoshop（或类似的图像合成和编辑应用程序），您可能熟悉图层。 图层将图形封装到不同的单个容器中。 您可以堆叠这些图层以构建复杂的绘图，并应用图层效果以向每个图层的内容添加阴影，高光和其他装饰。 重要的是，这些效果一次适用于整个图层，而不考虑创建图层内容的各个绘图操">
+<meta name="keywords" content="绘制渐变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6.5-状态和透明层">
+<meta property="og:url" content="http://chengdong.top/2017/03/01/6-5-State-and-Transparency-Layers/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="在继续深入渐变之前，本章需要退后一步，覆盖一个重要的Quartz绘图功能。 此特性在本章中的示例中使用，值得解释。 如果您使用Photoshop（或类似的图像合成和编辑应用程序），您可能熟悉图层。 图层将图形封装到不同的单个容器中。 您可以堆叠这些图层以构建复杂的绘图，并应用图层效果以向每个图层的内容添加阴影，高光和其他装饰。 重要的是，这些效果一次适用于整个图层，而不考虑创建图层内容的各个绘图操">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/03/01/6-5-State-and-Transparency-Layers/图6-11-1.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/01/6-5-State-and-Transparency-Layers/图6-11-2.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="6.5-状态和透明层">
+<meta name="twitter:description" content="在继续深入渐变之前，本章需要退后一步，覆盖一个重要的Quartz绘图功能。 此特性在本章中的示例中使用，值得解释。 如果您使用Photoshop（或类似的图像合成和编辑应用程序），您可能熟悉图层。 图层将图形封装到不同的单个容器中。 您可以堆叠这些图层以构建复杂的绘图，并应用图层效果以向每个图层的内容添加阴影，高光和其他装饰。 重要的是，这些效果一次适用于整个图层，而不考虑创建图层内容的各个绘图操">
+<meta name="twitter:image" content="http://chengdong.top/2017/03/01/6-5-State-and-Transparency-Layers/图6-11-1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/03/01/6-5-State-and-Transparency-Layers/"/>
+
+
+
+
+
+  <title> 6.5-状态和透明层 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/03/01/6-5-State-and-Transparency-Layers/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                6.5-状态和透明层
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-01T12:54:15+08:00">
+                2017-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在继续深入渐变之前，本章需要退后一步，覆盖一个重要的Quartz绘图功能。 此特性在本章中的示例中使用，值得解释。</p>
+<p>如果您使用Photoshop（或类似的图像合成和编辑应用程序），您可能熟悉图层。 图层将图形封装到不同的单个容器中。 您可以堆叠这些图层以构建复杂的绘图，并应用图层效果以向每个图层的内容添加阴影，高光和其他装饰。 重要的是，这些效果一次适用于整个图层，而不考虑创建图层内容的各个绘图操作。</p>
+<p>Quartz提供了类似的功能，称为<em>透明层</em>。 这些层使您能够将多个绘图操作合并到单个缓冲区中。 图6-11说明了为什么要在应用程序中使用图层。</p>
+<p><img src="/2017/03/01/6-5-State-and-Transparency-Layers/图6-11-1.jpg" alt="图6-11-1"><br><img src="/2017/03/01/6-5-State-and-Transparency-Layers/图6-11-2.jpg" alt="图6-11-2"></p>
+<p>图6-11使用透明层确保绘制效果一次应用于整个绘图操作集合，而不是单个绘图请求。 Clarus的DogCow来自苹果的TechNote 31。</p>
+<p>此图形被渲染为启用阴影的上下文。 在顶部图像中，阴影出现在图形的所有部分下，包括DogCow的“内部”。 这是因为这张照片是使用三个Bezier填充操作创建的：</p>
+<ul>
+<li>第一个操作填充了粉红色的DogCow乳房。 （Clarus纯粹主义者，请原谅异端邪说，我想要一个更复杂的形状来处理这个例子。）</li>
+<li>第二个填充图中的白色背景。</li>
+<li>第三个画出了斑点，眼睛和那个背景上的轮廓。</li>
+</ul>
+<p>左下角的图像显示了用于这些绘图任务的Bezier路径的轮廓。 当这些路径作为三个操作执行时，上下文将阴影应用于每个绘制请求。 要创建单个复合图形，如图6-11右下角所示，您将改用Quartz透明层。 阴影仅应用于复合图形的边缘，而不是在组件的边缘。</p>
+<p>透明层将绘制请求分组到独立的缓冲区中，与图形上下文分开。 在启动一个图层（通过调用<code>CGContextBeginTransparencyLayer()</code>），这个缓冲区用一个完全透明的背景初始化。 它的阴影被禁用，全局alpha设置为1。只有在完成绘制（通过调用<code>CGContextEndTransparencyLayer()</code>）后，才会将图层的内容呈现给父上下文。</p>
+<h3 id="透明度块"><a href="#透明度块" class="headerlink" title="透明度块"></a>透明度块</h3><p>与大多数其他Quartz和UIKit绘图请求一样，图层声明很快变得混乱：难以跟随，难以阅读，难以维护。 请参考示例6-3，其中介绍了在图6-11中创建最终DogCow的代码。 传递给<code>PushLayerDraw()</code>的块确保在绘制之前设置的阴影应用于整个组。</p>
+<p>示例6-3使用块绘制透明层</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SetShadow(shadowColor, <span class="built_in">CGSizeMake</span>(<span class="number">4</span>, <span class="number">4</span>), <span class="number">4</span>);</span><br><span class="line">PushLayerDraw(^&#123;</span><br><span class="line">	[udder fill:pinkColor];</span><br><span class="line">	[interior fill:whiteColor];</span><br><span class="line">	[baseMoof fill:blackColor];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>清单6-4给出了<code>PushLayerDraw()</code>函数。 它在透明层中执行绘图操作块。 这种方法使您能够在易于使用的块中组合图形，确保基于图层的渲染。</p>
+<p>清单6-4使用透明层绘图</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> (^DrawingStateBlock)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> PushLayerDraw(DrawingStateBlock block)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!block) <span class="keyword">return</span>; <span class="comment">// Nothing to do</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextRef</span> context =<span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error: No context to draw to"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextBeginTransparencyLayer</span>(context, <span class="literal">NULL</span>);</span><br><span class="line">	block();</span><br><span class="line">	<span class="built_in">CGContextEndTransparencyLayer</span>(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>透明层的优点是显而易见的：它们使您能够将绘图操作视为组。 缺点是，由于（需要）额外的绘图缓冲区，它是非常耗费内存的。 （可）通过在使用图层之前剪切上下文来缓解这种情况。 如果你知道你的组将只绘制你的上下文的一部分，在开始图层之前添加剪切。 这迫使图层仅绘制到裁剪区域，从而减少缓冲区大小和相关的内存开销。</p>
+<p>但要小心，使用阴影的时候。 向剪裁区域添加阴影补偿，因为透明层结束时将立即绘制阴影。 作为经验法则，您想要允许阴影大小加上模糊。 因此，对于偏移为（2，4）和模糊为4的阴影，至少应向剪裁区域添加（6,8）点。</p>
+<h3 id="状态块"><a href="#状态块" class="headerlink" title="状态块"></a>状态块</h3><p>无论何时使用临时剪辑或任何其他特定于上下文的状态，您都可以通过使用基于块的方法来简化工作，如清单6-5所示。 与清单6-4类似，此<code>PushDraw()</code>函数在保存和恢复上下文状态的调用之间执行块。</p>
+<p>清单6-5使用状态块绘图</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> PushDraw(DrawingStateBlock block)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!block) <span class="keyword">return</span>; <span class="comment">// Nothing to do</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error: No context to draw to"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextSaveGState</span>(context);</span><br><span class="line">	block();</span><br><span class="line">	<span class="built_in">CGContextRestoreGState</span>(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例6-4使用清单6-4和6-5的函数显示用于创建图6-11中最终图像的完整序列。 它执行上下文剪切，设置上下文阴影，并将所有三个Bezier路径做为一个组绘制。 在该块执行之后，上下文完全返回到其预绘制条件。 剪切或阴影状态改变都不会超出此示例。</p>
+<p>示例6-4使用状态和透明度块剪切</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGRect</span> clipRect = <span class="built_in">CGRectInset</span>(destinationRect, <span class="number">-8</span>, <span class="number">-8</span>);</span><br><span class="line">PushDraw(^&#123;</span><br><span class="line">	<span class="comment">// Clip path to bounds union with shadow allowance</span></span><br><span class="line">	<span class="comment">// to improve drawing performance</span></span><br><span class="line">	[[<span class="built_in">UIBezierPath</span> bezierPathWithRect:clipRect] addClip];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Set shadow</span></span><br><span class="line">	SetShadow(shadowColor, <span class="built_in">CGSizeMake</span>(<span class="number">4</span>, <span class="number">4</span>), <span class="number">4</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Draw as group</span></span><br><span class="line">	PushLayerDraw(^&#123;</span><br><span class="line">		[udder fill:pinkColor];</span><br><span class="line">		[interior fill:whiteColor];</span><br><span class="line">		[baseMoof fill:blackColor];</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘制渐变/" rel="tag"># 绘制渐变</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/28/6-4-Adding-Edge-Effects/" rel="next" title="6.4-添加边缘效果">
+                <i class="fa fa-chevron-left"></i> 6.4-添加边缘效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/02/6-6-Flipping-Gradients/" rel="prev" title="6.6-翻转渐变">
+                6.6-翻转渐变 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#透明度块"><span class="nav-number">1.</span> <span class="nav-text">透明度块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#状态块"><span class="nav-number">2.</span> <span class="nav-text">状态块</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

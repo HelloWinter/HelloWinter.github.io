@@ -1,0 +1,676 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘制文本," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="图8-25演示了Core Text中的一个基本问题。 这涉及将Core Text绘制到列中。当您布置列时，文本应该在每列的边缘换行，而不是在它们之间继续。例如，在右列的顶部，单词sitting应该出现在第一列的第二行，因为它原本是在tired of之后的。相反，它放置在右侧绘图第二列的顶部。文本穿过列，然后在下一列绘制，而不是在第一列一直向下绘制，然后在下一列再向下绘制。  图8-25文本本身并不">
+<meta name="keywords" content="绘制文本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8.6-分列绘制">
+<meta property="og:url" content="http://chengdong.top/2017/04/09/8-6-Drawing-Columns/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="图8-25演示了Core Text中的一个基本问题。 这涉及将Core Text绘制到列中。当您布置列时，文本应该在每列的边缘换行，而不是在它们之间继续。例如，在右列的顶部，单词sitting应该出现在第一列的第二行，因为它原本是在tired of之后的。相反，它放置在右侧绘图第二列的顶部。文本穿过列，然后在下一列绘制，而不是在第一列一直向下绘制，然后在下一列再向下绘制。  图8-25文本本身并不">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/04/09/8-6-Drawing-Columns/图8-25.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/04/09/8-6-Drawing-Columns/图8-26.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/04/09/8-6-Drawing-Columns/图8-27.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/04/09/8-6-Drawing-Columns/图8-28.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8.6-分列绘制">
+<meta name="twitter:description" content="图8-25演示了Core Text中的一个基本问题。 这涉及将Core Text绘制到列中。当您布置列时，文本应该在每列的边缘换行，而不是在它们之间继续。例如，在右列的顶部，单词sitting应该出现在第一列的第二行，因为它原本是在tired of之后的。相反，它放置在右侧绘图第二列的顶部。文本穿过列，然后在下一列绘制，而不是在第一列一直向下绘制，然后在下一列再向下绘制。  图8-25文本本身并不">
+<meta name="twitter:image" content="http://chengdong.top/2017/04/09/8-6-Drawing-Columns/图8-25.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/04/09/8-6-Drawing-Columns/"/>
+
+
+
+
+
+  <title> 8.6-分列绘制 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/04/09/8-6-Drawing-Columns/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                8.6-分列绘制
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-09T17:23:13+08:00">
+                2017-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>图8-25演示了Core Text中的一个基本问题。 这涉及将Core Text绘制到列中。当您布置列时，文本应该在每列的边缘换行，而不是在它们之间继续。例如，在右列的顶部，单词<em>sitting</em>应该出现在第一列的第二行，因为它原本是在<em>tired of</em>之后的。相反，它放置在右侧绘图第二列的顶部。文本穿过列，然后在下一列绘制，而不是在第一列一直向下绘制，然后在下一列再向下绘制。</p>
+<p><img src="/2017/04/09/8-6-Drawing-Columns/图8-25.jpg" alt="图8-25"></p>
+<p>图8-25文本本身并不知道在这个复杂的路径中在哪里换行。在开始下一行之前，文本将跨两列进行流动（绘制）而不是分别在每一列向下移动。</p>
+<p>问题是Core Text框架列表将整个Bezier路径视为一个单一的形状（您在图8-26中看到的路径）。它的两个竖直矩形意味着显示独立的文本列。 然而，发生的情况是，Core Text framesetter只使用一个测试来构建其框架。它确定(只考虑)路径内的点和路径外的点。所有其他注意事项都省略。Core Text和iOS通常没有“列”的概念，所以默认的技术不支持我们所期望的逐列布局。</p>
+<p><img src="/2017/04/09/8-6-Drawing-Columns/图8-26.jpg" alt="图8-26"></p>
+<p>图8-26该路径包含两个矩形。</p>
+<p>图8-27显示了我想要的布局。在这里，<em>sitting</em>在<em>tired of</em>之后进行了合适的换行。 文本在第一列向下排列，然后继续到第二列再向下排列。此布局将两列视为单个的输出流。 文本从一列移动到另一列。</p>
+<p><img src="/2017/04/09/8-6-Drawing-Columns/图8-27.jpg" alt="图8-27"></p>
+<p>图8-27本文以合适的方式遵从列布局来排列。</p>
+<p>比较图8-25和8-27中的视觉风格。图8-27看起来是正确的“文本”布局，一系列格式良好的短段落。图8-25右列显示了更多的间隙线和较少的文本。其布局看起来略逊于图8-27中的布局。</p>
+<p>我通过调用清单8-1中的<code>DrawAttributedStringInBezierPath()</code>生成了图8-25的“before”映像。从图8-25中的错误布局流到图8-27中的正确布局，它实际上只需要很少的工作来实现此功能。清单8-2显示了是实现的。</p>
+<p>这个新函数叫做<code>DrawAttributedStringIntoSubpath()</code>。 它以一个一个的子路径为基础，并使用无法绘制到路径中的属性字符串内容更新字符串余数参数。要完成此操作，它会查询Core Text框架的可见字符串范围。此函数计算属性字符串的余数，即不可见部分，并将其分配给余数参数。</p>
+<p>清单8-2中的第二个函数是<code>DrawAttributedStringInBezierSubpaths()</code>。此入口点遍历路径的子路径。在每个阶段，它检索“其余”字符串并将其应用到下一个绘图阶段。该函数在完成绘制子路径或其余字符串长度减少到零时返回。</p>
+<p>清单8-2将属性字符串绘制到独立子路径中</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> DrawAttributedStringIntoSubpath(</span><br><span class="line">	<span class="built_in">UIBezierPath</span> *path, <span class="built_in">NSAttributedString</span> *attributedString,</span><br><span class="line">	<span class="built_in">NSAttributedString</span> **remainder)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">		COMPLAIN_AND_BAIL(<span class="string">@"No context to draw into"</span>, <span class="literal">nil</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Handle vertical mirroring</span></span><br><span class="line">	<span class="built_in">UIBezierPath</span> *<span class="keyword">copy</span> = [path safeCopy];</span><br><span class="line">	MirrorPathVerticallyInContext(<span class="keyword">copy</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Establish the framesetter and retrieve the frame</span></span><br><span class="line">	<span class="built_in">CTFramesetterRef</span> framesetter =</span><br><span class="line">		<span class="built_in">CTFramesetterCreateWithAttributedString</span>(</span><br><span class="line">			(__bridge <span class="built_in">CFAttributedStringRef</span>) attributedString);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CTFrameRef</span> theFrame = <span class="built_in">CTFramesetterCreateFrame</span>(framesetter,</span><br><span class="line">		<span class="built_in">CFRangeMake</span>(<span class="number">0</span>, attributedString.length), <span class="keyword">copy</span>.CGPath, <span class="literal">NULL</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// If the remainder can be dereferenced, calculate</span></span><br><span class="line">	<span class="comment">// the remaining attributed string</span></span><br><span class="line">	<span class="keyword">if</span> (remainder)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">CFRange</span> range = <span class="built_in">CTFrameGetVisibleStringRange</span>(theFrame);</span><br><span class="line">		<span class="built_in">NSInteger</span> startLocation = range.location + range.length;</span><br><span class="line">		<span class="built_in">NSInteger</span> extent = attributedString.length - startLocation;</span><br><span class="line">		<span class="built_in">NSAttributedString</span> *substring =</span><br><span class="line">			[attributedString attributedSubstringFromRange:</span><br><span class="line">				<span class="built_in">NSMakeRange</span>(startLocation, extent)];</span><br><span class="line">		*remainder = substring;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Perform the drawing in Quartz coordinates</span></span><br><span class="line">	PushDraw(^&#123;</span><br><span class="line">		FlipContextVertically(GetUIKitContextSize());</span><br><span class="line">		<span class="built_in">CTFrameDraw</span>(theFrame, <span class="built_in">UIGraphicsGetCurrentContext</span>());</span><br><span class="line">	&#125;);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Clean up the Core Text objects</span></span><br><span class="line">	<span class="built_in">CFRelease</span>(theFrame);</span><br><span class="line">	<span class="built_in">CFRelease</span>(framesetter);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> DrawAttributedStringInBezierSubpaths(<span class="built_in">UIBezierPath</span> *path,</span><br><span class="line">	<span class="built_in">NSAttributedString</span> *attributedString)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">NSAttributedString</span> *string;</span><br><span class="line">	<span class="built_in">NSAttributedString</span> *remainder = attributedString;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Iterate through subpaths, drawing the</span></span><br><span class="line">	<span class="comment">// attributed string into each section</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">UIBezierPath</span> *subpath <span class="keyword">in</span> path.subpaths)</span><br><span class="line">	&#123;</span><br><span class="line">		string = remainder;</span><br><span class="line">		DrawAttributedStringIntoSubpath(</span><br><span class="line">			subpath, string, &amp;remainder);</span><br><span class="line">		<span class="keyword">if</span> (remainder.length == <span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Image-Cutouts"><a href="#Image-Cutouts" class="headerlink" title="Image Cutouts"></a>Image Cutouts</h3><p>清单8-2最适用于绘图上下文中的列或其他独立元素。对于使用偶数/奇数填充规则创建的孔的布局不适用。如果您使用<code>DrawAttributedStringInBezierSubpaths()</code>函数，您将最终在整个路径上绘制文本，然后再次进入该孔，因为外部路径及其内部孔将分为两个不同的子路径。</p>
+<p>要处理利用偶数/奇数填充规则的复杂路径，请以让局部（路径）有意义的方式执行自己的路径分解。然后直接调用<code>DrawAttributedStringIntoSubpath()</code>函数。</p>
+<p>也就是说，偶数/奇数填充规则使您能够在路径中创建简单的Cutouts。这些可以应用图像绘制，如图8-28所示。为了绘制这个，我创建了一个内部矩形，并将其添加到我的路径。 这建立了一个足够大的“洞”来绘制我的图像。</p>
+<p><img src="/2017/04/09/8-6-Drawing-Columns/图8-28.jpg" alt="图8-28"></p>
+<p>图8-28将图像绘制到路径切口(cutout)上。</p>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘制文本/" rel="tag"># 绘制文本</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/05/8-5-Drawing-with-Core-Text/" rel="next" title="8.5-使用Core Text绘制">
+                <i class="fa fa-chevron-left"></i> 8.5-使用Core Text绘制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/11/8-7-Drawing-Attributed-Text-Along-a-Path/" rel="prev" title="8.7-沿着路径绘制属性文本">
+                8.7-沿着路径绘制属性文本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Image-Cutouts"><span class="nav-number">1.</span> <span class="nav-text">Image Cutouts</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

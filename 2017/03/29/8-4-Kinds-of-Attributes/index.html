@@ -1,0 +1,775 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘制文本," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="iOS排版属性定义文本的绘制方式和风格到上下文中。 以下部分列举了使用的属性以及分配给它们的值。 字体属性: NSFontAttributeName 分配一个UIFont对象来设置文本字体。 示例8-2和8-3将此属性设置为36点Futura。 图8-5显示了作为字体属性应用的各种（字体）（Chalkboard，Helvetica和Times New Roman）。  图8-5应用于文本的字体属性">
+<meta name="keywords" content="绘制文本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8.4-属性种类">
+<meta property="og:url" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="iOS排版属性定义文本的绘制方式和风格到上下文中。 以下部分列举了使用的属性以及分配给它们的值。 字体属性: NSFontAttributeName 分配一个UIFont对象来设置文本字体。 示例8-2和8-3将此属性设置为36点Futura。 图8-5显示了作为字体属性应用的各种（字体）（Chalkboard，Helvetica和Times New Roman）。  图8-5应用于文本的字体属性">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-5.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-6.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-7.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-8.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-9.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-10.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-11.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-12.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-13.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-14.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-15.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-16.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-17.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-18.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-19.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-20.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-21.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8.4-属性种类">
+<meta name="twitter:description" content="iOS排版属性定义文本的绘制方式和风格到上下文中。 以下部分列举了使用的属性以及分配给它们的值。 字体属性: NSFontAttributeName 分配一个UIFont对象来设置文本字体。 示例8-2和8-3将此属性设置为36点Futura。 图8-5显示了作为字体属性应用的各种（字体）（Chalkboard，Helvetica和Times New Roman）。  图8-5应用于文本的字体属性">
+<meta name="twitter:image" content="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/图8-5.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/"/>
+
+
+
+
+
+  <title> 8.4-属性种类 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                8.4-属性种类
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-29T17:22:43+08:00">
+                2017-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>iOS排版属性定义文本的绘制方式和风格到上下文中。 以下部分列举了使用的属性以及分配给它们的值。</p>
+<h3 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h3><p><em>属性</em>: NSFontAttributeName</p>
+<p>分配一个<code>UIFont</code>对象来设置文本字体。 示例8-2和8-3将此属性设置为36点Futura。 图8-5显示了作为字体属性应用的各种（字体）（Chalkboard，Helvetica和Times New Roman）。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-5.jpg" alt="图8-5"></p>
+<p>图8-5应用于文本的字体属性。</p>
+<h3 id="文字颜色"><a href="#文字颜色" class="headerlink" title="文字颜色"></a>文字颜色</h3><p><em>属性</em>：NSForegroundColorAttributeName和NSBackgroundColorAttributeName</p>
+<p><code>UIColor</code>对象设置文本前景色和背景色。 图8-6显示了在紫色背景色上以绿色前景色绘制的文字。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-6.jpg" alt="图8-6"></p>
+<p>图8-6前景和背景颜色指定文本填充颜色和文本背后绘制的背景。</p>
+<p><em>属性</em>：NSStrokeColorAttributeName</p>
+<p><code>UIColor</code>指定笔画颜色。 这大部分与前景颜色同义，因为它仅在指定笔画宽度属性时使用。只有当您应用负的笔画宽度时，才会看到它与前景色不同，如下一部分所示。</p>
+<h3 id="描边风格"><a href="#描边风格" class="headerlink" title="描边风格"></a>描边风格</h3><p><em>属性</em>：NSStrokeWidthAttributeName</p>
+<p>分配一个<code>NSNumber</code>对象，该对象存储定义笔画宽度的浮点值，作为字体大小的百分比。 例如，在图8-7中，可以看到应用的宽度（1,4和8）。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-7.jpg" alt="图8-7"></p>
+<p>图8-7正的笔画宽度的具有外边线的文字。 从上到下，施加的描边宽度为1,4和8。</p>
+<p>负数两个描边（使用描边颜色）和填充（使用前景色）文本。 正数创建一个“空心”演示，描边每个字符字形的边缘，如图8-8所示。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-8.jpg" alt="图8-8"></p>
+<p>图8-8顶部：正描边值使用当前笔画颜色（或前景颜色，如果笔画颜色未设置），但不填满内部，只描边字符字形。 底部：负描边值用前景色填充文本，并用描边颜色描边。</p>
+<h3 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h3><p><em>属性</em>：NSStrikethroughStyleAttributeName</p>
+<p>此项指定项目是否使用删除线。 传递<code>NSNumber</code>实例：0（取消删除线）或1（启用删除线）。</p>
+<p><em>属性</em>：NSStrikethroughColorAttributeName</p>
+<p>传递此属性的颜色为您的删除线指定自定义色调。</p>
+<p>删除线是一种排版方式，在文本中加上一条横线，表示内容已经被消除。 图8-9显示了删除线，突出显示了为删除线分配颜色的新iOS 7属性。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-9.jpg" alt="图8-9"></p>
+<p>图8-9 iOS 7删除线格式现在可以添加自定义颜色。</p>
+<h3 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h3><p><em>属性</em>：NSUnderlineStyleAttributeName</p>
+<p>iOS 7引入了各种新的下划线样式。样式包括单行，双行和粗线，以及虚线，点缀和逐字选项。 您可以通过屏蔽下划线选项来分配您创建的<code>NSNumber</code>。</p>
+<p>属性字符串的下划线属性（<code>NSUnderlineStyleAttributeName</code>）提供四种基本样式。 这些值是<code>NSUnderlineStyleNone</code>（0，基本上没有下划线），<code>NSUnderlineStyleSingle</code>（1），<code>NSUnderlineStyleThick</code>（2）和<code>NSUnderlineStyleDouble</code>（9）。 图8-10显示了这些选项。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-10.jpg" alt="图8-10"></p>
+<p>图8-10基本的下划线包括单，双和粗线样式。</p>
+<p>除了基本样式之外，您可能需要添加下划线模式。 从中选择solid（<code>NSUnderlinePatternSolid</code>，默认值），Dots（<code>NSUnderlinePatternDot</code>），dashs（<code>NSUnderlinePatternDash</code>），dash-dots（<code>NSUnderlinePatternDashDot</code>）和dash-dot-dots（NSUnderlinePatternDashDotDot）。 将其与您使用的任何基本的下划线样式一起使用，如以下示例所示：</p>
+<p>attributes[NSUnderlineStyleAttributeName] =<br>    @(NSUnderlineStyleThick | NSUnderlinePatternDash);</p>
+<p>图8-11显示了这些模式的使用中的示例，与单个下划线样式进行OR对齐。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-11.jpg" alt="图8-11"></p>
+<p>图8-11新的iOS 7下划线图案包括（从上到下）：solid, dotted, dashed, dash-dot, and dash-dot-dot。</p>
+<p>最后一个选项是<code>NSUnderlineByWord</code>。 当你将它进行或运算应用到你的属性中时，它会单独对每个单词下划线。 你可以看到如图8-12所示。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-12.jpg" alt="图8-12"></p>
+<p>图8-12 underline-by-word选项适用于您选择的任何下划线样式和模式到每个单词，留下空白间隙。</p>
+<p><em>属性</em>：NSUnderlineColorAttributeName</p>
+<p>分配颜色实例以设置不同的下划线颜色。 如图8-13所示。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-13.jpg" alt="图8-13"></p>
+<p>图8-13此下划线具有应用的绿色色调属性。</p>
+<h3 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h3><p><em>属性</em>：NSShadowAttributeName</p>
+<p>分配一个<code>NSShadow</code>对象。 该类设置阴影的颜色，偏移和模糊半径，如图8-14所示。 阴影像在上下文中一样工作。 您提供阴影偏移的大小，模糊半径的浮点和阴影颜色的<code>UIColor</code>：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSShadow</span> *shadow = [[<span class="built_in">NSShadow</span> alloc] init];</span><br><span class="line">shadow.shadowBlurRadius = <span class="number">2.0</span>f;</span><br><span class="line">shadow.shadowOffset = <span class="built_in">CGSizeMake</span>(<span class="number">2.0</span>f, <span class="number">2.0</span>f);</span><br><span class="line">shadow.shadowColor = [<span class="built_in">UIColor</span> grayColor];</span><br><span class="line">attributes[<span class="built_in">NSShadowAttributeName</span>] = shadow;</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-14.jpg" alt="图8-14"></p>
+<p>图8-14使用<code>NSShadow</code>类添加阴影属性。</p>
+<blockquote>
+<p>Note</p>
+<p>在OS X上，您可以设置一个<code>NSShadow</code>实例将其参数应用于活动绘图上下文。此功能尚未迁移到iOS。</p>
+</blockquote>
+<h3 id="基线"><a href="#基线" class="headerlink" title="基线"></a>基线</h3><p><em>属性</em>：NSBaselineOffsetAttributeName</p>
+<p>分配为<code>NSNumber</code>的此属性从正常文本绘图位置添加偏移量，如图8-15所示。 用于垂直定位的元素，如下标和上标：</p>
+<p>[string addAttribute:NSBaselineOffsetAttributeName<br>    value:@(20) range:NSMakeRange(6, 5)];</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-15.jpg" alt="图8-15"></p>
+<p>图8-15基准偏移从正常文本行向上或向下移动文本。为这个例子标明了下划线的位置来突出显示差异。</p>
+<h3 id="文字效果"><a href="#文字效果" class="headerlink" title="文字效果"></a>文字效果</h3><p><em>属性</em>：NSTextEffectAttributeName</p>
+<p>通过预定义的<code>NSString</code>常量分配效果。</p>
+<p>iOS 7引入了一种将效果应用于字体的新类型的文本属性。 它只发送一个选项，“凸版”效果（<code>NSTextEffectLetterpressStyle</code>）。 此属性样式创建一个轻微的3D文字效果，如图8-16所示：</p>
+<p>attributes[NSTextEffectAttributeName] = NSTextEffectLetterpressStyle;</p>
+<p>该图使用深色背景来展示两个示例之间的区别。在浅色的背景下，凸版改变很难被识别。 图8-16底部的文字使用凸版; 顶部的文本没有。其他文字效果预计在未来的iOS更新(中提供)。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-16.jpg" alt="图8-16"></p>
+<p>图8-16凸版属性（底部）创建一个微妙的3D效果。顶部文本在不添加凸版效果的情况下绘制文本。</p>
+<h3 id="倾斜和扩张（字膨胀）"><a href="#倾斜和扩张（字膨胀）" class="headerlink" title="倾斜和扩张（字膨胀）"></a>倾斜和扩张（字膨胀）</h3><p><em>属性</em>：NSObliquenessAttributeName</p>
+<p>分配<code>NSNumber</code>值从<code>@(-1.0)</code>到<code>@(1.0)</code>。</p>
+<p>新的iOS 7的<code>NSObliquenessAttributeName</code>属性为您的文本添加了一个倾斜。 您可以选择-1到1的偏移。图8-17显示了一个未应用属性的项目以及应用属性的两个示例。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-17.jpg" alt="图8-17"></p>
+<p>图8-17从上到下，这些例子显示了0（无倾斜），0.15（正的向右略微倾斜）和-0.5（负的向左强倾斜）的倾斜度值。</p>
+<p><em>属性</em>：NSExpansionAttributeName</p>
+<p>您可以用<code>@(0.0)</code>及以上分配<code>NSNumber</code>值。</p>
+<p>在iOS 7中引入的<code>NSExpansionAttributeName</code>属性提供了一个水平乘数，可以对文本空格。 图8-18显示了（字）膨胀如何应用于文本。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-18.jpg" alt="图8-18"></p>
+<p>图8-18从上到下，这些例子突出显示（字）扩张值的工作原理。 它们显示0（无膨胀），0.15（中等膨胀）和0.25（强膨胀）。文本和间距都受此属性的影响。</p>
+<h3 id="字符连接和字距调整"><a href="#字符连接和字距调整" class="headerlink" title="字符连接和字距调整"></a>字符连接和字距调整</h3><p><em>属性</em>：NSLigatureAttributeName</p>
+<p>该属性引用从“不使用字符连接”（0）和“使用默认字符连接”（1）中选择的<code>NSNumber</code>。</p>
+<p><em>字符连接</em>是指单个字形（字符图片）可以绑定在一起的方式，如f与i对应，如图8-19所示。 启用后，iOS会针对某些序列使用单个组合图像替换单独字母。 这些（组合）对通常发生在一个字母的特征延伸到另一个字母所占据的空间中时。 普通的英文连字包括fi，fj，fl，ff，ffi和ffl。 这些字体不同。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-19.jpg" alt="图8-19"></p>
+<p>图8-19 Ligatures将某些字母组合如f和i组合成单个字符字形。 注意当连接被禁用时，i上的单独的点。</p>
+<p><em>属性</em>：NSKernAttributeName</p>
+<p>该<code>NSNumber</code>指示是否启用（1）或禁用字距调整（0，默认值）。</p>
+<p>字距调整允许排版机器调整字母之间的空间，以便它们自然地重叠，例如在字母V旁边放置字母A时。图8-20显示了行动中的字距调整。</p>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-20.jpg" alt="图8-20"></p>
+<p>图8-20 Kerning减少字符之间的空格以重叠相应的字母对。 顶部：启用字距，字符边框部分相互覆盖。 底部：禁用字距，因此每个字符都是独立的。</p>
+<h3 id="段落样式"><a href="#段落样式" class="headerlink" title="段落样式"></a>段落样式</h3><p><em>属性</em>：NSParagraphStyleAttributeName</p>
+<p><code>NSParagraphStyle</code>对象用于指定多个段落设置，包括对齐，换行模式和缩进。</p>
+<p>段落样式存储在他们自己的对象中，<code>NSParagraphStyle</code>类的成员。 您使用该类的可变版本<code>NSMutableParagraphStyle</code>来迭代地设置样式细节。 示例8-4创建了图8-21所示的演示文稿，使用了段落之间的超大间距和大量的第一行缩进。</p>
+<p>示例8-4将属性分层（罗列添加）到可变属性字符串中</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableParagraphStyle</span> *paragraphStyle =</span><br><span class="line">	[[<span class="built_in">NSMutableParagraphStyle</span> alloc] init];</span><br><span class="line">paragraphStyle.alignment = <span class="built_in">NSTextAlignmentLeft</span>;</span><br><span class="line">paragraphStyle.lineBreakMode = <span class="built_in">NSLineBreakByWordWrapping</span>;</span><br><span class="line">paragraphStyle.firstLineHeadIndent = <span class="number">36.0</span>f;</span><br><span class="line">paragraphStyle.lineSpacing = <span class="number">8.0</span>f;</span><br><span class="line">paragraphStyle.paragraphSpacing = <span class="number">24.0</span>f; <span class="comment">// Big!</span></span><br><span class="line">[attributedString addAttribute:<span class="built_in">NSParagraphStyleAttributeName</span></span><br><span class="line">	value:paragraphStyle range:r];</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/03/29/8-4-Kinds-of-Attributes/图8-21.jpg" alt="图8-21"></p>
+<p>图8-21段落样式属性包括缩进，段落间距，对齐等。</p>
+<p>这些值中的大多数是用点（来表示），例如行列或段落之间的间距以及缩进。如果你很小心，你可以逐个地控制这些功能。样式对象被分配，不是被复制。一个秘密在于确保为每个段落分配不同的段落样式对象。 如果不这样做，就像我之前发现的一样，您可以创建一个属性结果，其段落样式都指向同一个对象：更新一个，就会更新它们所有。</p>
+<h3 id="段落样式属性"><a href="#段落样式属性" class="headerlink" title="段落样式属性"></a>段落样式属性</h3><p>以下列表列举了段落样式属性。 将这些应用于属性字符串以指定iOS如何绘制文本内容：</p>
+<ul>
+<li>alignment - 段落对齐，作为<code>NSTextAlignment</code>值。 一般来说，您可将段落左，右，中心对齐或依情况而定来对齐。</li>
+<li>firstLineHeadIndent - 每个段落的第一行的缩进。 提供非负值。 示例8-4使用第一行36点头缩进。</li>
+<li>headIndent - 段落前缘的缩进，即像英语一样从左到右排版的语言的左边缘，和像阿拉伯语和希伯来语一样从右到左的语言的右边缘。通常在使用块引号（block quotes）和其他缩进材料时使用此属性，此属性确保您可以将其从文本容器中移开。</li>
+<li>tailIndent - 与头部缩进的相反，这个段落相对于其文本绘图容器从段落的后端缩进。 与其他缩进一样，它使用非负浮点值。</li>
+<li>maximumLineHeight和minimumLineHeight - 行占据的最大/最小高度（以点为单位）。</li>
+<li>lineHeightMultiple - 根据Apple文档，“在被最小和最大行高约束之前，接收者的自然行高乘以这个因子（如果为正）。</li>
+<li>lineSpacing - 即被人所熟知的leading，是指段落内行之间的空格间距（以点为单位）。</li>
+<li>paragraphSpacing - 一个段落和下一个段落之间的间距，以点为单位。 在示例8-4中，将其设定为24点。</li>
+<li>paragraphSpacingBefore - 在绘图区域开头的第一个段落之前添加此额外的空格。</li>
+<li>lineBreakMode - <code>NSLineBreakMode</code>的一个实例，指定要应用的换行，截断或裁剪的类型。 选项包括word wrapping（完整单词包装，单词不截断），character wrapping（字可能包裹在中间），裁剪，头截断（例如，“… lo世界”），尾截断（例如“Hello Wor …” “）和中间截断（例如”Hel … orld“）。</li>
+<li>hyphenationFactor - 连字符的阈值。 苹果写道：“当文本宽度（断开无连字符）与行片段的宽度的比率小于连字符因子时，尝试连字。 当段落的连字系数为0.0时，使用布局管理器的连字符因子。 当两者均为0.0时，连字符被禁用。</li>
+<li>baseWritingDirection - 当设置为自然方向时，段落默认为与当前语言设置（从左到右或从右到左）相关联的语言环境中设置的值。</li>
+</ul>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘制文本/" rel="tag"># 绘制文本</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/23/8-3-Text-Attributes/" rel="next" title="8.3-文本属性">
+                <i class="fa fa-chevron-left"></i> 8.3-文本属性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/05/8-5-Drawing-with-Core-Text/" rel="prev" title="8.5-使用Core Text绘制">
+                8.5-使用Core Text绘制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#字体"><span class="nav-number">1.</span> <span class="nav-text">字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文字颜色"><span class="nav-number">2.</span> <span class="nav-text">文字颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描边风格"><span class="nav-number">3.</span> <span class="nav-text">描边风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除线"><span class="nav-number">4.</span> <span class="nav-text">删除线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下划线"><span class="nav-number">5.</span> <span class="nav-text">下划线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阴影"><span class="nav-number">6.</span> <span class="nav-text">阴影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基线"><span class="nav-number">7.</span> <span class="nav-text">基线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文字效果"><span class="nav-number">8.</span> <span class="nav-text">文字效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#倾斜和扩张（字膨胀）"><span class="nav-number">9.</span> <span class="nav-text">倾斜和扩张（字膨胀）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符连接和字距调整"><span class="nav-number">10.</span> <span class="nav-text">字符连接和字距调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#段落样式"><span class="nav-number">11.</span> <span class="nav-text">段落样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#段落样式属性"><span class="nav-number">12.</span> <span class="nav-text">段落样式属性</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

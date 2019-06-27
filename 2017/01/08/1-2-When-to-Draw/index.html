@@ -1,0 +1,678 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘图上下文," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="对于开发人员来说，iOS绘图虽然是一个相当普遍的任务，但是任务本身并不一般。 大多数绘图仅限于某些特定的场合，即四个非常常见的直接使用图形的场景：创建自定义视图，构建图像，创建PDF以及使用Core Graphics构建绘图。 创建自定义视图每个UIKit视图本质上是一个空白的画布。你可以通过在应用程序中绘制最能表达视图角色的内容来完全自定义视图。 你可以通过在一个叫drawRect：的特殊方法中">
+<meta name="keywords" content="绘图上下文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.2-什么时候需要绘图">
+<meta property="og:url" content="http://chengdong.top/2017/01/08/1-2-When-to-Draw/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="对于开发人员来说，iOS绘图虽然是一个相当普遍的任务，但是任务本身并不一般。 大多数绘图仅限于某些特定的场合，即四个非常常见的直接使用图形的场景：创建自定义视图，构建图像，创建PDF以及使用Core Graphics构建绘图。 创建自定义视图每个UIKit视图本质上是一个空白的画布。你可以通过在应用程序中绘制最能表达视图角色的内容来完全自定义视图。 你可以通过在一个叫drawRect：的特殊方法中">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/01/08/1-2-When-to-Draw/图1-1.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/01/08/1-2-When-to-Draw/图1-2.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/01/08/1-2-When-to-Draw/图1-3.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/01/08/1-2-When-to-Draw/图1-4.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.2-什么时候需要绘图">
+<meta name="twitter:description" content="对于开发人员来说，iOS绘图虽然是一个相当普遍的任务，但是任务本身并不一般。 大多数绘图仅限于某些特定的场合，即四个非常常见的直接使用图形的场景：创建自定义视图，构建图像，创建PDF以及使用Core Graphics构建绘图。 创建自定义视图每个UIKit视图本质上是一个空白的画布。你可以通过在应用程序中绘制最能表达视图角色的内容来完全自定义视图。 你可以通过在一个叫drawRect：的特殊方法中">
+<meta name="twitter:image" content="http://chengdong.top/2017/01/08/1-2-When-to-Draw/图1-1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/01/08/1-2-When-to-Draw/"/>
+
+
+
+
+
+  <title> 1.2-什么时候需要绘图 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/01/08/1-2-When-to-Draw/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                1.2-什么时候需要绘图
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-08T10:36:44+08:00">
+                2017-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对于开发人员来说，iOS绘图虽然是一个相当普遍的任务，但是任务本身并不一般。 大多数绘图仅限于某些特定的场合，即四个非常常见的直接使用图形的场景：创建自定义视图，构建图像，创建PDF以及使用Core Graphics构建绘图。</p>
+<h3 id="创建自定义视图"><a href="#创建自定义视图" class="headerlink" title="创建自定义视图"></a>创建自定义视图</h3><p>每个UIKit视图本质上是一个空白的画布。你可以通过在应用程序中绘制最能表达视图角色的内容来完全自定义视图。 你可以通过在一个叫<code>drawRect：</code>的特殊方法中绘制内容来实现。 此方法使您能够通过调用UIKit和Quartz绘图程序来自定义视图的外观。</p>
+<p>图 1-1 显示了一个自定义颜色控件。它由一组样本视图组成，其中每个视图都是一个实现了<code>drawRect：</code>方法的<code>UIView</code>的子类。这些视图绘制了圆角边框，信息文本和颜色的飞溅，以创建一个完全实现的，但完全自定义的外观。</p>
+<p><img src="/2017/01/08/1-2-When-to-Draw/图1-1.jpg" alt="图 1-1"></p>
+<p>图 1-1 这些颜色卡片是通过自定义<code>drawRect:</code>方法来实现的</p>
+<p>除非你在一个子类中重写它，默认的<code>drawRect：</code>方法基本上什么也不做。使用UIKit和Core Graphics程序创建演示内容的子类重写此方法。它们将绘图请求添加到它们的子类实现。 仅仅更新背景颜色或以其他方式提供内容的简单视图不应该重写<code>drawRect：</code>方法。 类似地，使用OpenGL ES的视图也不应使用此入口点进行绘制。</p>
+<p><code>drawRect：</code>方法有一个只用于类似的方法：<code>drawRect：forViewPrintFormatter：</code>允许您自定义内容去实现打印和显示呈现不同效果。</p>
+<h3 id="构建图像"><a href="#构建图像" class="headerlink" title="构建图像"></a>构建图像</h3><p>并不是每个图像都以PNG或JPEG文件的形式出现。在iOS上，你可以绘制在一个UIKit图像上下文中并检索生成一个UIImage实例。这使您能够创建新图像或修改现有图像。</p>
+<p>图 1-2 显示了一个以用程序构造的彩色圆盘。 此图像是通过绘制到UIKit图像上下文中的一系列彩色贝塞尔扇弧路径创建的。然后将所得图像添加到标准图像视图。绘图使您能根据需要构建自定义图像，而不必依赖于预先存在的图像文件库。</p>
+<p>使用代码来绘图是一个重要的权衡。 虽然相对来说你需要更多的处理时间来创建图像（不是一个巨大的数，而且是可衡量的），你最终会得到一个体积更小的应用程序包，所需要的资源也会更少。改变图像只需要修改创建它们的代码，所以您的图像也更灵活。</p>
+<p><img src="/2017/01/08/1-2-When-to-Draw/图1-2.jpg" alt="图1-2"></p>
+<p>图 1-2 彩色圆盘是通过代码生成的一个自定义的<code>UIImage</code>实例</p>
+<h3 id="创建PDF文件"><a href="#创建PDF文件" class="headerlink" title="创建PDF文件"></a>创建PDF文件</h3><p>帮助您构建图像的相同类型的调用也支持构建PDF。您可以绘制到UIKit PDF上下文中，该上下文可以直接发送到文件或保存到数据。这使您能够从应用程序构建PDF内容，然后共享，存储或显示它们，如图 1-3 所示。</p>
+<p>PDF提供了一种高度可移植，不依赖系统的标准，其封装了一个完整的文档描述。您在iOS上创建的文档能在用于查看该文档的任何计算机上看起来都一样，只不过有时操作系统的颜色管理系统或多或少可能会影响颜色显示。</p>
+<p><img src="/2017/01/08/1-2-When-to-Draw/图1-3.jpg" alt="图1-3"></p>
+<p>图 1-3 包含多页面的PDF在此iOS 6 popover中的预览。</p>
+<h3 id="使用Core-Graphics构建"><a href="#使用Core-Graphics构建" class="headerlink" title="使用Core Graphics构建"></a>使用Core Graphics构建</h3><p>当你想打破UIKit的当前功能的局限性，你可以回到标准的Quartz。Core Graphics已经存在很长时间了，它的绘图功能已经为OS X提供了至少十年的支持。任何不能立即在UIKit中调整的功能几乎都可以通过Quartz实现。</p>
+<p>将项目绘制到Core Graphics上下文中提供了灵活而强大的绘图解决方案 - 即使它们不像UIKit一样简单。Core Graphics使用Core Foundation风格的基于C的对象，并需要手动保留和释放开发策略。</p>
+<p>例如，您可能希望逐个字节访问图像数据。这是一个UIKit尚未处理的很好的任务，但是使用Core Graphics的位图上下文是可以完美解决的。图 1-4 显示了为什么你可能要转而使用Quartz函数的示例。在本示例中，使用Core Graphics将左侧的RGB图像渲染为右侧的灰度颜色空间。</p>
+<p>生成的图像必须从Quartz <code>CGImageRef</code>（以Ref结束的CG类型是指向对象的指针）转换为<code>UIImage</code>实例（<code>imageWithCGImage :</code>)并显示在标准的图像视图中。</p>
+<p><img src="/2017/01/08/1-2-When-to-Draw/图1-4.jpg" alt="图1-4"></p>
+<p>图 1-4 将这个RGB图像转换为灰度表示的例子是使用原生Core Graphic编写的。</p>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘图上下文/" rel="tag"># 绘图上下文</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/07/1-1-Frameworks/" rel="next" title="1.1-框架">
+                <i class="fa fa-chevron-left"></i> 1.1-框架
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/09/1-3-Contexts/" rel="prev" title="1.3-上下文">
+                1.3-上下文 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建自定义视图"><span class="nav-number">1.</span> <span class="nav-text">创建自定义视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建图像"><span class="nav-number">2.</span> <span class="nav-text">构建图像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建PDF文件"><span class="nav-number">3.</span> <span class="nav-text">创建PDF文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Core-Graphics构建"><span class="nav-number">4.</span> <span class="nav-text">使用Core Graphics构建</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

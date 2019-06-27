@@ -1,0 +1,735 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="深入学习路径," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Quartz上下文支持阴影绘制作为可选的特定上下文功能。绘制在您指定的路径偏移处，阴影绘制模拟物理对象上光源的效果。图5-8演示了阴影在绘制到上下文时的外观。绘制阴影需要频繁的CPU计算，但是它们为你的界面增加了美丽的细节。  图5-8 您可以添加阴影到上下文 与所有其他上下文状态更改一样，阴影会影响任何后续绘制操作。如果要在应用阴影之后重置状态，请确保执行保存并恢复上下文图形状态（GState）">
+<meta name="keywords" content="深入学习路径">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5.9-绘制阴影">
+<meta property="og:url" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="Quartz上下文支持阴影绘制作为可选的特定上下文功能。绘制在您指定的路径偏移处，阴影绘制模拟物理对象上光源的效果。图5-8演示了阴影在绘制到上下文时的外观。绘制阴影需要频繁的CPU计算，但是它们为你的界面增加了美丽的细节。  图5-8 您可以添加阴影到上下文 与所有其他上下文状态更改一样，阴影会影响任何后续绘制操作。如果要在应用阴影之后重置状态，请确保执行保存并恢复上下文图形状态（GState）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-8.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.1.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.2.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.3.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.4.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.5.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.6.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.7.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.8.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-9.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-10.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-11.jpg">
+<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-12.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5.9-绘制阴影">
+<meta name="twitter:description" content="Quartz上下文支持阴影绘制作为可选的特定上下文功能。绘制在您指定的路径偏移处，阴影绘制模拟物理对象上光源的效果。图5-8演示了阴影在绘制到上下文时的外观。绘制阴影需要频繁的CPU计算，但是它们为你的界面增加了美丽的细节。  图5-8 您可以添加阴影到上下文 与所有其他上下文状态更改一样，阴影会影响任何后续绘制操作。如果要在应用阴影之后重置状态，请确保执行保存并恢复上下文图形状态（GState）">
+<meta name="twitter:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-8.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/"/>
+
+
+
+
+
+  <title> 5.9-绘制阴影 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                5.9-绘制阴影
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-21T19:14:18+08:00">
+                2017-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Quartz上下文支持阴影绘制作为可选的特定上下文功能。绘制在您指定的路径偏移处，阴影绘制模拟物理对象上光源的效果。图5-8演示了阴影在绘制到上下文时的外观。绘制阴影需要频繁的CPU计算，但是它们为你的界面增加了美丽的细节。</p>
+<p><img src="/2017/02/21/5-9-Drawing-Shadows/图5-8.jpg" alt="图5-8"></p>
+<p>图5-8 您可以添加阴影到上下文</p>
+<p>与所有其他上下文状态更改一样，阴影会影响任何后续绘制操作。如果要在应用阴影之后重置状态，请确保执行保存并恢复上下文图形状态（<code>GState</code>）。设置阴影颜色为透明（<code>[UIColor clearColor].CGColor</code>）以“禁用”应用程序阴影。</p>
+<p>清单5-10用Objective-C颜色参数包装<code>CGContextSetShadowWithColor()</code>函数。您可以指定颜色，偏移量（大小）和模糊量。该函数更新上下文状态，应用这些值。关于阴影这里有几点需要知道的：</p>
+<ul>
+<li>每个阴影以相对于任何绘图操作的x和y偏移量添加。你可以通过<code>CGSize</code>指定它。</li>
+<li>浮点模糊参数指示硬（0）或软（大于0）的程度来绘制边缘。</li>
+<li>您可以通过调用<code>CGContextSetShadow()</code>来跳过颜色值。此函数默认为半透明黑色，具有0.33 alpha值。清单5 - 10使用这种颜色，如果调用<code>SetShadow()</code>则使用的是nil颜色参数。</li>
+</ul>
+<p>清单5-10 Specifying a Context Shadow</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> SetShadow(<span class="built_in">UIColor</span> *color, <span class="built_in">CGSize</span> size, <span class="built_in">CGFloat</span> blur)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error: No context to draw into"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (color)</span><br><span class="line">		<span class="built_in">CGContextSetShadowWithColor</span>(context,size, blur, color.CGColor);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">CGContextSetShadow</span>(context, size, blur);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表5-1显示了阴影参数对绘图的影响。</p>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>Result</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>当存储到上下文状态时，阴影适用于任何绘图操作。您通过填充（左）和描边（右）创建阴影。</td>
+<td><img src="/2017/02/21/5-9-Drawing-Shadows/图5.9.1.jpg" alt="图5.9.1"></td>
+<td><img src="/2017/02/21/5-9-Drawing-Shadows/图5.9.2.jpg" alt="图5.9.2"></td>
+</tr>
+<tr>
+<td>增加模糊半径可以柔化模糊。左图像使用模糊半径4.将其与右侧设置为0的硬模糊比较。硬阴影创建斜角和挤压效果，赋予形状3D外观。</td>
+<td><img src="/2017/02/21/5-9-Drawing-Shadows/图5.9.3.jpg" alt="图5.9.3"></td>
+<td><img src="/2017/02/21/5-9-Drawing-Shadows/图5.9.4.jpg" alt="图5.9.4"></td>
+</tr>
+<tr>
+<td>您可以应用任何阴影颜色。这里的示例是紫色的。左图像使用0.5的alpha级别，右侧为1.0的alpha。</td>
+<td><img src="/2017/02/21/5-9-Drawing-Shadows/图5.9.5.jpg" alt="图5.9.5"></td>
+<td><img src="/2017/02/21/5-9-Drawing-Shadows/图5.9.6.jpg" alt="图5.9.6"></td>
+</tr>
+<tr>
+<td>调整偏移量来移动影子。左图像将先前图像的阴影从（4，4）切换到（-4,4）。阴影向左移动，但保持在形状下。正确的图像使用（-4，-4）。 阴影出现在形状的左侧和顶部。</td>
+<td><img src="/2017/02/21/5-9-Drawing-Shadows/图5.9.7.jpg" alt="图5.9.7"></td>
+<td><img src="/2017/02/21/5-9-Drawing-Shadows/图5.9.8.jpg" alt="图5.9.8"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="（绘制）阴影的代价"><a href="#（绘制）阴影的代价" class="headerlink" title="（绘制）阴影的代价"></a>（绘制）阴影的代价</h3><p>无可争辩的事实，阴影给你的绘图计算增加了高负荷。虽然视觉上华丽，它们不一定是您要用于实时高性能界面元素的功能。</p>
+<p>只要有可能，在开发过程中分析你的绘图操作，以了解他们的成本。这里有一个quick-and-dirty的方法来使用，你建立你的方法，以跟踪已用时间：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDate</span> *start = [<span class="built_in">NSDate</span> date];<span class="comment">// Perform drawing operations</span><span class="built_in">NSLog</span>(<span class="string">@"%f seconds"</span>, [[<span class="built_in">NSDate</span> date] timeIntervalSinceDate:start]);</span><br></pre></td></tr></table></figure>
+<h3 id="绘制内阴影"><a href="#绘制内阴影" class="headerlink" title="绘制内阴影"></a>绘制内阴影</h3><p>图5-9显示了通过用添加的内部阴影填充Bezier路径创建的图像。内部阴影，如名称所示，添加在路径的边界内绘制的阴影。取决于你的大脑如何处理它，在这一刻，阴影看起来好像外面的形状是投射的一个阴影，或者，如果你可以让你的头脑做一个触发器，形状表示一个浮雕的边缘。</p>
+<p><img src="/2017/02/21/5-9-Drawing-Shadows/图5-9.jpg" alt="图5-9"></p>
+<p>图5-9可以创建带有内阴影的路径。</p>
+<p>图5-10显示了组合创建内部阴影的绘图操作。第一个操作是无光泽填充操作。第二个操作是建立阴影，掩盖在形状内部。</p>
+<p><img src="/2017/02/21/5-9-Drawing-Shadows/图5-10.jpg" alt="图5-10"></p>
+<p>图5-10左：原始路径。中间：反转路径。右：在路径边界内反转。</p>
+<p>如清单5-9所示，构建阴影需要反转路径。允许上下文为该倒置形状绘制阴影，该阴影自然落在原始路径的剩余部分中。剪切上下文可确保在该路径之外不绘制任何内容。</p>
+<p>清单5-11显示了绘制内部阴影的步骤。首先设置上下文阴影状态。此函数将此应用于<code>GState</code>堆栈中，确保绘图操作后状态恢复。它还将绘图区域剪切到作为参数传递的路径。这确保所有绘图都在路径边界内发生。</p>
+<p>接下来，它设置绘图颜色。由于所有绘图都是在剪辑区域外完成的，因此理论上任何非透明颜色都可以奏效。然而，在实践中，在路径边界经历高曲率时，您将遇到轻微的限幅误差。这是一个已知的问题。使用阴影颜色避免了视觉不连续。</p>
+<p>最后，此函数用该颜色填充路径的反转。由于剪辑，创建的唯一的图形是阴影，它显示在图5-10的右侧。</p>
+<p>清单5-11 绘制内阴影</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> DrawInnerShadow(<span class="built_in">UIBezierPath</span> *path,</span><br><span class="line">	<span class="built_in">UIColor</span> *color, <span class="built_in">CGSize</span> size, <span class="built_in">CGFloat</span> blur)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error: No context to draw to"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Build shadow</span></span><br><span class="line">	<span class="built_in">CGContextSaveGState</span>(context);</span><br><span class="line">	SetShadow(color,</span><br><span class="line">		<span class="built_in">CGSizeMake</span>(size.width, size.height), blur);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Clip to the original path</span></span><br><span class="line">	[path addClip];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Fill the inverted path</span></span><br><span class="line">	[path.inverse fill:color];</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextRestoreGState</span>(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>清单5-12提供了另一个内部阴影。我称这种方法“PaintCode”解决方案，因为它最初的灵感来自PixelCut（<a href="http://pixelcut.com" target="_blank" rel="noopener">http://pixelcut.com</a>）从他们的PaintCode应用程序导出的代码。它比清单5-11中的解决方案更加繁琐，但它避免了边缘情况，它将反转路径填充颜色的小部分与高度变形曲线的绘制混合。它的工作原理是轻微地扭转反向路径，以削减一个微小的位，远离那边缘。这导致更清晰的阴影呈现。</p>
+<p>清单5-12绘制（更好的）内部阴影</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>) drawInnerShadow: (<span class="built_in">UIColor</span> *) color</span><br><span class="line">	size: (<span class="built_in">CGSize</span>) size blur: (<span class="built_in">CGFloat</span>) radius</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!color)</span><br><span class="line">			COMPLAIN_AND_BAIL(<span class="string">@"Color cannot be nil"</span>, <span class="literal">nil</span>);</span><br><span class="line">		</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">		COMPLAIN_AND_BAIL(<span class="string">@"No context to draw into"</span>, <span class="literal">nil</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextSaveGState</span>(context);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Originally inspired by the PaintCode guys</span></span><br><span class="line">	<span class="comment">// http://paintcodeapp.com</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Establish initial offsets</span></span><br><span class="line">	<span class="built_in">CGFloat</span> xOffset = size.width;</span><br><span class="line">	<span class="built_in">CGFloat</span> yOffset = size.height;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Adjust the border</span></span><br><span class="line">	<span class="built_in">CGRect</span> borderRect =</span><br><span class="line">		<span class="built_in">CGRectInset</span>(<span class="keyword">self</span>.bounds, -radius, -radius);</span><br><span class="line">	</span><br><span class="line">	borderRect =</span><br><span class="line">		<span class="built_in">CGRectOffset</span>(borderRect, -xOffset, -yOffset);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGRect</span> unionRect =</span><br><span class="line">		<span class="built_in">CGRectUnion</span>(borderRect, <span class="keyword">self</span>.bounds);</span><br><span class="line">	</span><br><span class="line">	borderRect = <span class="built_in">CGRectInset</span>(unionRect, <span class="number">-1.0</span>, <span class="number">-1.0</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Tweak the size a tiny bit</span></span><br><span class="line">		xOffset += round(borderRect.size.width);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGSize</span> tweakSize = <span class="built_in">CGSizeMake</span>(</span><br><span class="line">		xOffset + copysign(<span class="number">0.1</span>, xOffset),</span><br><span class="line">		yOffset + copysign(<span class="number">0.1</span>, yOffset));</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Set the shadow and clip</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextSetShadowWithColor</span>(context, tweakSize,		radius, color.CGColor);</span><br><span class="line">		</span><br><span class="line">	[<span class="keyword">self</span> addClip];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Apply transform</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGAffineTransform</span> transform =<span class="built_in">CGAffineTransformMakeTranslation</span>(</span><br><span class="line">		-round(borderRect.size.width), <span class="number">0</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">UIBezierPath</span> *negativePath =		[<span class="keyword">self</span> inverseInRect:borderRect];</span><br><span class="line">	</span><br><span class="line">	[negativePath applyTransform:transform];</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Any color would do, use red for testing</span></span><br><span class="line">	[negativePath fill:color];</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">CGContextRestoreGState</span>(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="压花形状"><a href="#压花形状" class="headerlink" title="压花形状"></a>压花形状</h3><p>在左下方应用一个黑色的内部阴影，在右上方应用一个浅色的内部阴影可以创建图5-11中所示的浮雕效果。这种效果使用柔和的模糊效果来创建平滑过渡：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DrawInnerShadow(path, [[<span class="built_in">UIColor</span> whiteColor]</span><br><span class="line">	colorWithAlphaComponent:<span class="number">0.3</span>f],</span><br><span class="line">	<span class="built_in">CGSizeMake</span>(<span class="number">-4</span>, <span class="number">4</span>), <span class="number">4</span>);</span><br><span class="line">DrawInnerShadow(path, [[<span class="built_in">UIColor</span> blackColor]</span><br><span class="line">	colorWithAlphaComponent:<span class="number">0.3</span>f],</span><br><span class="line">	<span class="built_in">CGSizeMake</span>(<span class="number">4</span>, <span class="number">-4</span>), <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/02/21/5-9-Drawing-Shadows/图5-11.jpg" alt="图5-11"></p>
+<p>图5-11您可以将明暗的内部阴影结合起来，以“镶嵌”贝塞尔路径。</p>
+<p>您可以将较柔和的内部阴影与尖锐的外部阴影结合起来，为您的形状创建一个斜角效果，如图5-12所示：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DrawInnerShadow(bunny, WHITE_LEVEL(<span class="number">0</span>, <span class="number">0.5</span>),</span><br><span class="line">	<span class="built_in">CGSizeMake</span>(<span class="number">-4</span>, <span class="number">4</span>), <span class="number">2</span>);</span><br><span class="line">DrawShadow(bunny, WHITE_LEVEL(<span class="number">0</span>, <span class="number">0.5</span>),</span><br><span class="line">	<span class="built_in">CGSizeMake</span>(<span class="number">2</span>, <span class="number">-2</span>), <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/02/21/5-9-Drawing-Shadows/图5-12.jpg" alt="图5-12"></p>
+<p>图5-12通过组合内部阴影和外部阴影以及锐利的边缘来“斜切”(bevel)一条路径。</p>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深入学习路径/" rel="tag"># 深入学习路径</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/20/5-8-Inverting-Paths/" rel="next" title="5.8-反转路径">
+                <i class="fa fa-chevron-left"></i> 5.8-反转路径
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/" rel="prev" title="5.10-绘制内部和外部发光">
+                5.10-绘制内部和外部发光 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#（绘制）阴影的代价"><span class="nav-number">1.</span> <span class="nav-text">（绘制）阴影的代价</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制内阴影"><span class="nav-number">2.</span> <span class="nav-text">绘制内阴影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压花形状"><span class="nav-number">3.</span> <span class="nav-text">压花形状</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

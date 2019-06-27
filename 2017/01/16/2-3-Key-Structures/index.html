@@ -1,0 +1,842 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="几何术语," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="iOS绘图使用四个关键结构体来定义几何图元：points，sizes，rectangles和transforms。这些结构体都使用共同的单位，逻辑点。点是使用CGFloat值定义的。这些类型定义为iOS上的float和OS X上的double。 与固有整数的像素不同，点不绑定到设备硬件。它们的值涉及数学坐标，提供子像素精度。iOS绘图系统代替您处理其中的数学运算。 您使用的四个基元如下：  CGP">
+<meta name="keywords" content="几何术语">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.3-主要的结构体">
+<meta property="og:url" content="http://chengdong.top/2017/01/16/2-3-Key-Structures/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="iOS绘图使用四个关键结构体来定义几何图元：points，sizes，rectangles和transforms。这些结构体都使用共同的单位，逻辑点。点是使用CGFloat值定义的。这些类型定义为iOS上的float和OS X上的double。 与固有整数的像素不同，点不绑定到设备硬件。它们的值涉及数学坐标，提供子像素精度。iOS绘图系统代替您处理其中的数学运算。 您使用的四个基元如下：  CGP">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/01/16/2-3-Key-Structures/图2.3.png">
+<meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2.3-主要的结构体">
+<meta name="twitter:description" content="iOS绘图使用四个关键结构体来定义几何图元：points，sizes，rectangles和transforms。这些结构体都使用共同的单位，逻辑点。点是使用CGFloat值定义的。这些类型定义为iOS上的float和OS X上的double。 与固有整数的像素不同，点不绑定到设备硬件。它们的值涉及数学坐标，提供子像素精度。iOS绘图系统代替您处理其中的数学运算。 您使用的四个基元如下：  CGP">
+<meta name="twitter:image" content="http://chengdong.top/2017/01/16/2-3-Key-Structures/图2.3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/01/16/2-3-Key-Structures/"/>
+
+
+
+
+
+  <title> 2.3-主要的结构体 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/01/16/2-3-Key-Structures/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                2.3-主要的结构体
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-16T09:28:31+08:00">
+                2017-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>iOS绘图使用四个关键结构体来定义几何图元：points，sizes，rectangles和transforms。这些结构体都使用共同的单位，逻辑点。点是使用<code>CGFloat</code>值定义的。这些类型定义为iOS上的float和OS X上的double。</p>
+<p>与固有整数的像素不同，点不绑定到设备硬件。它们的值涉及数学坐标，提供子像素精度。iOS绘图系统代替您处理其中的数学运算。</p>
+<p>您使用的四个基元如下：</p>
+<ul>
+<li>CGPoint - Points结构由<code>x</code>和<code>y</code>坐标组成。它们定义逻辑位置。</li>
+<li>CGSize - Size结构具有<code>width</code>和<code>height</code>。他们确定宽高。</li>
+<li>CGRect - Rectangles包括由点定义的<code>origin</code>和<code>size</code>。</li>
+<li>CGAffineTransform - 仿射变换结构体描述应用于几何项目的更改 - 特别是项目如何放置，缩放和旋转。它将<code>a</code>，<code>b</code>，<code>c</code>，<code>d</code>，<code>tx</code>和<code>ty</code>值存储在定义特定变换的矩阵中。</li>
+</ul>
+<p>接下来的部分将更深入地介绍这些项目。在深入了解绘图的细节之前，您需要掌握这些基础的几何知识。</p>
+<h3 id="Points"><a href="#Points" class="headerlink" title="Points"></a>Points</h3><p><code>CGPoint</code>结构体存储一个逻辑位置，您通过向<code>x</code>和<code>y</code>字段分配值来定义该逻辑位置。有一个非常方便的函数：<code>CGPointMake()</code>可以从您传递的两个参数来构建点结构体：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="built_in">CGPoint</span> &#123;</span><br><span class="line">	<span class="built_in">CGFloat</span> x;</span><br><span class="line">	<span class="built_in">CGFloat</span> y;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这些值可以存储任何浮点数，负值与正值一样有效。</p>
+<h3 id="Sizes"><a href="#Sizes" class="headerlink" title="Sizes"></a>Sizes</h3><p><code>CGSize</code>结构体存储两个延伸的值，<code>width</code>和<code>height</code>。 使用<code>CGSizeMake()</code>来构建大小。 高度和宽度可以是在日常实践中不常见的负值也可以是常见的正值：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="built_in">CGSize</span> &#123;</span><br><span class="line">	<span class="built_in">CGFloat</span> width;</span><br><span class="line">	<span class="built_in">CGFloat</span> height;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Rectangles"><a href="#Rectangles" class="headerlink" title="Rectangles"></a>Rectangles</h3><p><code>CGRect</code>结构体由两个子结构体组成：<code>CGPoint</code>（用于定义矩形的原点）和<code>CGSize</code>（用于定义其范围）。<code>CGRectMake()</code>函数接受四个参数并返回一个填充的<code>rect</code>结构体。按顺序，参数是x原点，y原点，宽度和高度。 例如，<code>CGRectMake(0，0，50，100)</code>：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="built_in">CGRect</span> &#123;</span><br><span class="line">	<span class="built_in">CGPoint</span> origin;</span><br><span class="line">	<span class="built_in">CGSize</span> size;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>调用<code>CGRectStandardize()</code>将带有负数扩展区的矩形转换为等价形式版本的正宽度和高度。</p>
+<h3 id="Transforms"><a href="#Transforms" class="headerlink" title="Transforms"></a>Transforms</h3><p>变换是体现iOS几何的最强大的方面之一。它们允许在一个坐标系中的点变换到另一个坐标系。它们允许你缩放，旋转，镜像和平移你绘制的图形元素，同时保持线性和相对比例。主要是在调整绘图上下文时会遇到绘图变换，就像你在第1章中所看到的那样，或者如你将在第5章中阅读到的当你操作路径（形状）的时候。</p>
+<p>广泛应用于2D和3D图形，变换为许多几何解决方案提供了一个复杂的机制。Core Graphics版本（<code>CGAffineTransform</code>）使用3乘3矩阵，使其成为仅限2D的解决方案。使用4乘4矩阵的3D变换是Core Animation图层的默认值。Quartz变换使您能够缩放，平移和旋转几何。</p>
+<p>每个变换由基础变换矩阵表示，其设置如下：</p>
+<p><img src="/2017/01/16/2-3-Key-Structures/图2.3.png" alt="图2.3"></p>
+<p>该矩阵对应于简单的C结构体：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="built_in">CGAffineTransform</span> &#123;</span><br><span class="line">	<span class="built_in">CGFloat</span> a;</span><br><span class="line">	<span class="built_in">CGFloat</span> b;</span><br><span class="line">	<span class="built_in">CGFloat</span> c;</span><br><span class="line">	<span class="built_in">CGFloat</span> d;</span><br><span class="line">	<span class="built_in">CGFloat</span> tx;</span><br><span class="line">	<span class="built_in">CGFloat</span> ty;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="Creating-Transforms"><a href="#Creating-Transforms" class="headerlink" title="Creating Transforms"></a>Creating Transforms</h4><p>与其他Core Graphics结构不同，很少直接访问仿射变换的字段。大多数人不会使用或需要<code>CGAffineTransformMake()</code>构造函数，它将六个组件中的每一个都作为参数。</p>
+<p>相反，创建变换的典型入口点是<code>CGAffineTransformMakeScale()</code>，<code>CGAffineTransformMakeRotation()</code>或<code>CGAffineTransformMakeTranslation()</code>。 这些函数根据您提供的参数构建缩放，旋转和平移（位置偏移）矩阵。通过使用这些选项，您可以在要应用它们的术语中讨论要应用的操作。需要旋转对象吗？指定旋转度数。要移动对象？以点数表示偏移量。每个函数创建一个变换，在应用时会生成您指定的操作。</p>
+<h4 id="Layering-Transforms"><a href="#Layering-Transforms" class="headerlink" title="Layering Transforms"></a>Layering Transforms</h4><p>相关的函数使您能够将一个转换叠加到另一个转换，从而提高复杂性。与第一组函数不同，这些函数将变换作为参数。他们修改该变换，以在顶部执行另一个操作。与“make”函数不同，这些函数总是按顺序应用，每个函数的结果传递给下一个。例如，您可以创建一个旋转和缩放围绕其中心的对象的变换。 以下代码段演示了如何执行此操作：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGAffineTransform</span> t = <span class="built_in">CGAffineTransformIdentity</span>;</span><br><span class="line">t = <span class="built_in">CGAffineTransformTranslate</span>(t, -center.x, -center.y);</span><br><span class="line">t = <span class="built_in">CGAffineTransformRotate</span>(t, M_PI_4);</span><br><span class="line">t = <span class="built_in">CGAffineTransformScale</span>(t, <span class="number">1.5</span>, <span class="number">1.5</span>);</span><br><span class="line">t = <span class="built_in">CGAffineTransformTranslate</span>(t, center.x, center.y);</span><br></pre></td></tr></table></figure>
+<p>这里从身份(原始)转换(CGAffineTransformIdentity)开始。恒等变换是加法中的数字0或乘法中的数字1的仿射等效物。当应用于任何几何对象时，它返回与您开始的相同的表示。在此使用它以确保以后操作的一致起点。</p>
+<p>因为变换是从它们的原点应用的，而不是它们的中心，所以你可以将中心平移到原点。缩放和旋转变换始终与（0，0）相关。如果要将它们与另一个点（例如视图的中心或路径）相关联，则应始终将该点移动到（0，0）。 在那里，您可以在将原点复位回其初始位置之前执行旋转和缩放。这整个操作集合存储在单个最终变换<code>t</code>中。</p>
+<h4 id="Exposing-Transforms"><a href="#Exposing-Transforms" class="headerlink" title="Exposing Transforms"></a>Exposing Transforms</h4><p>UIKit框架定义了特定于图形和绘图操作的各种辅助函数。这些包括几个仿射特定的函数。您可以通过UIKit的<code>NSStringFromCGAffineTransform()</code>函数打印视图的变换。它的逆(函数)是<code>CGAffineTransformFromString()</code>。以下是当记录缩放1.5倍并旋转45度的变换时的值：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2013</span><span class="number">-03</span><span class="number">-31</span> <span class="number">09</span>:<span class="number">43</span>:<span class="number">20.837</span> HelloWorld[<span class="number">41450</span>:c07] [<span class="number">1.06066</span>, <span class="number">1.06066</span>, <span class="number">-1.06066</span>, <span class="number">1.06066</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>这个特定的变换跳过了任何中心重定向，所以你只关注这两个操作。</p>
+<p>这些原始数字不是特别有意义。具体来说，此表示法不直接告诉您变换缩放或旋转多少。幸运的是，有一个简单的方法，一种将非直观的参数转换为更有用(更直观的数值)的表示方法。清单2-1显示了如何实现。它计算x和y刻度值以及旋转角度，从变换结构体的组件返回这些值。</p>
+<p>无需计算平移（位置偏移）值。这些值直接存储在tx和ty字段中，本质上是“纯文本”。</p>
+<p>清单 2-1 从变换中提取缩放和旋转值信息</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Extract the x scale from transform</span></span><br><span class="line"><span class="built_in">CGFloat</span> TransformGetXScale(<span class="built_in">CGAffineTransform</span> t)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> sqrt(t.a * t.a + t.c * t.c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Extract the y scale from transform</span></span><br><span class="line"><span class="built_in">CGFloat</span> TransformGetYScale(<span class="built_in">CGAffineTransform</span> t)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> sqrt(t.b * t.b + t.d * t.d);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Extract the rotation in radians</span></span><br><span class="line"><span class="built_in">CGFloat</span> TransformGetRotation(<span class="built_in">CGAffineTransform</span> t)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> atan2f(t.b, t.a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Predefined-Constants"><a href="#Predefined-Constants" class="headerlink" title="Predefined Constants"></a>Predefined Constants</h3><p>每个Core Graphics结构体都有预定义的常量。使用Quartz时，你会遇到的最常见的如下：</p>
+<ul>
+<li>Geometric zeros - 这些常量使用零值提供默认值。<code>CGPointZero</code>是一个指向位置（0，0）的点常量。<code>CGSizeZero</code>常量引用其宽度和高度都为0。<code>CGRectZero</code>等效于CGRectMake（0,0,0,0），零原点和大小。</li>
+<li>Geometric identity - <code>CGAffineTransformIdentity</code>提供常规identity转换。当应用于任何几何元素时，此变换将返回您开始的同一元素。</li>
+<li>Geometric infinity - <code>CGRectInfinite</code>是一个有无限范围的矩形。宽度和高度设置为<code>CGFLOAT_MAX</code>，最大的浮点值。原点设置为可能的最小负数（-CGFLOAT_MAX / 2）。</li>
+<li>Geometric nulls - <code>CGRectNull</code>与<code>CGRectZero</code>不同之处在于它没有位置。<code>CGRectZero</code>的位置是（0，0）。<code>CGRectNull</code>的位置是（<code>INFINITY</code>，<code>INFINITY</code>）。 当你请求两个不相交的矩形的交集时，你会遇到这种矩形。<br>任何矩形与<code>CGRectNull</code>的联合(并集)总是返回原来的<code>rect</code>。例如，CGRectMake（10，10，10，10）与<code>CGRectNull</code>的并集为{10,10,10,10}。与<code>CGRectZero</code>的联合(并集)（结果是{0，0，20，20}）进行对比。原点被拉向（0,0），使矩形的尺寸加倍并改变其位置。</li>
+</ul>
+<h3 id="Conversion-to-Objects"><a href="#Conversion-to-Objects" class="headerlink" title="Conversion to Objects"></a>Conversion to Objects</h3><p>因为几何项目是结构体而不是对象，将它们集成到标准Objective-C中可能是有挑战性的。您不能将size结构体或rectangle结构体添加到<code>NSArray</code>或字典。不能为点或变换设置默认值。因此，Core Graphics和Core Foundation提供了函数和类来转换和封装对象中的结构体。几何结构的最常见的对象解决方案是字符串(strings)，字典(dictionaries)和值(values)。</p>
+<h4 id="Strings"><a href="#Strings" class="headerlink" title="Strings"></a>Strings</h4><p>通过使用少数转换函数将结构体转换为字符串表示形式，这些函数列在表2-2中。这些便利功能使您能够以人类可读格式记录日志信息或使用定义良好且易于恢复的模式将结构体存储到文件中。转换后的点或大小（例如，<code>NSStringFromCGPoint(CGPointMake(5，2))</code>）看起来像这样：{5，2}。</p>
+<p><em>字符串对于将信息记录到调试控制台是最有用的。</em></p>
+<p>表格 2-2 字符串实用函数</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Convert to String</th>
+<th>Convert from String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CGPoint</td>
+<td>NSStringFromCGPoint()</td>
+<td>CGPointFromString()</td>
+</tr>
+<tr>
+<td>CGSize</td>
+<td>NSStringFromCGSize()</td>
+<td>CGSizeFromString()</td>
+</tr>
+<tr>
+<td>CGRect</td>
+<td>NSStringFromCGRect()</td>
+<td>CGRectFromString()</td>
+</tr>
+<tr>
+<td>CGAffineTransform</td>
+<td>NSStringFromCGAffineTransform()</td>
+<td>CGAffineTransformFromString()</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Dictionaries"><a href="#Dictionaries" class="headerlink" title="Dictionaries"></a>Dictionaries</h4><p>字典提供了另一种方式将几何结构体转换为用于存储和记录的对象。如表2-3所示，这些仅限于points，sizes和rectangles。此外，他们返回Core Foundation <code>CFDictionaryRef</code>实例，而不是<code>NSDictionary</code>项。你需要手动桥接这个结果。</p>
+<p><em>字典对于将结构体存储为用户默认最有用。</em></p>
+<p>表格 2-3 字典实用函数</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Convert to Dictionary</th>
+<th>Convert from Dictionary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CGPoint</td>
+<td>CGPointCreateDictionaryRepresentation ()</td>
+<td>CGPointMakeWithDictionaryRepresentation ()</td>
+</tr>
+<tr>
+<td>CGSize</td>
+<td>CGSizeCreateDictionaryRepresentation()</td>
+<td>CGSizeMakeWithDictionaryRepresentation()</td>
+</tr>
+<tr>
+<td>CGRect</td>
+<td>CGRectCreateDictionaryRepresentation()</td>
+<td>CGRectMakeWithDictionaryRepresentation()</td>
+</tr>
+</tbody>
+</table>
+<p>以下代码将矩形转换为Cocoa Touch字典表示，然后返回给CGRect，并记录结果：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Convert CGRect to NSDictionary representation</span></span><br><span class="line"><span class="built_in">CGRect</span> testRect = <span class="built_in">CGRectMake</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line"><span class="built_in">NSDictionary</span> *dict = (__bridge_transfer <span class="built_in">NSDictionary</span> *)<span class="built_in">CGRectCreateDictionaryRepresentation</span>(testRect);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"Dictionary: %@"</span>, dict);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Convert NSDictionary representation to CGRect</span></span><br><span class="line"><span class="built_in">CGRect</span> outputRect;</span><br><span class="line"><span class="built_in">BOOL</span> success = <span class="built_in">CGRectMakeWithDictionaryRepresentation</span>((__bridge <span class="built_in">CFDictionaryRef</span>) dict, &amp;outputRect);</span><br><span class="line"><span class="keyword">if</span> (success)</span><br><span class="line">	<span class="built_in">NSLog</span>(<span class="string">@"Rect: %@"</span>, <span class="built_in">NSStringFromCGRect</span>(outputRect));</span><br></pre></td></tr></table></figure>
+<p>这里是这段代码产生的输出。在这里，您将看到测试矩形的字典表示和在转换回<code>CGRect</code>后恢复的矩形：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2013</span><span class="number">-04</span><span class="number">-02</span> <span class="number">08</span>:<span class="number">23</span>:<span class="number">07.323</span> HelloWorld[<span class="number">62600</span>:c07] Dictionary: &#123;</span><br><span class="line">	Height = <span class="number">4</span>;</span><br><span class="line">	Width = <span class="number">3</span>;</span><br><span class="line">	X=<span class="number">1</span>;</span><br><span class="line">	Y=<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="number">2013</span><span class="number">-04</span><span class="number">-02</span> <span class="number">08</span>:<span class="number">23</span>:<span class="number">07.323</span> HelloWorld[<span class="number">62600</span>:c07] Rect: &#123;&#123;<span class="number">1</span>, <span class="number">2</span>&#125;, &#123;<span class="number">3</span>, <span class="number">4</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Note</p>
+<p><code>CGRectMakeWithDictionaryRepresentation()</code>函数有一个已知的错误，使得一些在OS X上创建的值在iOS上不可读。</p>
+</blockquote>
+<h4 id="Values"><a href="#Values" class="headerlink" title="Values"></a>Values</h4><p><code>NSValue</code>类为C数据项提供了一个容器。它可以保存标量类型（如整数和浮点数），指针和结构体。 UIKit扩展了正常的<code>NSValue</code>行为以封装Core Graphics原语。当一个标量类型被放入一个值中，你可以像对待任何其他对象一样添加几何基元到Objective-C集合中。</p>
+<p><em>值对于向应用内计算的数组和字典添加结构体最有用。</em></p>
+<p>表格 2-4 值方法</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Place in NSValue</th>
+<th>Retrieve from NSValue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CGPoint</td>
+<td>+ valueWithCGPoint:</td>
+<td>- CGPointValue</td>
+</tr>
+<tr>
+<td>CGSize</td>
+<td>+ valueWithCGSize:</td>
+<td>- CGSizeValue</td>
+</tr>
+<tr>
+<td>CGRect</td>
+<td>+ valueWithCGRect:</td>
+<td>- CGRectValue</td>
+</tr>
+<tr>
+<td>CGAffineTransform</td>
+<td>+ valueWithCGAffineTransform:</td>
+<td>- CGAffineTransformValue</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Note</p>
+<p><code>NSCoder</code>为<code>CGPoint</code>，<code>CGSize</code>，<code>CGRect</code>和<code>CGAffineTransform</code>提供UIKit特定的几何编码和解码的方法。这些方法使您能够存储和恢复这些几何结构，将它们与您指定的键相关联。</p>
+</blockquote>
+<h3 id="Geometry-Tests"><a href="#Geometry-Tests" class="headerlink" title="Geometry Tests"></a>Geometry Tests</h3><p>Core Graphics提供了一组基本的几何测试函数，您可以在表2-5中看到这些函数。这些项目使您能够彼此比较项目，并检查可能遇到的特殊情况。这些函数命名同字面的解释一样。</p>
+<p>表格 2-5 Checking Geometry</p>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Functions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Special conditions</td>
+<td>CGRectIsEmpty(rect) CGRectIsNull(rect) CGRectIsInfinite(rect) CGAffineTransformIsIdentity(transform)</td>
+</tr>
+<tr>
+<td>Equality</td>
+<td>CGPointEqualToPoint(p1, p2) CGSizeEqualToSize(s1, s2) CGRectEqualToRect(r1, r2) CGAffineTransformEqualToTransform(t1, t2)</td>
+</tr>
+<tr>
+<td>Relationships</td>
+<td>CGRectContainsPoint(rect, point) CGRectContainsRect(r1, r2) CGRectIntersectsRect(r1, r2)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Other-Essential-Functions"><a href="#Other-Essential-Functions" class="headerlink" title="Other Essential Functions"></a>Other Essential Functions</h3><p>这里有一些你想知道的最终的函数：</p>
+<ul>
+<li>CGRectInset(rect，xinset，yinset) - 此函数使您能够创建一个较小或较大的矩形，其中心在与源矩形在相同的点。对于较小的矩形使用正的inset，对较大的矩形使用负的inset。<em>此功能对于将绘图和子图像从视图边缘移开以提供空白(边框)特别有用。</em></li>
+<li>CGRectOffset(rect，xoffset，yoffset) - 此函数返回一个矩形，它从原始矩形偏移一个你指定的x和y量。<em>偏移是方便移动frames和创建简单的阴影效果。</em></li>
+<li>CGRectGetMidX(rect)和CGRectGetMidY(rect) - 这些函数返回矩形中心的x和y坐标。 这些函数使得获取bounds和frames的中心点非常方便。相关函数返回<code>minX</code>，<code>maxX</code>，<code>minY</code>，<code>maxY</code>，<code>width</code>和<code>height</code>。<em>中心点可以帮助绘制图形中的项目。</em></li>
+<li>CGRectUnion(rect1，rect2) - 此函数返回完全包含两个源矩形的最小矩形(并集)。此函数可帮助您为正在绘制的不同元素建立最小边界框。<em>绘图路径的联合(并集)允许您将frame项目组织在一起，并为这些项目构建backsplash。</em></li>
+<li>CGRectIntersection(rect1，rect2) - 此函数返回两个矩形的交集，如果两个矩形不相交，则返回<code>CGRectNull</code>。 <em>Intersections帮助你在使用自动布局时计算矩形的insets。路径bounds和图像frame之间的相交可以定义用于对齐的内在内容。</em></li>
+<li>CGRectIntegral(rect) - 此函数将源矩形的值转换为整数。origin值从任何小数值向下取整为整数。size值则向上取整。以保证新的矩形完全包含原始的矩形。<em>Integral rectangles加速你的绘图和使你的绘图更清晰。完全在像素边界上绘制的视图需要更少的抗锯齿，并能导致更少的模糊输出。</em></li>
+<li>CGRectStandardize(rect) - 此函数返回具有正高度和宽度值的等效矩形。<em>当执行交互式绘图时，标准化的矩形可以简化数学运算，特别是当用户可以交互式地向左和向上移动而不是向右和向下移动时。</em></li>
+<li>CGRectDivide(rect，＆sliceRect，＆residualRect，amount，edge) - 这个函数是这些Core Graphics函数中最复杂的，但它也是最有用的。<em>Division使您能够将矩形重复切分为多个部分，因此可以细分绘图区域。</em></li>
+</ul>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/几何术语/" rel="tag"># 几何术语</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/15/2-2-View-Coordinates/" rel="next" title="2.2-视图坐标">
+                <i class="fa fa-chevron-left"></i> 2.2-视图坐标
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/17/2-4-Using-CGRectDivide/" rel="prev" title="2.4-使用CGRectDivide()分割矩形">
+                2.4-使用CGRectDivide()分割矩形 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Points"><span class="nav-number">1.</span> <span class="nav-text">Points</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sizes"><span class="nav-number">2.</span> <span class="nav-text">Sizes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rectangles"><span class="nav-number">3.</span> <span class="nav-text">Rectangles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transforms"><span class="nav-number">4.</span> <span class="nav-text">Transforms</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Creating-Transforms"><span class="nav-number">4.1.</span> <span class="nav-text">Creating Transforms</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Layering-Transforms"><span class="nav-number">4.2.</span> <span class="nav-text">Layering Transforms</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Exposing-Transforms"><span class="nav-number">4.3.</span> <span class="nav-text">Exposing Transforms</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Predefined-Constants"><span class="nav-number">5.</span> <span class="nav-text">Predefined Constants</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conversion-to-Objects"><span class="nav-number">6.</span> <span class="nav-text">Conversion to Objects</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Strings"><span class="nav-number">6.1.</span> <span class="nav-text">Strings</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dictionaries"><span class="nav-number">6.2.</span> <span class="nav-text">Dictionaries</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Values"><span class="nav-number">6.3.</span> <span class="nav-text">Values</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Geometry-Tests"><span class="nav-number">7.</span> <span class="nav-text">Geometry Tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Other-Essential-Functions"><span class="nav-number">8.</span> <span class="nav-text">Other Essential Functions</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

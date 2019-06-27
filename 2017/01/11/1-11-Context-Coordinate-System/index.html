@@ -1,0 +1,671 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="绘图上下文," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="当您主要使用UIKit进行绘图工作时，坐标系统是从屏幕的左上角开始（0,0），并向右和向下延伸。而在Quartz中，坐标系是从屏幕的左下角开始的。 如图1-11。它描绘了在UIKit（左）和Quartz（右）中绘制的正方形{20,20,40,40}。在每种情况下，对象都从原点开始偏离20个点。但是，你可以看到，原点在每种情况下都不同。  图1-11 UIKit原点（左上角）与Quartz原点（左下">
+<meta name="keywords" content="绘图上下文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.11-上下文坐标系统">
+<meta property="og:url" content="http://chengdong.top/2017/01/11/1-11-Context-Coordinate-System/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="当您主要使用UIKit进行绘图工作时，坐标系统是从屏幕的左上角开始（0,0），并向右和向下延伸。而在Quartz中，坐标系是从屏幕的左下角开始的。 如图1-11。它描绘了在UIKit（左）和Quartz（右）中绘制的正方形{20,20,40,40}。在每种情况下，对象都从原点开始偏离20个点。但是，你可以看到，原点在每种情况下都不同。  图1-11 UIKit原点（左上角）与Quartz原点（左下">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/01/11/1-11-Context-Coordinate-System/图1-11.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1.11-上下文坐标系统">
+<meta name="twitter:description" content="当您主要使用UIKit进行绘图工作时，坐标系统是从屏幕的左上角开始（0,0），并向右和向下延伸。而在Quartz中，坐标系是从屏幕的左下角开始的。 如图1-11。它描绘了在UIKit（左）和Quartz（右）中绘制的正方形{20,20,40,40}。在每种情况下，对象都从原点开始偏离20个点。但是，你可以看到，原点在每种情况下都不同。  图1-11 UIKit原点（左上角）与Quartz原点（左下">
+<meta name="twitter:image" content="http://chengdong.top/2017/01/11/1-11-Context-Coordinate-System/图1-11.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/01/11/1-11-Context-Coordinate-System/"/>
+
+
+
+
+
+  <title> 1.11-上下文坐标系统 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/01/11/1-11-Context-Coordinate-System/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                1.11-上下文坐标系统
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-11T09:21:32+08:00">
+                2017-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>当您主要使用UIKit进行绘图工作时，坐标系统是从屏幕的左上角开始（0,0），并向右和向下延伸。而在Quartz中，坐标系是从屏幕的左下角开始的。</p>
+<p>如图1-11。它描绘了在UIKit（左）和Quartz（右）中绘制的正方形{20,20,40,40}。在每种情况下，对象都从原点开始偏离20个点。但是，你可以看到，原点在每种情况下都不同。</p>
+<p><img src="/2017/01/11/1-11-Context-Coordinate-System/图1-11.jpg" alt="图1-11"></p>
+<p>图1-11 UIKit原点（左上角）与Quartz原点（左下角）不同。</p>
+<p>坐标系原点在什么位置取决于你是如何创建上下文的。如果你使用任何UIKit函数构建它，原点在左上角。如果你使用<code>CGBitmapContextCreate()</code>创建上下文，原点在左下角。</p>
+<h3 id="翻转上下文"><a href="#翻转上下文" class="headerlink" title="翻转上下文"></a>翻转上下文</h3><p>你可以调整Core Graphics上下文以使用UIKit的原点。清单 1-10 显示了实现这些步骤的代码：</p>
+<ol>
+<li>将<code>CGContextRef</code>压入到UIKit图形栈。</li>
+<li>垂直翻转上下文。你可以通过scales和translates转换原始上下文建立一个变换来实现这一步。</li>
+<li>将变换连接到上下文的当前变换矩阵（CTM）。这将调整上下文的坐标系以模拟UIKit，从而从左上角开始绘制。</li>
+<li>使用新的坐标系执行任何绘图操作。</li>
+<li>弹出图形栈。</li>
+</ol>
+<p>您可以直接使用Quartz实现，而不应用此坐标系。然而，大多数UIKit开发人员都喜欢使用单一的，与开发人员绘图时比较熟悉的视图坐标罗列计算方式相匹配的坐标系。一些开发人员也会创建双向宏来实现相同的翻转功能。这使得它们可以在使用QUARTZ的绘图请求中可视化地匹配非QUARTZ坐标系下的绘图请求。例程不用改变，但开发人员可以了解代码检查的当前状态。</p>
+<p>清单 1-10 包含了一个辅助翻转的例程，不需要你用点来提供上下文大小。老实说，这有点旁门左道，但它的确有用，因为它检索的图像将使用与上下文相同的大小和缩放比例。</p>
+<p>您还可以通过调用<code>CGBitmapContextGetHeight()</code>和<code>CGBitmapContextGetWidth()</code>来检索上下文的大小，并需要将这些函数返回的像素数除以屏幕的缩放比例。这前提是假设你正在使用某种位图上下文（例如由<code>UIGraphicsBeginImageContextWithOptions()</code>创建的位图上下文），并且在该上下文中也匹配屏幕的缩放比例。</p>
+<p>清单 1-10 调整坐标系原点</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Flip context by supplying the size</span></span><br><span class="line"><span class="keyword">void</span> FlipContextVertically(<span class="built_in">CGSize</span> size)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error: No context to flip"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">CGAffineTransform</span> transform = <span class="built_in">CGAffineTransformIdentity</span>;</span><br><span class="line">	transform = <span class="built_in">CGAffineTransformScale</span>(transform, <span class="number">1.0</span>f, <span class="number">-1.0</span>f);</span><br><span class="line">	transform = <span class="built_in">CGAffineTransformTranslate</span>(transform, <span class="number">0.0</span>f, -size.height);</span><br><span class="line">	<span class="built_in">CGContextConcatCTM</span>(context, transform);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Flip context by retrieving image</span></span><br><span class="line"><span class="keyword">void</span> FlipImageContextVertically()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">NSLog</span>(<span class="string">@"Error: No context to flip"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">UIImage</span> *image = <span class="built_in">UIGraphicsGetImageFromCurrentImageContext</span>();</span><br><span class="line">	FlipContextVertically(image.size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Query context for size and use screen scale</span></span><br><span class="line"><span class="comment">// to map from Quartz pixels to UIKit points</span></span><br><span class="line"><span class="built_in">CGSize</span> GetUIKitContextSize()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">CGContextRef</span> context = <span class="built_in">UIGraphicsGetCurrentContext</span>();</span><br><span class="line">	<span class="keyword">if</span> (context == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="built_in">CGSizeZero</span>;</span><br><span class="line">	<span class="built_in">CGSize</span> size = <span class="built_in">CGSizeMake</span>(<span class="built_in">CGBitmapContextGetWidth</span>(context), <span class="built_in">CGBitmapContextGetHeight</span>(context));</span><br><span class="line">	<span class="built_in">CGFloat</span> scale = [<span class="built_in">UIScreen</span> mainScreen].scale;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">CGSizeMake</span>(size.width / scale, size.height / scale);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Initialize the UIKit context stack</span></span><br><span class="line"><span class="built_in">UIGraphicsPushContext</span>(context);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Flip the context vertically</span></span><br><span class="line">FlipContextVertically(size);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Draw the test rectangle. It will now use the UIKit origin</span></span><br><span class="line"><span class="comment">// instead of the Quartz origin.</span></span><br><span class="line"><span class="built_in">CGRect</span> testRect = <span class="built_in">CGRectMake</span>(<span class="number">20</span>, <span class="number">20</span>, <span class="number">40</span>, <span class="number">40</span>);</span><br><span class="line"><span class="built_in">UIBezierPath</span> *path = [<span class="built_in">UIBezierPath</span> bezierPathWithRect:testRect];</span><br><span class="line">[greenColor set];</span><br><span class="line">[path fill];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pop the context stack</span></span><br><span class="line"><span class="built_in">UIGraphicsPopContext</span>();</span><br></pre></td></tr></table></figure>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/绘图上下文/" rel="tag"># 绘图上下文</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/11/1-10-Context-State/" rel="next" title="1.10-上下文状态">
+                <i class="fa fa-chevron-left"></i> 1.10-上下文状态
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/11/1-12-Clipping/" rel="prev" title="1.12-裁剪">
+                1.12-裁剪 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#翻转上下文"><span class="nav-number">1.</span> <span class="nav-text">翻转上下文</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

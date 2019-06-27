@@ -1,0 +1,638 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="深入学习路径," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="不幸的是，在iOS 6.x和早期版本的iOS 7 SDK中，特别是使用复杂的bezierPathByReversingPath颠倒Bezier路径的方法已经被打破了。新的解决方案取决于将每个路径分解为子路径（参见清单5-8;每个子路径都以移动操作开始，可能不会以关闭操作结束），然后再分解成组件元素（参见清单5-2）。 一般来说，当您将动画或绘图效果应用于路径表示而不是仅填充或对它描边时，您会想要使">
+<meta name="keywords" content="深入学习路径">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5.11-颠倒路径">
+<meta property="og:url" content="http://chengdong.top/2017/02/23/5-11-Reversing-a-Path/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="不幸的是，在iOS 6.x和早期版本的iOS 7 SDK中，特别是使用复杂的bezierPathByReversingPath颠倒Bezier路径的方法已经被打破了。新的解决方案取决于将每个路径分解为子路径（参见清单5-8;每个子路径都以移动操作开始，可能不会以关闭操作结束），然后再分解成组件元素（参见清单5-2）。 一般来说，当您将动画或绘图效果应用于路径表示而不是仅填充或对它描边时，您会想要使">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5.11-颠倒路径">
+<meta name="twitter:description" content="不幸的是，在iOS 6.x和早期版本的iOS 7 SDK中，特别是使用复杂的bezierPathByReversingPath颠倒Bezier路径的方法已经被打破了。新的解决方案取决于将每个路径分解为子路径（参见清单5-8;每个子路径都以移动操作开始，可能不会以关闭操作结束），然后再分解成组件元素（参见清单5-2）。 一般来说，当您将动画或绘图效果应用于路径表示而不是仅填充或对它描边时，您会想要使">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/02/23/5-11-Reversing-a-Path/"/>
+
+
+
+
+
+  <title> 5.11-颠倒路径 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/02/23/5-11-Reversing-a-Path/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                5.11-颠倒路径
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-23T19:15:46+08:00">
+                2017-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>不幸的是，在iOS 6.x和早期版本的iOS 7 SDK中，特别是使用复杂的<code>bezierPathByReversingPath</code>颠倒Bezier路径的方法已经被打破了。新的解决方案取决于将每个路径分解为子路径（参见清单5-8;每个子路径都以移动操作开始，可能不会以关闭操作结束），然后再分解成组件元素（参见清单5-2）。</p>
+<p>一般来说，当您将动画或绘图效果应用于路径表示而不是仅填充或对它描边时，您会想要使用反转路径。例如，如果您使用Bezier路径沿路径布置文本，则颠倒顺序可以更改绘图进程的方式。</p>
+<p>翻转路径变得比你想象的有点棘手。这是因为当你颠倒项目，你必须考虑临近点。这意味着反向路径通常看起来像这样：</p>
+<ul>
+<li>移动到倒数第二个元素（在close命令之前的那个）的目标点。</li>
+<li>向路径的第一个元素添加一直线。</li>
+<li>反转每个直线和曲线，使用每个项目的目标点作为起点，将起始元素作为目标。</li>
+<li>如果在原始路径中有一个关闭命令，应用该关闭命令以避免奇怪的线帽伪影。</li>
+</ul>
+<p>清单5-14显示了冗长的解决方案。它由两种方法组成。公共反转方法将路径分解为子路径，反转这些子路径的顺序。然后它调用私有<code>reverseSubpath:</code>方法，它会翻转每个单独的子路径。</p>
+<p>清单5-14创建一个反转的Bezier路径</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">UIBezierPath</span> *) reverseSubpath: (<span class="built_in">UIBezierPath</span> *) subpath</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">NSArray</span> *elements = subpath.elements;</span><br><span class="line">	<span class="built_in">NSArray</span> *reversedElements =		[[elements reverseObjectEnumerator] allObjects];</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">UIBezierPath</span> *newPath = [<span class="built_in">UIBezierPath</span> bezierPath];</span><br><span class="line">	<span class="built_in">BOOL</span> closesSubpath = <span class="literal">NO</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Locate the element with the first point</span></span><br><span class="line">	BezierElement *firstElement;</span><br><span class="line">	<span class="keyword">for</span> (BezierElement *e <span class="keyword">in</span> elements)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!POINT_IS_NULL(e.point))</span><br><span class="line">		&#123;</span><br><span class="line">			firstElement = e;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Locate the element with the last point </span></span><br><span class="line">	BezierElement *lastElement;</span><br><span class="line">	<span class="keyword">for</span> (BezierElement *e <span class="keyword">in</span> reversedElements)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!POINT_IS_NULL(e.point))</span><br><span class="line">		&#123;</span><br><span class="line">			lastElement = e; </span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Check for path closure</span></span><br><span class="line">		BezierElement *element = [elements lastObject];</span><br><span class="line">		<span class="keyword">if</span> (element.elementType == kCGPathElementCloseSubpath)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (firstElement)			[newPath moveToPoint:firstElement.point];</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (lastElement)			[newPath addLineToPoint:lastElement.point];</span><br><span class="line">			</span><br><span class="line">		closesSubpath = <span class="literal">YES</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		[newPath moveToPoint:lastElement.point];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Iterate backwards and reconstruct the path </span></span><br><span class="line">	<span class="built_in">CFIndex</span> i = <span class="number">0</span>;	<span class="keyword">for</span> (BezierElement *element <span class="keyword">in</span> reversedElements)</span><br><span class="line">	&#123;</span><br><span class="line">		i++;		BezierElement *nextElement = <span class="literal">nil</span>; </span><br><span class="line">		</span><br><span class="line">		BezierElement *workElement = [element <span class="keyword">copy</span>];</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (element.elementType == kCGPathElementCloseSubpath)</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (element == firstElement) </span><br><span class="line">		&#123;			<span class="keyword">if</span> (closesSubpath) [newPath closePath];			<span class="keyword">continue</span>; </span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (i &lt; reversedElements.count)</span><br><span class="line">		&#123;</span><br><span class="line">			nextElement = reversedElements[i];</span><br><span class="line">			<span class="keyword">if</span> (!POINT_IS_NULL(workElement.controlPoint2))</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="built_in">CGPoint</span> tmp = workElement.controlPoint1;</span><br><span class="line">				workElement.controlPoint1 = workElement.controlPoint2;</span><br><span class="line">				workElement.controlPoint2 = tmp;</span><br><span class="line">			&#125;</span><br><span class="line">			workElement.point = nextElement.point;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (element.elementType == kCGPathElementMoveToPoint)</span><br><span class="line">			workElement.elementType =				kCGPathElementAddLineToPoint;</span><br><span class="line">		</span><br><span class="line">		[workElement addToPath:newPath];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> newPath;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Reverse the entire path </span></span><br><span class="line">- (<span class="built_in">UIBezierPath</span> *) reversed</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// [self bezierPathByReversingPath] does not work </span></span><br><span class="line">	<span class="comment">// the way you expect. Radars are filed.</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">UIBezierPath</span> *reversed = [<span class="built_in">UIBezierPath</span> bezierPath]; </span><br><span class="line">	<span class="built_in">NSArray</span> *reversedSubpaths =		[[<span class="keyword">self</span>.subpaths reverseObjectEnumerator] allObjects];</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">UIBezierPath</span> *subpath <span class="keyword">in</span> reversedSubpaths)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">UIBezierPath</span> *p = [<span class="keyword">self</span> reverseSubpath:subpath];</span><br><span class="line">		<span class="keyword">if</span> (p)</span><br><span class="line">			[reversed appendPath:p];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> reversed;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深入学习路径/" rel="tag"># 深入学习路径</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/" rel="next" title="5.10-绘制内部和外部发光">
+                <i class="fa fa-chevron-left"></i> 5.10-绘制内部和外部发光
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/24/5-12-Visualizing-Path-Order/" rel="prev" title="5.12-可视化路径顺序">
+                5.12-可视化路径顺序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

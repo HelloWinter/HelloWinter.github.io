@@ -1,0 +1,774 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Objective-C与JavaScript的交互之JavaScriptCore," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文不再详述Objective-C与JavaScript之间交互的UIWebView和WKWebView常用实现，网上有太多此类文章可供参考，本文着重介绍JavaScriptCore以及一个使用JavaScriptCore黑魔法的UIWebView分类。JavaScriptCore框架提供了在Swift，Objective-C和基于C的应用程序中运行JavaScript程序的能力。您也可以使用J">
+<meta name="keywords" content="Objective-C与JavaScript的交互之JavaScriptCore">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objective-C与JavaScript的交互之JavaScriptCore">
+<meta property="og:url" content="http://chengdong.top/2018/03/14/Interaction-Between-Objective-C-and-JavaScript/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="本文不再详述Objective-C与JavaScript之间交互的UIWebView和WKWebView常用实现，网上有太多此类文章可供参考，本文着重介绍JavaScriptCore以及一个使用JavaScriptCore黑魔法的UIWebView分类。JavaScriptCore框架提供了在Swift，Objective-C和基于C的应用程序中运行JavaScript程序的能力。您也可以使用J">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-15T00:17:36.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Objective-C与JavaScript的交互之JavaScriptCore">
+<meta name="twitter:description" content="本文不再详述Objective-C与JavaScript之间交互的UIWebView和WKWebView常用实现，网上有太多此类文章可供参考，本文着重介绍JavaScriptCore以及一个使用JavaScriptCore黑魔法的UIWebView分类。JavaScriptCore框架提供了在Swift，Objective-C和基于C的应用程序中运行JavaScript程序的能力。您也可以使用J">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2018/03/14/Interaction-Between-Objective-C-and-JavaScript/"/>
+
+
+
+
+
+  <title> Objective-C与JavaScript的交互之JavaScriptCore | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2018/03/14/Interaction-Between-Objective-C-and-JavaScript/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Objective-C与JavaScript的交互之JavaScriptCore
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-14T16:15:40+08:00">
+                2018-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文不再详述Objective-C与JavaScript之间交互的UIWebView和WKWebView常用实现，网上有太多此类文章可供参考，本文着重介绍JavaScriptCore以及一个使用JavaScriptCore黑魔法的UIWebView分类。JavaScriptCore框架提供了在Swift，Objective-C和基于C的应用程序中运行JavaScript程序的能力。您也可以使用JavaScriptCore将自定义对象插入JavaScript环境。JavaScriptCore是从iOS7开始引入的可实现Objective-C与JavaScript之间完美交互的框架，</p>
+</blockquote>
+<p>JavaScriptCore框架主要包括四个类：JSContext，JSManagedValue，JSValue，JSVirtualMachine和一个协议：JSExport。</p>
+<h3 id="JSContext"><a href="#JSContext" class="headerlink" title="JSContext"></a>JSContext</h3><p>JSContext对象表示一个JavaScript执行环境。您可以创建和使用JavaScript上下文来运行Objective-C或Swift代码中的JavaScript脚本，访问在JavaScript中定义或计算的值，并使JavaScript可访问Objective-C本地对象，方法或函数。Objective-C与JavaScript交互的类，对象，函数等都将保存在JSContext对象中。</p>
+<h3 id="JavaManagedValue"><a href="#JavaManagedValue" class="headerlink" title="JavaManagedValue"></a>JavaManagedValue</h3><p>JSManagedValue对象包装JSValue对象，并添加“conditional retain”行为以提供值的自动内存管理，它是JavaScript和Objective-C对象的内存管理辅助对象。JavaManagedValue主要用来将JavaScript值存储在本身导出为JavaScript的Objective-C或Swift对象中。</p>
+<blockquote>
+<p>要点</p>
+<p>由于JavaScript内存管理机制和Objective-C内存管理机制并不相同，JavaScript是垃圾回收机制，Objective-C是引用计数机制，不要将非托管的JSValue对象存储在导出为JavaScript的原生对象中。由于JSValue对象强引用其封闭的JSContext对象，因此此操作会创建一个引用循环，而无法释放上下文，造成内存泄漏，JavaManagedValue就是保存JSValue并避免循环引用的扩充类。</p>
+</blockquote>
+<p>托管值的“conditional retain”行为可确保只要满足以下任一条件，就会保留其基础JavaScript值：</p>
+<ul>
+<li>JavaScript值可通过JavaScript对象图访问（即，不受JavaScript垃圾回收管理）</li>
+<li>JSManagedValue对象可通过Objective-C/Swift对象图访问，如使用<code>addManagedReference:withOwner:</code>方法报告给JavaScriptCore虚拟机</li>
+</ul>
+<p>然而，如果这两个条件都不成立，托管值将其<code>value</code>属性设置为nil，并释放基础JSValue对象。</p>
+<blockquote>
+<p>注意</p>
+<p>JSManagedValue对象本身的行为类似于对其底层JSValue对象的ARC弱引用 - 也就是说，如果不使用<code>addManagedReference:withOwner:</code>方法添加“conditional retain”行为，当JavaScript垃圾收集器销毁基础JavaScript值时,则受托管值的value属性会自动变为nil。</p>
+</blockquote>
+<h3 id="JSValue"><a href="#JSValue" class="headerlink" title="JSValue"></a>JSValue</h3><p>JSValue实例是对JavaScript值的引用。您可以使用JSValue类在JavaScript和Objective-C/Swift表示之间转换基本值（例如数字和字符串），以便在原生代码和JavaScript代码之间传递数据。您还可以使用此类创建JavaScript对象，该对象包装原生的自定义类的对象或由原生方法或块（blocks）提供的JavaScript函数实现。此对象会对创建自身的JSContext产生强引用。</p>
+<p>每个JSValue实例都来自一个JSContext对象，该对象表示包含该值的JavaScript执行环境。该值持有对其上下文对象的强引用 - 只要保留与特定JSContext实例关联的任何值，该上下文就保持活动状态。当你调用实例方法时，就是在JSValue对象上调用，如果该方法返回另一个JSValue对象，则返回的值与原始值属于相同的上下文。</p>
+<p>每个JavaScript值还（间接通过上下文属性）与特定的JSVirtualMachine对象关联，该对象表示上下文的底层执行资源集合。您可以将JSValue实例仅传递给由同一虚拟机托管的JSValue和JSContext实例方法 - 尝试将值传递给其他虚拟机会引发Objective-C异常。</p>
+<h4 id="在JavaScript和原生类型之间转换"><a href="#在JavaScript和原生类型之间转换" class="headerlink" title="在JavaScript和原生类型之间转换"></a>在JavaScript和原生类型之间转换</h4><p>JavaScriptCore会使用下面总结的规则自动将原生值转换为JavaScript值，反之亦然。</p>
+<ul>
+<li>NSDictionary对象或Swift字典及其包含的键成为具有相匹配命名属性的JavaScript对象，反之亦然。 键的值被递归复制和转换。</li>
+<li>NSArray对象或Swift数组成为JavaScript数组，反之亦然，并且元素被递归地复制和转换。</li>
+<li>Objective-C块（或带有@convention(block)属性的Swift闭包）成为JavaScript Function对象，参数和返回类型使用与值相同的规则进行转换。原生块或方法转换为支持的JavaScript函数块或方法;所有其他都会转换为空字典。</li>
+<li>对于所有其他原生对象类型（以及类类型或元类型），JavaScriptCore使用反映原生类层次结构的构造函数原型链创建JavaScript包装器对象。默认情况下，原生对象的JavaScript包装器并不能使该对象的属性和方法在JavaScript中可用。要选择导出到JavaScript的属性和方法，请参阅JSExport。</li>
+</ul>
+<p>在转换对象，方法或块时，JavaScriptCore使用表1中汇总的规则隐式转换对象属性和方法参数的类型和值。</p>
+<table>
+<thead>
+<tr>
+<th>Objective-C (and Swift) Types</th>
+<th>JavaScript Types</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nil</td>
+<td>undefined</td>
+<td></td>
+</tr>
+<tr>
+<td>NSNull</td>
+<td>null</td>
+<td></td>
+</tr>
+<tr>
+<td>NSString (Swift String)</td>
+<td>String</td>
+<td></td>
+</tr>
+<tr>
+<td>NSNumber and primitive numeric types</td>
+<td>Number, Boolean</td>
+<td>Conversion is consistent with the following methods:<br>valueWithBool:inContext:,<br>valueWithDouble:inContext:,<br>valueWithInt32:inContext:,<br>valueWithUInt32:inContext:</td>
+</tr>
+<tr>
+<td>NSDictionary (Swift Dictionary)</td>
+<td>Object</td>
+<td>Recursive conversion.</td>
+</tr>
+<tr>
+<td>NSArray (Swift Array)</td>
+<td>Array</td>
+<td>Recursive conversion.</td>
+</tr>
+<tr>
+<td>NSDate</td>
+<td>Date</td>
+<td></td>
+</tr>
+<tr>
+<td>Objective-C or Swift object (id or AnyObject)<br>Objective-C or Swift class (Class or AnyClass)</td>
+<td>Object</td>
+<td>Converts with <br>valueWithObject:inContext:/toObject.</td>
+</tr>
+<tr>
+<td>Structure types:</td>
+<td>Object</td>
+<td>Other structure types are not supported.</td>
+</tr>
+<tr>
+<td>Objective-C block (Swift closure)</td>
+<td>Function</td>
+<td>Convert explicitly with <br>valueWithObject:inContext:/toObject.<br><br>JavaScript functions do not convert to native blocks/closures unless already backed by a native block/closure.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="JSVirtualMachine"><a href="#JSVirtualMachine" class="headerlink" title="JSVirtualMachine"></a>JSVirtualMachine</h3><p>JavaScript虚拟机，JSVirtualMachine实例为JavaScript执行提供了一个自包含的环境，有独立的堆空间和内存回收机制（垃圾回收机制），因此不同虚拟机之间不能交换数据。这个类主要有两个作用：支持JavaScript并行执行（同一个虚拟机里不能执行多线程），以及管理在JavaScript和Objective-C/Swift之间桥接的对象的内存。</p>
+<h4 id="线程和并行JavaScript执行"><a href="#线程和并行JavaScript执行" class="headerlink" title="线程和并行JavaScript执行"></a>线程和并行JavaScript执行</h4><p>每个JavaScript上下文（一个JSContext对象）都属于一个虚拟机。每个虚拟机都可以包含多个上下文，允许在上下文之间传递值（JSValue对象）。但是，每个虚拟机都是不同的 - 您不能将在一个虚拟机中创建的值传递到另一个虚拟机中的上下文。</p>
+<p>JavaScriptCore API是线程安全的 - 例如，您可以创建JSValue对象或从任何线程运行脚本 - 但是，尝试使用同一虚拟机的所有其他线程都将等待。要在多个线程上同时运行JavaScript，请为每个线程使用单独的JSVirtualMachine实例。</p>
+<h4 id="管理导出对象的内存"><a href="#管理导出对象的内存" class="headerlink" title="管理导出对象的内存"></a>管理导出对象的内存</h4><p>当您将Objective-C或Swift对象导出到JavaScript时，不得在该对象中存储JavaScript值。此操作会创建一个引用循环-JSValue对象拥有对其封闭JavaScript上下文的强引用，并且JSContext对象也拥有对导出到JavaScript的原生对象的强引用。相反，请使用JSManagedValue类有条件地保留JavaScript值，并将该受管值的本地所有权链（native ownership chain）报告给JavaScriptCore虚拟机。使用<code>addManagedReference:withOwner:</code>和<code>removeManagedReference:withOwner:</code>方法将原生对象图描述给JavaScriptCore。在删除对象的最后一个托管引用后，JavaScript垃圾收集器可以安全地销毁该对象。</p>
+<h3 id="JSExport"><a href="#JSExport" class="headerlink" title="JSExport"></a>JSExport</h3><p>实现这个协议，用于将Objective-C类及其实例方法，类方法和属性导出为JavaScript代码。</p>
+<h3 id="使用JavaScriptCore时，OC与JS的交互"><a href="#使用JavaScriptCore时，OC与JS的交互" class="headerlink" title="使用JavaScriptCore时，OC与JS的交互"></a>使用JavaScriptCore时，OC与JS的交互</h3><h5 id="Objective-C调用JavaScript"><a href="#Objective-C调用JavaScript" class="headerlink" title="Objective-C调用JavaScript"></a>Objective-C调用JavaScript</h5><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JSContext *ctx = [[JSContext alloc] init];</span><br><span class="line"><span class="built_in">NSString</span> *js = <span class="string">@"function add(a,b) &#123;return a+b&#125;"</span>;</span><br><span class="line">[ctx evaluateScript:js];</span><br><span class="line">JSValue *n = [ctx[<span class="string">@"add"</span>] callWithArguments:@[@<span class="number">2</span>, @<span class="number">3</span>]];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"---%@"</span>, @([n toInt32]));<span class="comment">//---5</span></span><br></pre></td></tr></table></figure>
+<p><code>[ctx evaluateScript:js];</code>此处代码执行完，实际在JSContext里注册了JS的add函数(生成引用add函数的 JSValue)。上述代码创建了JSContext对象，执行了一段JS代码，代码声明了一个函数，后面调用此函数，返回值为 JSValue。实际上JSContext是实现OC与JS交互的核心。</p>
+<h5 id="JavaScript调用Objective-C"><a href="#JavaScript调用Objective-C" class="headerlink" title="JavaScript调用Objective-C"></a>JavaScript调用Objective-C</h5><h6 id="使用block"><a href="#使用block" class="headerlink" title="使用block"></a>使用block</h6><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JSContext *ctx = [[JSContext alloc] init];</span><br><span class="line">ctx[<span class="string">@"minus"</span>] = ^<span class="keyword">int</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) &#123;</span><br><span class="line">	<span class="keyword">return</span> a - b;</span><br><span class="line">&#125;;</span><br><span class="line">JSValue *value = [ctx evaluateScript:<span class="string">@"minus(4, 5)"</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"4 minus 5 = %d"</span>, [value toInt32]);</span><br></pre></td></tr></table></figure>
+<p>OC的block导入到JS中，实际上是转换成了JS的function(函数)。</p>
+<h6 id="使用JSExport"><a href="#使用JSExport" class="headerlink" title="使用JSExport"></a>使用JSExport</h6><p>使用JSExport可以实现将OC中更复杂的对象导入到JS中使用。下面是苹果官方文档提供的示例代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">MyPointExports</span> &lt;<span class="title">JSExport</span>&gt;</span></span><br><span class="line"><span class="keyword">@property</span> <span class="keyword">double</span> x;</span><br><span class="line"><span class="keyword">@property</span> <span class="keyword">double</span> y;</span><br><span class="line">- (<span class="built_in">NSString</span> *)description;</span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithX:(<span class="keyword">double</span>)x y:(<span class="keyword">double</span>)y;</span><br><span class="line">+ (MyPoint *)makePointWithX:(<span class="keyword">double</span>)x y:(<span class="keyword">double</span>)y;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MyPoint</span> : <span class="title">NSObject</span> &lt;<span class="title">MyPointExports</span>&gt;</span></span><br><span class="line">- (<span class="keyword">void</span>)myPrivateMethod;<span class="comment">// Not in the MyPointExports protocol, so not visible to JavaScript code.</span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">MyPoint</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>将JS代码保存在script.js的文件中，文件直接添加到工程里：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Objective-C properties become fields.</span></span><br><span class="line">point.x;</span><br><span class="line">point.x = <span class="number">10</span>;</span><br><span class="line"><span class="comment">// Objective-C instance methods become functions.</span></span><br><span class="line">point.description();</span><br><span class="line"><span class="comment">// Objective-C initializers can be called with constructor syntax.</span></span><br><span class="line"><span class="keyword">var</span> p = MyPoint(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">// Objective-C class methods become functions on the constructor object.</span></span><br><span class="line"><span class="keyword">var</span> q = MyPoint.makePointWithXY(<span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>创建JSContext，执行上述JS代码:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">JSContext *ctx = [[JSContext alloc] init];</span><br><span class="line">ctx.exceptionHandler = ^(JSContext *context, JSValue *exception)&#123;</span><br><span class="line">[JSContext currentContext].exception = exception;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"exception:%@"</span>,exception);</span><br><span class="line">&#125;;</span><br><span class="line">ctx[<span class="string">@"p"</span>] = [MyPoint makePointWithX:<span class="number">10</span> y:<span class="number">10</span>];</span><br><span class="line">ctx[<span class="string">@"MyPoint"</span>] = MyPoint.class;</span><br><span class="line"><span class="built_in">NSURL</span> *fileURL = [<span class="built_in">NSURL</span> fileURLWithPath:[[<span class="built_in">NSBundle</span> bundleForClass:<span class="keyword">self</span>.class]pathForResource:<span class="string">@"script.js"</span> ofType:<span class="literal">nil</span>]];</span><br><span class="line">[ctx evaluateScript:[[<span class="built_in">NSString</span> alloc] initWithContentsOfURL:fileURL encoding:(<span class="built_in">NSUTF8StringEncoding</span>) error:<span class="literal">nil</span>]];</span><br></pre></td></tr></table></figure>
+<p>上述代码同时还使用了JS执行异常的处理<code>exceptionHandler</code>。注意这里没有直接引用<code>ctx</code>而是使用 <code>[JSContext currentContext]</code>查找到当前的<code>JSContext</code>，是为了避免在自身引用的block中引用自身导致循环引用。同时从上述代码中可以看到，OC导出到JS的函数名转换规则，不过我们也可以通过 <code>JSExportAs</code>宏定义函数名的转换,以下是转换的代码：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">MyPointExports</span> &lt;<span class="title">JSExport</span>&gt;</span></span><br><span class="line">JSExportAs(make, +(MyPoint *)makePointWithX:(<span class="keyword">double</span>)x y:(<span class="keyword">double</span>)y );</span><br><span class="line"><span class="keyword">@property</span> <span class="keyword">double</span> x;</span><br><span class="line"><span class="keyword">@property</span> <span class="keyword">double</span> y;</span><br><span class="line">- (<span class="built_in">NSString</span> *)description;</span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithX:(<span class="keyword">double</span>)x y:(<span class="keyword">double</span>)y;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>则相应的js代码则修改为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> q = MyPoint.make(<span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="UIWebView黑魔法"><a href="#UIWebView黑魔法" class="headerlink" title="UIWebView黑魔法"></a>UIWebView黑魔法</h5><p>UIWebView在加载页面时，其实会创建JS的运行环境JSContext，因此可以利用此JSContext，完成OC与JS的交互。</p>
+<p>获取UIWebView加载页面时的JSContext的方法，通过KVO访问:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)webViewDidFinishLoad:(<span class="built_in">UIWebView</span> *)webView &#123;</span><br><span class="line">	<span class="built_in">NSLog</span>(<span class="string">@"webview's context : %@"</span>, [webView</span><br><span class="line">    valueForKeyPath:<span class="string">@"documentView.webView.mainFrame.javaScriptContext"</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意因为webViewDidFinishLoad:的调用时间晚，会导致上述方法加载JSContext较晚。另外还要注意在 UIWebView的生命周期内，可能会进行多次加载，多次调用webViewDidFinishLoad:。还因为是私有属性，存在着因为版本更新而变动的可能，因此不建议使用。 </p>
+<h6 id="WebFrameLoadDelegate"><a href="#WebFrameLoadDelegate" class="headerlink" title="WebFrameLoadDelegate"></a>WebFrameLoadDelegate</h6><p>此协议定义在WebKit框架下，但并没有公开头文件，因此无法直接使用(虽然无法看到头文件，但奇怪的是在官方文档中却可以查找到该协议的API文档)，但我们仍然可以直接重载此代理方法,示例代码可在这里找到：<a href="https://github.com/TomSwift/UIWebView-TS_JavaScriptContext" target="_blank" rel="noopener">https://github.com/TomSwift/UIWebView-TS_JavaScriptContext</a>:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">TSWebFrame</span> &lt;<span class="title">NSObject</span>&gt;</span></span><br><span class="line">- (<span class="keyword">id</span>) parentFrame;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">NSObject</span> (<span class="title">TS_JavaScriptContext</span>)</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>) webView: (<span class="keyword">id</span>) unused didCreateJavaScriptContext: (JSContext*) ctx forFrame: (<span class="keyword">id</span>&lt;TSWebFrame&gt;) frame</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">NSLog</span>(<span class="string">@"didCreateJavaScriptContext"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>在上述的 webView:didCreateJavaScriptContext:forFrame: 代理方法中可以获取到context，注意这里回调 的webView类型为 WebView，不是我们熟悉的UIWebView类型，所以不建议使用该对象。因此如果需要查找到此 context关联的是哪个webView，可以通过全局的方式: </p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="built_in">NSHashTable</span>* g_webViews = <span class="literal">nil</span>;</span><br><span class="line">- (<span class="keyword">void</span>) webView: (<span class="keyword">id</span>) unused didCreateJavaScriptContext: (JSContext*) ctx forFrame: (<span class="keyword">id</span>&lt;TSWebFrame&gt;) frame</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSParameterAssert</span>( [frame respondsToSelector: <span class="keyword">@selector</span>( parentFrame )] );</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// only interested in root-level frames</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> ( [frame respondsToSelector: <span class="keyword">@selector</span>( parentFrame) ] &amp;&amp; [frame parentFrame] != <span class="literal">nil</span> )</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">void</span> (^notifyDidCreateJavaScriptContext)() = ^&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> ( <span class="built_in">UIWebView</span>* webView <span class="keyword">in</span> g_webViews )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">NSString</span>* cookie = [<span class="built_in">NSString</span> stringWithFormat: <span class="string">@"ts_jscWebView_%lud"</span>, (<span class="keyword">unsigned</span> <span class="keyword">long</span>)webView.hash ];</span><br><span class="line">            </span><br><span class="line">            [webView stringByEvaluatingJavaScriptFromString: [<span class="built_in">NSString</span> stringWithFormat: <span class="string">@"var %@ = '%@'"</span>, cookie, cookie ] ];</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> ( [ctx[cookie].toString isEqualToString: cookie] )</span><br><span class="line">            &#123;</span><br><span class="line">                [webView ts_didCreateJavaScriptContext: ctx];</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> ( [<span class="built_in">NSThread</span> isMainThread] )</span><br><span class="line">    &#123;</span><br><span class="line">        notifyDidCreateJavaScriptContext();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">dispatch_async</span>( dispatch_get_main_queue(), notifyDidCreateJavaScriptContext );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了将所有UIWebView对象都添加到NSHashTable中，可以重写UIWebView的allocWithZone:方法:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>) allocWithZone:(<span class="keyword">struct</span> _NSZone *)zone</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        </span><br><span class="line">        g_webViews = [<span class="built_in">NSHashTable</span> weakObjectsHashTable];</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSAssert</span>( [<span class="built_in">NSThread</span> isMainThread], <span class="string">@"uh oh - why aren't we on the main thread?"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">id</span> webView = [<span class="keyword">super</span> allocWithZone: zone];</span><br><span class="line"></span><br><span class="line">    [g_webViews addObject: webView];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> webView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到这里，所有的都一目了然了，我们获取了UIWebView的JSContext的，然后导入OC中的对象到JSContext中，剩下的就是在JS中调用此对象了。 </p>
+<h5 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h5><h6 id="block中捕获JSContext"><a href="#block中捕获JSContext" class="headerlink" title="block中捕获JSContext"></a>block中捕获JSContext</h6><p>JSValue会对其所在的JSContext维持一个强引用，因此在JSContext中注入的block时，不要直接捕获JSContext或 JSValue，可以使用[JSContext currentContext];获取JSContext以及对JSValue进行弱引用处理。 </p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JSContext *ctx = [[JSContext alloc] init];</span><br><span class="line">JSValue *jsvalue = [JSValue valueWithBool:<span class="literal">NO</span> inContext:ctx];</span><br><span class="line">__<span class="keyword">weak</span> <span class="keyword">typeof</span>(JSValue) *wjsvalue = jsvalue;</span><br><span class="line">ctx[<span class="string">@"oclog"</span>] = ^<span class="keyword">void</span>(<span class="keyword">void</span>) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"context:%p, jsvalue:%p"</span>, [JSContext currentContext], wjsvalue);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"jsvalue:%p"</span>, jsvalue);</span><br></pre></td></tr></table></figure>
+<h6 id="Objective-C与JavaScript循环引用"><a href="#Objective-C与JavaScript循环引用" class="headerlink" title="Objective-C与JavaScript循环引用"></a>Objective-C与JavaScript循环引用</h6><p>OC中有对象持有JSValue，并且该对象被传递到JS中使用的时候，会产生循环引用，这时候需要用 JSManagedValue保存JSValue，避免循环引用。 </p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个JSExport protocol</span></span><br><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">JSExportTest</span> &lt;<span class="title">JSExport</span>&gt;</span></span><br><span class="line"><span class="comment">//用来保存JS的对象</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) JSValue *jsValue;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">JSExportObj</span> : <span class="title">NSObject</span>&lt;<span class="title">JSExportTest</span>&gt;</span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">JSExportObj</span></span></span><br><span class="line"><span class="keyword">@synthesize</span> jsValue = _jsValue;</span><br><span class="line">- (<span class="keyword">void</span>)dealloc &#123;</span><br><span class="line">	<span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __FUNCTION__);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.obj = [[JSExportObj alloc] init];</span><br><span class="line"><span class="comment">//创建context</span></span><br><span class="line">JSContext *ctx = [[JSContext alloc] init];</span><br><span class="line"><span class="comment">//设置异常处理</span></span><br><span class="line">ctx.exceptionHandler = ^(JSContext *context, JSValue *exception) &#123;</span><br><span class="line">context.exception = exception;</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"exception:%@"</span>,exception);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//加载JS代码到context中</span></span><br><span class="line">[ctx evaluateScript:<span class="string">@"function callback ()&#123;&#125;;function setObj(obj)&#123;this.obj=obj;obj.jsValue=callback;&#125;"</span>];</span><br><span class="line"><span class="comment">//调用JS方法</span></span><br><span class="line">[ctx[<span class="string">@"setObj"</span>] callWithArguments:@[<span class="keyword">self</span>.obj]];</span><br></pre></td></tr></table></figure>
+<p>上述代码中，JS对象保留了传进来的obj，而obj.jsValue对callback也产生强引用，导致JS对象与OC对象相互引 用，产生了循环引用。鉴于JS与OC内存管理方法的不同(JS为垃圾回收，OC为引用计数)，系统提供了 JSManagedValue解决这个问题。将代码改写如下: </p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">JSExportObj</span> ()</span></span><br><span class="line"><span class="comment">//添加一个JSManagedValue用来保存JSValue</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) JSManagedValue *managedValue;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">JSExportObj</span></span></span><br><span class="line"><span class="comment">//重写setter方法</span></span><br><span class="line">- (<span class="keyword">void</span>)setJsValue:(JSValue *)jsValue &#123;</span><br><span class="line">	JSContext *ctx = [JSContext currentContext];</span><br><span class="line">	<span class="keyword">if</span> (_managedValue) &#123;</span><br><span class="line">		[ctx.virtualMachine removeManagedReference:_managedValue withOwner:<span class="keyword">self</span>];</span><br><span class="line">		_managedValue = <span class="literal">nil</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (jsValue) &#123;</span><br><span class="line">		_managedValue = [JSManagedValue managedValueWithValue:jsValue];</span><br><span class="line">		[ctx.virtualMachine addManagedReference:_managedValue withOwner:<span class="keyword">self</span>];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (JSValue *)jsValue &#123;</span><br><span class="line">	<span class="keyword">return</span> _managedValue.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Objective-C与JavaScript的交互之JavaScriptCore/" rel="tag"># Objective-C与JavaScript的交互之JavaScriptCore</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/" rel="next" title="在Xcode9中使用Xcode server & bot自动化持续集成并上传ipa到蒲公英">
+                <i class="fa fa-chevron-left"></i> 在Xcode9中使用Xcode server & bot自动化持续集成并上传ipa到蒲公英
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSContext"><span class="nav-number">1.</span> <span class="nav-text">JSContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaManagedValue"><span class="nav-number">2.</span> <span class="nav-text">JavaManagedValue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSValue"><span class="nav-number">3.</span> <span class="nav-text">JSValue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在JavaScript和原生类型之间转换"><span class="nav-number">3.1.</span> <span class="nav-text">在JavaScript和原生类型之间转换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSVirtualMachine"><span class="nav-number">4.</span> <span class="nav-text">JSVirtualMachine</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程和并行JavaScript执行"><span class="nav-number">4.1.</span> <span class="nav-text">线程和并行JavaScript执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管理导出对象的内存"><span class="nav-number">4.2.</span> <span class="nav-text">管理导出对象的内存</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSExport"><span class="nav-number">5.</span> <span class="nav-text">JSExport</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用JavaScriptCore时，OC与JS的交互"><span class="nav-number">6.</span> <span class="nav-text">使用JavaScriptCore时，OC与JS的交互</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Objective-C调用JavaScript"><span class="nav-number">6.0.1.</span> <span class="nav-text">Objective-C调用JavaScript</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JavaScript调用Objective-C"><span class="nav-number">6.0.2.</span> <span class="nav-text">JavaScript调用Objective-C</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#使用block"><span class="nav-number">6.0.2.1.</span> <span class="nav-text">使用block</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#使用JSExport"><span class="nav-number">6.0.2.2.</span> <span class="nav-text">使用JSExport</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UIWebView黑魔法"><span class="nav-number">6.0.3.</span> <span class="nav-text">UIWebView黑魔法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#WebFrameLoadDelegate"><span class="nav-number">6.0.3.1.</span> <span class="nav-text">WebFrameLoadDelegate</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#内存管理"><span class="nav-number">6.0.4.</span> <span class="nav-text">内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#block中捕获JSContext"><span class="nav-number">6.0.4.1.</span> <span class="nav-text">block中捕获JSContext</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Objective-C与JavaScript循环引用"><span class="nav-number">6.0.4.2.</span> <span class="nav-text">Objective-C与JavaScript循环引用</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

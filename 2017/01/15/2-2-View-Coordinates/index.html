@@ -1,0 +1,691 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="几何术语," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="您提供给绘图例程的数字通常与您要绘制的视图紧密相关，特别是在使用drawRect:方法时。 每个视图的本地坐标系统从左上角开始。 在iOS 7和更高版本中，视图控制器的起点可能会也可能不会从导航栏下面开始，具体取决于您如何设置控制器的edgesForExtendedLayout属性。默认情况下，视图现在延伸到bars下，提供了边缘到边缘的UI体验。 Frame和Bounds视图（至少）存在于两个世">
+<meta name="keywords" content="几何术语">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.2-视图坐标">
+<meta property="og:url" content="http://chengdong.top/2017/01/15/2-2-View-Coordinates/index.html">
+<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:description" content="您提供给绘图例程的数字通常与您要绘制的视图紧密相关，特别是在使用drawRect:方法时。 每个视图的本地坐标系统从左上角开始。 在iOS 7和更高版本中，视图控制器的起点可能会也可能不会从导航栏下面开始，具体取决于您如何设置控制器的edgesForExtendedLayout属性。默认情况下，视图现在延伸到bars下，提供了边缘到边缘的UI体验。 Frame和Bounds视图（至少）存在于两个世">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://chengdong.top/2017/01/15/2-2-View-Coordinates/图2-2.jpg">
+<meta property="og:updated_time" content="2018-01-16T02:49:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2.2-视图坐标">
+<meta name="twitter:description" content="您提供给绘图例程的数字通常与您要绘制的视图紧密相关，特别是在使用drawRect:方法时。 每个视图的本地坐标系统从左上角开始。 在iOS 7和更高版本中，视图控制器的起点可能会也可能不会从导航栏下面开始，具体取决于您如何设置控制器的edgesForExtendedLayout属性。默认情况下，视图现在延伸到bars下，提供了边缘到边缘的UI体验。 Frame和Bounds视图（至少）存在于两个世">
+<meta name="twitter:image" content="http://chengdong.top/2017/01/15/2-2-View-Coordinates/图2-2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chengdong.top/2017/01/15/2-2-View-Coordinates/"/>
+
+
+
+
+
+  <title> 2.2-视图坐标 | Cheng Dong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-90097936-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description"></h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/01/15/2-2-View-Coordinates/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Cheng Dong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/cat.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Cheng Dong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                2.2-视图坐标
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-15T09:31:47+08:00">
+                2017-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>您提供给绘图例程的数字通常与您要绘制的视图紧密相关，特别是在使用<code>drawRect:</code>方法时。 每个视图的本地坐标系统从左上角开始。</p>
+<p>在iOS 7和更高版本中，视图控制器的起点可能会也可能不会从导航栏下面开始，具体取决于您如何设置控制器的<code>edgesForExtendedLayout</code>属性。默认情况下，视图现在延伸到bars下，提供了边缘到边缘的UI体验。</p>
+<h3 id="Frame和Bounds"><a href="#Frame和Bounds" class="headerlink" title="Frame和Bounds"></a>Frame和Bounds</h3><p>视图（至少）存在于两个世界。每个视图的<code>frame</code>属性都在其父视图对象的坐标系中定义。它指定一个矩形，标记视图在该父视图中的位置和大小。视图的<code>bounds</code>属性在其自己的坐标系中定义，因此它的原点默认为（0，0）。（当您只显示视图的一部分时，例如使用滚动视图时，这可以改变。）视图的bounds和frame紧密耦合。更改视图的frame大小会影响它的bounds，反之亦然。</p>
+<p>如图 2-2 。灰色视图的原点从位置（80，100）开始。它水平延伸200点，垂直延伸150点。其父坐标系中的frame是{80,100,200，150}。 在其自己的坐标系中，其bounds是{0,0,200，150}。 相对的原点改变，延伸程度（尺寸大小）保持不变 。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Gray View</th>
+<th>Parent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Origin</td>
+<td>{0, 0}</td>
+<td>{80, 100}</td>
+</tr>
+<tr>
+<td>Circle</td>
+<td>{66, 86}</td>
+<td>{146,186}</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/2017/01/15/2-2-View-Coordinates/图2-2.jpg" alt="图2-2"></p>
+<p>图 2-2 任何点的位置取决于它所在的坐标系。</p>
+<p>点的位置取决于定义的坐标系。在图 2-2 中，圆圈围绕灰色视图中的一个点。在灰色视图的坐标系中，该点出现在位置（66,86）处，即，距离灰色视图原点向右66个点，向下86个点。</p>
+<p>在父视图的坐标系中，该点对应于位置（146,186）。在父视图原点(白色背景图的左上角)的向右146点和向下186点的位置。要从灰色视图的坐标系统转换到父级的坐标系统，请将灰色视图的原点（80,100）添加到该点。 结果是（66 + 80,100 + 86）或（146，186）。</p>
+<blockquote>
+<p>Note</p>
+<p>视图frame由bounds，center和应用于视图的任何变换计算得来。它表示包含在父视图内的视图的最小矩形。</p>
+</blockquote>
+<h3 id="坐标系之间转换"><a href="#坐标系之间转换" class="headerlink" title="坐标系之间转换"></a>坐标系之间转换</h3><p>iOS SDK提供了几种在坐标系之间转换的方法。例如，您可能想将点的位置从当前视图的坐标系统转换为其父视图的坐标系统，以确定绘制点落在父视图中的位置。你应该怎么做，方法如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CGPoint</span> convertedPoint = [outerView convertPoint:samplePoint fromView:grayView];</span><br></pre></td></tr></table></figure>
+<p>您可以在任何视图实例上调用该转换方法。指定是否要将点转换到另一个坐标系（<code>toView:</code>)或从另一个坐标系转换到当前坐标系（<code>fromView:</code>)，如在此示例中所做的。</p>
+<p>转换坐标系操作所涉及的视图必须在同一个<code>UIWindow</code>内，否则这样转换不会有意义。然而，视图间不必具有任何特定的关系。他们可以是兄弟姐妹，父/子，祖先/孩子，或着其他任何。这些方法会返回相对于您指定的原点的坐标。</p>
+<p>转换操作适用于矩形以及点。要将矩形从当前视图坐标系转换为另一个坐标系，请使用<code>convertRect:fromView:</code>. 要转换回来，请使用<code>convertRect:toView:</code>.</p>
+<hr>
+<p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/几何术语/" rel="tag"># 几何术语</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/14/2-1-Points-Versus-Pixels/" rel="next" title="2.1-点与像素">
+                <i class="fa fa-chevron-left"></i> 2.1-点与像素
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/16/2-3-Key-Structures/" rel="prev" title="2.3-主要的结构体">
+                2.3-主要的结构体 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/cat.png"
+               alt="Cheng Dong" />
+          <p class="site-author-name" itemprop="name">Cheng Dong</p>
+          <p class="site-description motion-element" itemprop="description">Write the code,Change the world.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">104</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/HelloWinter" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Frame和Bounds"><span class="nav-number">1.</span> <span class="nav-text">Frame和Bounds</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坐标系之间转换"><span class="nav-number">2.</span> <span class="nav-text">坐标系之间转换</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheng Dong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
