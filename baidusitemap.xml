@@ -22,7 +22,7 @@
     
   <url>
     <loc>http://chengdong.top/2018/03/14/Interaction-Between-Objective-C-and-JavaScript/</loc>
-    <lastmod>2018-03-15T00:17:36.878Z</lastmod>
+    <lastmod>2018-03-15T00:17:36.000Z</lastmod>
     <data>
         <display>
         <title>Objective-C与JavaScript的交互之JavaScriptCore</title>
@@ -39,7 +39,7 @@
     
   <url>
     <loc>http://chengdong.top/2017/02/27/6-3-Building-Gradients/</loc>
-    <lastmod>2018-03-14T05:36:37.735Z</lastmod>
+    <lastmod>2018-03-14T05:36:37.000Z</lastmod>
     <data>
         <display>
         <title>6.3-构建渐变</title>
@@ -56,7 +56,7 @@
     
   <url>
     <loc>http://chengdong.top/2017/02/26/6-2-Drawing-Gradients/</loc>
-    <lastmod>2018-03-14T05:22:12.067Z</lastmod>
+    <lastmod>2018-03-14T05:22:12.000Z</lastmod>
     <data>
         <display>
         <title>6.2-绘制渐变</title>
@@ -73,7 +73,7 @@
     
   <url>
     <loc>http://chengdong.top/2017/02/25/chapter-6-Drawing-Gradients/</loc>
-    <lastmod>2018-03-14T05:20:22.037Z</lastmod>
+    <lastmod>2018-03-14T05:20:22.000Z</lastmod>
     <data>
         <display>
         <title>（第6章）绘制渐变</title>
@@ -90,7 +90,7 @@
     
   <url>
     <loc>http://chengdong.top/2017/02/25/6-1-Gradients/</loc>
-    <lastmod>2018-03-14T04:57:46.428Z</lastmod>
+    <lastmod>2018-03-14T04:57:46.000Z</lastmod>
     <data>
         <display>
         <title>6.1-渐变</title>
@@ -107,28 +107,11 @@
     
   <url>
     <loc>http://chengdong.top/2017/02/24/chapter-5-Summary/</loc>
-    <lastmod>2018-03-13T08:53:21.423Z</lastmod>
+    <lastmod>2018-03-13T08:53:21.000Z</lastmod>
     <data>
         <display>
         <title>（第5章）小结</title>
         <pubTime>2017-02-24T11:16:54.000Z</pubTime>
-        
-        <tag>深入学习路径</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/02/20/5-8-Inverting-Paths/</loc>
-    <lastmod>2018-01-16T02:49:36.000Z</lastmod>
-    <data>
-        <display>
-        <title>5.8-反转路径</title>
-        <pubTime>2017-02-20T10:47:04.000Z</pubTime>
         
         <tag>深入学习路径</tag>
          
@@ -190,6 +173,23 @@
     </url>
 
     
+  <url>
+    <loc>http://chengdong.top/2017/01/21/3-1-UIKit-Images/</loc>
+    <lastmod>2018-01-16T02:49:36.000Z</lastmod>
+    <data>
+        <display>
+        <title>3.1-UIKit框架中的图像</title>
+        <pubTime>2017-01-21T01:01:39.000Z</pubTime>
+        
+        <tag>绘制图像</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://chengdong.top/2017/01/06/chapter-1-Drawing-Contexts/</loc>
@@ -208,6 +208,22 @@
     </url>
 
     
+  <url>
+    <loc>http://chengdong.top/2017/02/20/5-8-Inverting-Paths/</loc>
+    <lastmod>2018-01-16T02:49:36.000Z</lastmod>
+    <data>
+        <display>
+        <title>5.8-反转路径</title>
+        <pubTime>2017-02-20T10:47:04.000Z</pubTime>
+        
+        <tag>深入学习路径</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
     
   <url>
     <loc>http://chengdong.top/2017/02/14/5-2-Converting-Bezier-Paths-into-Element-Arrays/</loc>
@@ -260,175 +276,6 @@
     </url>
 
     
-  <url>
-    <loc>http://chengdong.top/2017/01/21/3-1-UIKit-Images/</loc>
-    <lastmod>2018-01-16T02:49:36.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.1-UIKit框架中的图像</title>
-        <pubTime>2017-01-21T01:01:39.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/02/28/6-4-Adding-Edge-Effects/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>6.4-添加边缘效果</title>
-        <pubTime>2017-02-28T04:53:53.000Z</pubTime>
-        
-        <tag>绘制渐变</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/16/2-3-Key-Structures/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>2.3-主要的结构体</title>
-        <pubTime>2017-01-16T01:28:31.000Z</pubTime>
-        
-        <tag>几何术语</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/30/3-10-Rendering-a-PDF/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.10-渲染PDF</title>
-        <pubTime>2017-01-30T01:05:24.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/11/1-11-Context-Coordinate-System/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>1.11-上下文坐标系统</title>
-        <pubTime>2017-01-11T01:21:32.000Z</pubTime>
-        
-        <tag>绘图上下文</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/31/3-11-Building-a-Pattern-Image/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.11-构建模式图像</title>
-        <pubTime>2017-01-31T01:05:41.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/22/3-2-Building-Thumbnails/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.2-构建缩略图</title>
-        <pubTime>2017-01-22T01:02:26.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/23/3-3-Extracting-Subimages/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.3-提取图片部分区域</title>
-        <pubTime>2017-01-23T01:02:43.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/24/3-4-Converting-an-Image-to-Grayscale/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.4-将图像转换为灰度</title>
-        <pubTime>2017-01-24T01:03:15.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/25/3-5-Watermarking-Images/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.5-为图像添加水印</title>
-        <pubTime>2017-01-25T01:03:30.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
     
   <url>
     <loc>http://chengdong.top/2017/01/26/3-6-Retrieving-Image-Data/</loc>
@@ -437,40 +284,6 @@
         <display>
         <title>3.6-检索图像数据</title>
         <pubTime>2017-01-26T01:03:47.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/27/3-7-Creating-Images-from-Bytes/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.7-从字节数据创建图像</title>
-        <pubTime>2017-01-27T01:04:11.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/28/3-8-Drawing-and-Auto-Layout/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>3.8-绘图和自动布局</title>
-        <pubTime>2017-01-28T01:04:36.000Z</pubTime>
         
         <tag>绘制图像</tag>
          
@@ -499,14 +312,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/17/2-4-Using-CGRectDivide/</loc>
+    <loc>http://chengdong.top/2017/01/24/3-4-Converting-an-Image-to-Grayscale/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>2.4-使用CGRectDivide()分割矩形</title>
-        <pubTime>2017-01-17T02:55:08.000Z</pubTime>
+        <title>3.4-将图像转换为灰度</title>
+        <pubTime>2017-01-24T01:03:15.000Z</pubTime>
         
-        <tag>几何术语</tag>
+        <tag>绘制图像</tag>
          
          
            
@@ -550,48 +363,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/11/1-12-Clipping/</loc>
+    <loc>http://chengdong.top/2017/01/25/3-5-Watermarking-Images/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.12-裁剪</title>
-        <pubTime>2017-01-11T01:22:09.000Z</pubTime>
+        <title>3.5-为图像添加水印</title>
+        <pubTime>2017-01-25T01:03:30.000Z</pubTime>
         
-        <tag>绘图上下文</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/12/1-14-Setting-Line-Parameters/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>1.14-设置画线的参数</title>
-        <pubTime>2017-01-12T02:45:00.000Z</pubTime>
-        
-        <tag>绘图上下文</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/02/03/4-3-Building-Paths/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>4.3-构建路径</title>
-        <pubTime>2017-02-03T10:03:48.000Z</pubTime>
-        
-        <tag>路径的基础知识</tag>
+        <tag>绘制图像</tag>
          
          
            
@@ -609,23 +388,6 @@
         <pubTime>2017-02-04T07:08:28.000Z</pubTime>
         
         <tag>路径的基础知识</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/11/chapter-7-Masks-Blurs-and-Animation/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>（第7章）蒙版，模糊和动画</title>
-        <pubTime>2017-03-11T08:55:19.000Z</pubTime>
-        
-        <tag>蒙版，模糊和动画</tag>
          
          
            
@@ -669,40 +431,6 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/03/10/chapter-6-Summary/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>（第6章）小结</title>
-        <pubTime>2017-03-10T10:32:59.000Z</pubTime>
-        
-        <tag>绘制渐变</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/02/13/chapter-5-Paths-in-Depth/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>（第5章）深入学习路径</title>
-        <pubTime>2017-02-13T01:33:34.000Z</pubTime>
-        
-        <tag>深入学习路径</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://chengdong.top/2017/02/13/5-1-Path-Elements/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
@@ -711,23 +439,6 @@
         <pubTime>2017-02-13T02:08:17.000Z</pubTime>
         
         <tag>深入学习路径</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/02/01/chapter-4-Path-Basics/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>（第4章）路径的基础知识</title>
-        <pubTime>2017-02-01T07:06:48.000Z</pubTime>
-        
-        <tag>路径的基础知识</tag>
          
          
            
@@ -771,14 +482,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/14/2-1-Points-Versus-Pixels/</loc>
+    <loc>http://chengdong.top/2017/01/23/3-3-Extracting-Subimages/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>2.1-点与像素</title>
-        <pubTime>2017-01-14T01:07:32.000Z</pubTime>
+        <title>3.3-提取图片部分区域</title>
+        <pubTime>2017-01-23T01:02:43.000Z</pubTime>
         
-        <tag>几何术语</tag>
+        <tag>绘制图像</tag>
          
          
            
@@ -805,46 +516,12 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/02/12/chapter-4-Summary/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>（第4章）小结</title>
-        <pubTime>2017-02-12T07:10:31.000Z</pubTime>
-        
-        <tag>路径的基础知识</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://chengdong.top/2017/02/17/5-5-Calculating-Path-Distance/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
         <title>5.5-计算路径距离</title>
         <pubTime>2017-02-17T10:45:32.000Z</pubTime>
-        
-        <tag>深入学习路径</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/02/19/5-7-Retrieving-Subpaths/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>5.7-检索子路径</title>
-        <pubTime>2017-02-19T10:46:47.000Z</pubTime>
         
         <tag>深入学习路径</tag>
          
@@ -873,29 +550,12 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/31/chapter-3-Summary/</loc>
+    <loc>http://chengdong.top/2017/02/19/5-7-Retrieving-Subpaths/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>（第3章）小结</title>
-        <pubTime>2017-01-31T01:06:16.000Z</pubTime>
-        
-        <tag>绘制图像</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>5.9-绘制阴影</title>
-        <pubTime>2017-02-21T11:14:18.000Z</pubTime>
+        <title>5.7-检索子路径</title>
+        <pubTime>2017-02-19T10:46:47.000Z</pubTime>
         
         <tag>深入学习路径</tag>
          
@@ -907,12 +567,29 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/13/chapter-1-Summary/</loc>
+    <loc>http://chengdong.top/2017/01/22/3-2-Building-Thumbnails/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>（第1章）小结</title>
-        <pubTime>2017-01-13T01:33:19.000Z</pubTime>
+        <title>3.2-构建缩略图</title>
+        <pubTime>2017-01-22T01:02:26.000Z</pubTime>
+        
+        <tag>绘制图像</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/11/1-12-Clipping/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.12-裁剪</title>
+        <pubTime>2017-01-11T01:22:09.000Z</pubTime>
         
         <tag>绘图上下文</tag>
          
@@ -924,65 +601,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/13/chapter-2-The-Language-of-Geometry/</loc>
+    <loc>http://chengdong.top/2017/01/11/1-11-Context-Coordinate-System/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>（第2章）几何术语</title>
-        <pubTime>2017-01-13T05:39:38.000Z</pubTime>
+        <title>1.11-上下文坐标系统</title>
+        <pubTime>2017-01-11T01:21:32.000Z</pubTime>
         
-        <tag>几何术语</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>在Xcode9中使用Xcode server & bot自动化持续集成并上传ipa到蒲公英</title>
-        <pubTime>2017-11-29T12:26:00.000Z</pubTime>
-        
-        <tag>Xcode Server</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/04/12/8-8-Fitting-Text/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>8.8-文本拟合</title>
-        <pubTime>2017-04-12T09:23:45.000Z</pubTime>
-        
-        <tag>绘制文本</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/04/11/8-7-Drawing-Attributed-Text-Along-a-Path/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>8.7-沿着路径绘制属性文本</title>
-        <pubTime>2017-04-11T09:23:29.000Z</pubTime>
-        
-        <tag>绘制文本</tag>
+        <tag>绘图上下文</tag>
          
          
            
@@ -1009,14 +635,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/10/1-8-UIKit-and-Quartz-Colors/</loc>
+    <loc>http://chengdong.top/2017/01/31/3-11-Building-a-Pattern-Image/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.8-UIKit和Quartz的颜色属性</title>
-        <pubTime>2017-01-10T11:21:55.000Z</pubTime>
+        <title>3.11-构建模式图像</title>
+        <pubTime>2017-01-31T01:05:41.000Z</pubTime>
         
-        <tag>绘图上下文</tag>
+        <tag>绘制图像</tag>
          
          
            
@@ -1026,14 +652,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/04/09/8-6-Drawing-Columns/</loc>
+    <loc>http://chengdong.top/2017/01/30/3-10-Rendering-a-PDF/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>8.6-分列绘制</title>
-        <pubTime>2017-04-09T09:23:13.000Z</pubTime>
+        <title>3.10-渲染PDF</title>
+        <pubTime>2017-01-30T01:05:24.000Z</pubTime>
         
-        <tag>绘制文本</tag>
+        <tag>绘制图像</tag>
          
          
            
@@ -1043,14 +669,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/10/1-7-Drawing-Within-a-UIKit-Context/</loc>
+    <loc>http://chengdong.top/2017/02/28/6-4-Adding-Edge-Effects/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.7-使用UIKit上下文绘图</title>
-        <pubTime>2017-01-10T11:16:41.000Z</pubTime>
+        <title>6.4-添加边缘效果</title>
+        <pubTime>2017-02-28T04:53:53.000Z</pubTime>
         
-        <tag>绘图上下文</tag>
+        <tag>绘制渐变</tag>
          
          
            
@@ -1111,65 +737,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/09/1-4-Establishing-Contexts-in-UIKit/</loc>
+    <loc>http://chengdong.top/2017/01/27/3-7-Creating-Images-from-Bytes/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.4-使用UIKit建立上下文</title>
-        <pubTime>2017-01-09T13:44:19.000Z</pubTime>
+        <title>3.7-从字节数据创建图像</title>
+        <pubTime>2017-01-27T01:04:11.000Z</pubTime>
         
-        <tag>绘图上下文</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>8.4-属性种类</title>
-        <pubTime>2017-03-29T09:22:43.000Z</pubTime>
-        
-        <tag>绘制文本</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/09/1-5-Building-Contexts-in-Quartz/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>1.5-在Quartz中构建上下文</title>
-        <pubTime>2017-01-09T14:07:26.000Z</pubTime>
-        
-        <tag>绘图上下文</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/22/8-2-iOS-7-Changes/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>8.2-iOS 7的改变</title>
-        <pubTime>2017-03-22T09:22:10.000Z</pubTime>
-        
-        <tag>绘制文本</tag>
+        <tag>绘制图像</tag>
          
          
            
@@ -1196,14 +771,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/03/16/7-6-Creating-Display-Links-for-Drawing/</loc>
+    <loc>http://chengdong.top/2017/01/17/2-4-Using-CGRectDivide/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>7.6-创建绘图的Display Links</title>
-        <pubTime>2017-03-16T08:57:46.000Z</pubTime>
+        <title>2.4-使用CGRectDivide()分割矩形</title>
+        <pubTime>2017-01-17T02:55:08.000Z</pubTime>
         
-        <tag>蒙版，模糊和动画</tag>
+        <tag>几何术语</tag>
          
          
            
@@ -1213,80 +788,12 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/03/06/6-10-Building-Indented-Graphics/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/03/22/8-2-iOS-7-Changes/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>6.10-构建内凹图形</title>
-        <pubTime>2017-03-06T10:31:31.000Z</pubTime>
-        
-        <tag>绘制渐变</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/15/7-5-Drawing-Reflections/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>7.5-绘制反射</title>
-        <pubTime>2017-03-15T08:57:27.000Z</pubTime>
-        
-        <tag>蒙版，模糊和动画</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/10/1-6-Drawing-into-Contexts/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>1.6-在上下文中绘图</title>
-        <pubTime>2017-01-10T11:13:12.000Z</pubTime>
-        
-        <tag>绘图上下文</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/19/7-9-Applying-Core-Image-Transitions/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>7.9-应用Core Image转换</title>
-        <pubTime>2017-03-19T08:58:48.000Z</pubTime>
-        
-        <tag>蒙版，模糊和动画</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/21/8-1-Drawing-Strings/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>8.1-绘制字符串</title>
-        <pubTime>2017-03-21T09:21:53.000Z</pubTime>
+        <title>8.2-iOS 7的改变</title>
+        <pubTime>2017-03-22T09:22:10.000Z</pubTime>
         
         <tag>绘制文本</tag>
          
@@ -1298,97 +805,12 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/03/04/6-8-Drawing-Gradients-on-Path-Edges/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/01/14/2-1-Points-Versus-Pixels/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>6.8-在路径边缘上绘制渐变</title>
-        <pubTime>2017-03-04T10:30:59.000Z</pubTime>
-        
-        <tag>绘制渐变</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/13/7-3-Complex-Masking/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>7.3-复杂蒙版</title>
-        <pubTime>2017-03-13T08:56:52.000Z</pubTime>
-        
-        <tag>蒙版，模糊和动画</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/12/7-2-Simple-Masking/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>7.2-简单蒙版</title>
-        <pubTime>2017-03-12T08:56:30.000Z</pubTime>
-        
-        <tag>蒙版，模糊和动画</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/11/7-1-Drawing-into-Images-with-Blocks/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>7.1-使用Blocks绘制图像</title>
-        <pubTime>2017-03-11T08:56:07.000Z</pubTime>
-        
-        <tag>蒙版，模糊和动画</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/05/6-9-Drawing-3D-Letters/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>6.9-绘制3D字母</title>
-        <pubTime>2017-03-05T10:31:14.000Z</pubTime>
-        
-        <tag>绘制渐变</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/19/2-6-Fitting-and-Filling/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>2.6-Fitting and Filling</title>
-        <pubTime>2017-01-19T00:57:05.000Z</pubTime>
+        <title>2.1-点与像素</title>
+        <pubTime>2017-01-14T01:07:32.000Z</pubTime>
         
         <tag>几何术语</tag>
          
@@ -1400,46 +822,12 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/03/09/6-13-Adding-Bottom-Glows/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/01/10/1-8-UIKit-and-Quartz-Colors/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>6.13-添加底部发光</title>
-        <pubTime>2017-03-09T10:32:26.000Z</pubTime>
-        
-        <tag>绘制渐变</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/03/08/6-12-Basic-Button-Gloss/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>6.12-基本按钮光泽</title>
-        <pubTime>2017-03-08T10:32:10.000Z</pubTime>
-        
-        <tag>绘制渐变</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/09/1-3-Contexts/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>1.3-上下文</title>
-        <pubTime>2017-01-09T13:38:49.000Z</pubTime>
+        <title>1.8-UIKit和Quartz的颜色属性</title>
+        <pubTime>2017-01-10T11:21:55.000Z</pubTime>
         
         <tag>绘图上下文</tag>
          
@@ -1451,14 +839,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/03/07/6-11-Combining-Gradients-and-Texture/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/04/09/8-6-Drawing-Columns/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>6.11-组合渐变和纹理</title>
-        <pubTime>2017-03-07T10:31:56.000Z</pubTime>
+        <title>8.6-分列绘制</title>
+        <pubTime>2017-04-09T09:23:13.000Z</pubTime>
         
-        <tag>绘制渐变</tag>
+        <tag>绘制文本</tag>
          
          
            
@@ -1468,12 +856,63 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/08/1-2-When-to-Draw/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/04/11/8-7-Drawing-Attributed-Text-Along-a-Path/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.2-什么时候需要绘图</title>
-        <pubTime>2017-01-08T02:36:44.000Z</pubTime>
+        <title>8.7-沿着路径绘制属性文本</title>
+        <pubTime>2017-04-11T09:23:29.000Z</pubTime>
+        
+        <tag>绘制文本</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/04/12/8-8-Fitting-Text/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>8.8-文本拟合</title>
+        <pubTime>2017-04-12T09:23:45.000Z</pubTime>
+        
+        <tag>绘制文本</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>在Xcode9中使用Xcode server & bot自动化持续集成并上传ipa到蒲公英</title>
+        <pubTime>2017-11-29T12:26:00.000Z</pubTime>
+        
+        <tag>Xcode Server</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/10/1-7-Drawing-Within-a-UIKit-Context/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.7-使用UIKit上下文绘图</title>
+        <pubTime>2017-01-10T11:16:41.000Z</pubTime>
         
         <tag>绘图上下文</tag>
          
@@ -1485,29 +924,12 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/03/14/7-4-Blurring/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/01/13/chapter-1-Summary/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>7.4-模糊</title>
-        <pubTime>2017-03-14T08:57:10.000Z</pubTime>
-        
-        <tag>蒙版，模糊和动画</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chengdong.top/2017/01/10/1-9-The-Painter%E2%80%99s-Model/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>1.9-画家模型</title>
-        <pubTime>2017-01-10T15:24:42.000Z</pubTime>
+        <title>（第1章）小结</title>
+        <pubTime>2017-01-13T01:33:19.000Z</pubTime>
         
         <tag>绘图上下文</tag>
          
@@ -1519,12 +941,29 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/21/chapter-3-Drawing-Images/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/01/13/chapter-2-The-Language-of-Geometry/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>（第3章）绘制图像</title>
-        <pubTime>2017-01-21T00:59:16.000Z</pubTime>
+        <title>（第2章）几何术语</title>
+        <pubTime>2017-01-13T05:39:38.000Z</pubTime>
+        
+        <tag>几何术语</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/31/chapter-3-Summary/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>（第3章）小结</title>
+        <pubTime>2017-01-31T01:06:16.000Z</pubTime>
         
         <tag>绘制图像</tag>
          
@@ -1536,14 +975,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/20/chapter-2-Summary/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/02/01/chapter-4-Path-Basics/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>（第2章）小结</title>
-        <pubTime>2017-01-20T00:58:23.000Z</pubTime>
+        <title>（第4章）路径的基础知识</title>
+        <pubTime>2017-02-01T07:06:48.000Z</pubTime>
         
-        <tag>几何术语</tag>
+        <tag>路径的基础知识</tag>
          
          
            
@@ -1553,12 +992,46 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/11/1-10-Context-State/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/02/12/chapter-4-Summary/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.10-上下文状态</title>
-        <pubTime>2017-01-11T01:00:32.000Z</pubTime>
+        <title>（第4章）小结</title>
+        <pubTime>2017-02-12T07:10:31.000Z</pubTime>
+        
+        <tag>路径的基础知识</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/02/13/chapter-5-Paths-in-Depth/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>（第5章）深入学习路径</title>
+        <pubTime>2017-02-13T01:33:34.000Z</pubTime>
+        
+        <tag>深入学习路径</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/09/1-5-Building-Contexts-in-Quartz/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.5-在Quartz中构建上下文</title>
+        <pubTime>2017-01-09T14:07:26.000Z</pubTime>
         
         <tag>绘图上下文</tag>
          
@@ -1570,14 +1043,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/02/16/5-4-Math-Behind-the-Path/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/01/09/1-4-Establishing-Contexts-in-UIKit/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>5.4-路径后面的数学</title>
-        <pubTime>2017-02-16T02:09:12.000Z</pubTime>
+        <title>1.4-使用UIKit建立上下文</title>
+        <pubTime>2017-01-09T13:44:19.000Z</pubTime>
         
-        <tag>深入学习路径</tag>
+        <tag>绘图上下文</tag>
          
          
            
@@ -1587,14 +1060,14 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/03/10/chapter-6-Summary/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>5.10-绘制内部和外部发光</title>
-        <pubTime>2017-02-22T11:15:19.000Z</pubTime>
+        <title>（第6章）小结</title>
+        <pubTime>2017-03-10T10:32:59.000Z</pubTime>
         
-        <tag>深入学习路径</tag>
+        <tag>绘制渐变</tag>
          
          
            
@@ -1604,12 +1077,63 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/02/08/4-8-Adding-Dashes/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/03/11/chapter-7-Masks-Blurs-and-Animation/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>4.8-添加虚线</title>
-        <pubTime>2017-02-08T07:10:53.000Z</pubTime>
+        <title>（第7章）蒙版，模糊和动画</title>
+        <pubTime>2017-03-11T08:55:19.000Z</pubTime>
+        
+        <tag>蒙版，模糊和动画</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/16/2-3-Key-Structures/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>2.3-主要的结构体</title>
+        <pubTime>2017-01-16T01:28:31.000Z</pubTime>
+        
+        <tag>几何术语</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/28/3-8-Drawing-and-Auto-Layout/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>3.8-绘图和自动布局</title>
+        <pubTime>2017-01-28T01:04:36.000Z</pubTime>
+        
+        <tag>绘制图像</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/02/03/4-3-Building-Paths/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>4.3-构建路径</title>
+        <pubTime>2017-02-03T10:03:48.000Z</pubTime>
         
         <tag>路径的基础知识</tag>
          
@@ -1621,14 +1145,65 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/02/09/4-9-Building-a-Polygon-Path/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <loc>http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>4.9-构建多边形路径</title>
-        <pubTime>2017-02-09T07:07:55.000Z</pubTime>
+        <title>5.9-绘制阴影</title>
+        <pubTime>2017-02-21T11:14:18.000Z</pubTime>
         
-        <tag>路径的基础知识</tag>
+        <tag>深入学习路径</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/29/8-4-Kinds-of-Attributes/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>8.4-属性种类</title>
+        <pubTime>2017-03-29T09:22:43.000Z</pubTime>
+        
+        <tag>绘制文本</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/12/1-14-Setting-Line-Parameters/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.14-设置画线的参数</title>
+        <pubTime>2017-01-12T02:45:00.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/16/7-6-Creating-Display-Links-for-Drawing/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>7.6-创建绘图的Display Links</title>
+        <pubTime>2017-03-16T08:57:46.000Z</pubTime>
+        
+        <tag>蒙版，模糊和动画</tag>
          
          
            
@@ -1655,14 +1230,218 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/02/02/4-2-Class-Convenience-Methods/</loc>
+    <loc>http://chengdong.top/2017/01/19/2-6-Fitting-and-Filling/</loc>
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     <data>
         <display>
-        <title>4.2-类的便捷方法</title>
-        <pubTime>2017-02-02T07:07:59.000Z</pubTime>
+        <title>2.6-Fitting and Filling</title>
+        <pubTime>2017-01-19T00:57:05.000Z</pubTime>
+        
+        <tag>几何术语</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/09/1-3-Contexts/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.3-上下文</title>
+        <pubTime>2017-01-09T13:38:49.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/06/6-10-Building-Indented-Graphics/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>6.10-构建内凹图形</title>
+        <pubTime>2017-03-06T10:31:31.000Z</pubTime>
+        
+        <tag>绘制渐变</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/07/6-11-Combining-Gradients-and-Texture/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>6.11-组合渐变和纹理</title>
+        <pubTime>2017-03-07T10:31:56.000Z</pubTime>
+        
+        <tag>绘制渐变</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/02/08/4-8-Adding-Dashes/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>4.8-添加虚线</title>
+        <pubTime>2017-02-08T07:10:53.000Z</pubTime>
         
         <tag>路径的基础知识</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/09/6-13-Adding-Bottom-Glows/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>6.13-添加底部发光</title>
+        <pubTime>2017-03-09T10:32:26.000Z</pubTime>
+        
+        <tag>绘制渐变</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/02/09/4-9-Building-a-Polygon-Path/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>4.9-构建多边形路径</title>
+        <pubTime>2017-02-09T07:07:55.000Z</pubTime>
+        
+        <tag>路径的基础知识</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/07/1-1-Frameworks/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.1-框架</title>
+        <pubTime>2017-01-07T14:31:35.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/20/chapter-2-Summary/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>（第2章）小结</title>
+        <pubTime>2017-01-20T00:58:23.000Z</pubTime>
+        
+        <tag>几何术语</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>5.10-绘制内部和外部发光</title>
+        <pubTime>2017-02-22T11:15:19.000Z</pubTime>
+        
+        <tag>深入学习路径</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/21/chapter-3-Drawing-Images/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>（第3章）绘制图像</title>
+        <pubTime>2017-01-21T00:59:16.000Z</pubTime>
+        
+        <tag>绘制图像</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/10/1-9-The-Painter%E2%80%99s-Model/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.9-画家模型</title>
+        <pubTime>2017-01-10T15:24:42.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/08/1-2-When-to-Draw/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.2-什么时候需要绘图</title>
+        <pubTime>2017-01-08T02:36:44.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
          
          
            
@@ -1680,6 +1459,91 @@
         <pubTime>2017-01-15T01:31:47.000Z</pubTime>
         
         <tag>几何术语</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/01/10/1-6-Drawing-into-Contexts/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.6-在上下文中绘图</title>
+        <pubTime>2017-01-10T11:13:12.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/04/6-8-Drawing-Gradients-on-Path-Edges/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>6.8-在路径边缘上绘制渐变</title>
+        <pubTime>2017-03-04T10:30:59.000Z</pubTime>
+        
+        <tag>绘制渐变</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/05/6-9-Drawing-3D-Letters/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>6.9-绘制3D字母</title>
+        <pubTime>2017-03-05T10:31:14.000Z</pubTime>
+        
+        <tag>绘制渐变</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/11/7-1-Drawing-into-Images-with-Blocks/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>7.1-使用Blocks绘制图像</title>
+        <pubTime>2017-03-11T08:56:07.000Z</pubTime>
+        
+        <tag>蒙版，模糊和动画</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/12/7-2-Simple-Masking/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>7.2-简单蒙版</title>
+        <pubTime>2017-03-12T08:56:30.000Z</pubTime>
+        
+        <tag>蒙版，模糊和动画</tag>
          
          
            
@@ -1740,6 +1604,108 @@
 
     
   <url>
+    <loc>http://chengdong.top/2017/01/11/1-10-Context-State/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.10-上下文状态</title>
+        <pubTime>2017-01-11T01:00:32.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/13/7-3-Complex-Masking/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>7.3-复杂蒙版</title>
+        <pubTime>2017-03-13T08:56:52.000Z</pubTime>
+        
+        <tag>蒙版，模糊和动画</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/15/7-5-Drawing-Reflections/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>7.5-绘制反射</title>
+        <pubTime>2017-03-15T08:57:27.000Z</pubTime>
+        
+        <tag>蒙版，模糊和动画</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/02/16/5-4-Math-Behind-the-Path/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>5.4-路径后面的数学</title>
+        <pubTime>2017-02-16T02:09:12.000Z</pubTime>
+        
+        <tag>深入学习路径</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/02/02/4-2-Class-Convenience-Methods/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>4.2-类的便捷方法</title>
+        <pubTime>2017-02-02T07:07:59.000Z</pubTime>
+        
+        <tag>路径的基础知识</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/14/7-4-Blurring/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>7.4-模糊</title>
+        <pubTime>2017-03-14T08:57:10.000Z</pubTime>
+        
+        <tag>蒙版，模糊和动画</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chengdong.top/2017/01/18/2-5-Rectangle-Utilities/</loc>
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     <data>
@@ -1757,14 +1723,48 @@
 
     
   <url>
-    <loc>http://chengdong.top/2017/01/07/1-1-Frameworks/</loc>
+    <loc>http://chengdong.top/2017/03/19/7-9-Applying-Core-Image-Transitions/</loc>
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     <data>
         <display>
-        <title>1.1-框架</title>
-        <pubTime>2017-01-07T14:31:35.000Z</pubTime>
+        <title>7.9-应用Core Image转换</title>
+        <pubTime>2017-03-19T08:58:48.000Z</pubTime>
         
-        <tag>绘图上下文</tag>
+        <tag>蒙版，模糊和动画</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/21/8-1-Drawing-Strings/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>8.1-绘制字符串</title>
+        <pubTime>2017-03-21T09:21:53.000Z</pubTime>
+        
+        <tag>绘制文本</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chengdong.top/2017/03/08/6-12-Basic-Button-Gloss/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>6.12-基本按钮光泽</title>
+        <pubTime>2017-03-08T10:32:10.000Z</pubTime>
+        
+        <tag>绘制渐变</tag>
          
          
            
