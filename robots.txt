@@ -10,5 +10,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: http://chengdong.top/sitemap.xml
-Sitemap: http://chengdong.top/baidusitemap.xml
+Sitemap: http://codev.top/sitemap.xml
+Sitemap: http://codev.top/baidusitemap.xml

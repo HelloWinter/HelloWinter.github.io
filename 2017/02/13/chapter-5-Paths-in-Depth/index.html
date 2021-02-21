@@ -88,8 +88,8 @@
 <meta name="keywords" content="深入学习路径">
 <meta property="og:type" content="article">
 <meta property="og:title" content="（第5章）深入学习路径">
-<meta property="og:url" content="http://chengdong.top/2017/02/13/chapter-5-Paths-in-Depth/index.html">
-<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:url" content="http://codev.top/2017/02/13/chapter-5-Paths-in-Depth/index.html">
+<meta property="og:site_name" content="CodeV">
 <meta property="og:description" content="深入学习路径内部知识扩展了使用UIBezierPath类的方式。特别地，它使您能够利用存储在每个实例的底层CGPath中的CGPathElement数据结构来为许多常见的iOS绘图挑战生成解决方案。想要沿着路径的曲线放置对象吗？想要将路径划分为子路径并单独对它们着色？基于元素的解决方案使您能够做到这一点。 本章从很多教学实现细节开始。它完成了利用这些实现的解决方案为您的iOS项目创建引人注目的绘">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://chengdong.top/2017/02/13/chapter-5-Paths-in-Depth/"/>
+  <link rel="canonical" href="http://codev.top/2017/02/13/chapter-5-Paths-in-Depth/"/>
 
 
 
 
 
-  <title> （第5章）深入学习路径 | Cheng Dong's Blog </title>
+  <title> （第5章）深入学习路径 | CodeV </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +170,7 @@
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="site-title">CodeV</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -252,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/02/13/chapter-5-Paths-in-Depth/">
+  <link itemprop="mainEntityOfPage" href="http://codev.top/2017/02/13/chapter-5-Paths-in-Depth/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Cheng Dong">
@@ -261,9 +261,9 @@
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Cheng Dong's Blog">
+    <meta itemprop="name" content="CodeV">
     <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+      <img style="display:none;" itemprop="url image" alt="CodeV" src="">
     </span>
   </span>
 
@@ -332,19 +332,19 @@
 <p>本章从很多教学实现细节开始。它完成了利用这些实现的解决方案为您的iOS项目创建引人注目的绘图结果。</p>
 </blockquote>
 <ul>
-<li><a href="http://chengdong.top/2017/02/13/5-1-Path-Elements/">5.1-路径元素</a></li>
-<li><a href="http://chengdong.top/2017/02/14/5-2-Converting-Bezier-Paths-into-Element-Arrays/">5.2-将贝塞尔曲线路径转换为元素数组</a></li>
-<li><a href="http://chengdong.top/2017/02/15/5-3-Legal-and-Illegal-Paths/">5.3-合法和非法路径</a></li>
-<li><a href="http://chengdong.top/2017/02/16/5-4-Math-Behind-the-Path/">5.4-路径后面的数学</a></li>
-<li><a href="http://chengdong.top/2017/02/17/5-5-Calculating-Path-Distance/">5.5-计算路径距离</a></li>
-<li><a href="http://chengdong.top/2017/02/18/5-6-Interpolating-Paths/">5.6-插值路径</a></li>
-<li><a href="http://chengdong.top/2017/02/19/5-7-Retrieving-Subpaths/">5.7-检索子路径</a></li>
-<li><a href="http://chengdong.top/2017/02/20/5-8-Inverting-Paths/">5.8-反转路径</a></li>
-<li><a href="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/">5.9-绘制阴影</a></li>
-<li><a href="http://chengdong.top/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/">5.10-绘制内部和外部发光</a></li>
-<li><a href="http://chengdong.top/2017/02/23/5-11-Reversing-a-Path/">5.11-颠倒路径</a></li>
-<li><a href="http://chengdong.top/2017/02/24/5-12-Visualizing-Path-Order/">5.12-可视化路径顺序</a></li>
-<li><a href="http://chengdong.top/2017/02/24/chapter-5-Summary/">（第5章）小结</a></li>
+<li><a href="http://chengdong.top/2017/02/13/5-1-Path-Elements/" target="_blank" rel="noopener">5.1-路径元素</a></li>
+<li><a href="http://chengdong.top/2017/02/14/5-2-Converting-Bezier-Paths-into-Element-Arrays/" target="_blank" rel="noopener">5.2-将贝塞尔曲线路径转换为元素数组</a></li>
+<li><a href="http://chengdong.top/2017/02/15/5-3-Legal-and-Illegal-Paths/" target="_blank" rel="noopener">5.3-合法和非法路径</a></li>
+<li><a href="http://chengdong.top/2017/02/16/5-4-Math-Behind-the-Path/" target="_blank" rel="noopener">5.4-路径后面的数学</a></li>
+<li><a href="http://chengdong.top/2017/02/17/5-5-Calculating-Path-Distance/" target="_blank" rel="noopener">5.5-计算路径距离</a></li>
+<li><a href="http://chengdong.top/2017/02/18/5-6-Interpolating-Paths/" target="_blank" rel="noopener">5.6-插值路径</a></li>
+<li><a href="http://chengdong.top/2017/02/19/5-7-Retrieving-Subpaths/" target="_blank" rel="noopener">5.7-检索子路径</a></li>
+<li><a href="http://chengdong.top/2017/02/20/5-8-Inverting-Paths/" target="_blank" rel="noopener">5.8-反转路径</a></li>
+<li><a href="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/" target="_blank" rel="noopener">5.9-绘制阴影</a></li>
+<li><a href="http://chengdong.top/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/" target="_blank" rel="noopener">5.10-绘制内部和外部发光</a></li>
+<li><a href="http://chengdong.top/2017/02/23/5-11-Reversing-a-Path/" target="_blank" rel="noopener">5.11-颠倒路径</a></li>
+<li><a href="http://chengdong.top/2017/02/24/5-12-Visualizing-Path-Order/" target="_blank" rel="noopener">5.12-可视化路径顺序</a></li>
+<li><a href="http://chengdong.top/2017/02/24/chapter-5-Summary/" target="_blank" rel="noopener">（第5章）小结</a></li>
 </ul>
 <hr>
 <p>本文翻译自《iOS Drawing Practical UIKit Solutions》作者：Erica Sadun，翻译：Cheng Dong。如果觉得本书不错请购买支持正版:<a href="https://www.amazon.cn/Ios-Drawing-Practical-Uikit-Solutions-Sadun-Erica/dp/1502345307/ref=sr_1_1?ie=UTF8&amp;qid=1483861287&amp;sr=8-1&amp;keywords=iOS+drawing" target="_blank" rel="noopener">亚马逊购买传送门</a>，本书所有源代码可在<a href="https://github.com/erica/iOS-Drawing" target="_blank" rel="noopener">GitHub</a>上下载。译者虽然力求做到信，达，雅，但是由于时间仓促加之译者水平十分有限，文中难免会出现不正确，不准确，词不达意，难于理解的地方，还望各位批评指正，共同进步，谢谢。转载请注明出处。</p>

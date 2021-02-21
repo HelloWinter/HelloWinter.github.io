@@ -88,25 +88,25 @@
 <meta name="keywords" content="Xcode Server">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Xcode9中使用Xcode server &amp; bot自动化持续集成并上传ipa到蒲公英">
-<meta property="og:url" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/index.html">
-<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:url" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/index.html">
+<meta property="og:site_name" content="CodeV">
 <meta property="og:description" content="前言：常用的持续集成工具有很多种，例如Jenkins，Buildbot，Travis CI，Go等，本文主要介绍如何搭建使用苹果官方提供的持续集成工具：Xcode server &amp;amp; bot并自动将ipa上传到常用的内测程序分发服务平台蒲公英。在Xcode9之前使用Xcode server需要下载安装OS X Server（现在称作macOS Server），而在Xcode9之后苹果已经把">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/1.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/2.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/3.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/4.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/5.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/6.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/7.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/8.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/9.png">
-<meta property="og:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/10.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/1.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/2.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/3.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/4.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/5.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/6.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/7.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/8.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/9.png">
+<meta property="og:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/10.png">
 <meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Xcode9中使用Xcode server &amp; bot自动化持续集成并上传ipa到蒲公英">
 <meta name="twitter:description" content="前言：常用的持续集成工具有很多种，例如Jenkins，Buildbot，Travis CI，Go等，本文主要介绍如何搭建使用苹果官方提供的持续集成工具：Xcode server &amp;amp; bot并自动将ipa上传到常用的内测程序分发服务平台蒲公英。在Xcode9之前使用Xcode server需要下载安装OS X Server（现在称作macOS Server），而在Xcode9之后苹果已经把">
-<meta name="twitter:image" content="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/1.png">
+<meta name="twitter:image" content="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/1.png">
 
 
 
@@ -135,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/"/>
+  <link rel="canonical" href="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/"/>
 
 
 
 
 
-  <title> 在Xcode9中使用Xcode server & bot自动化持续集成并上传ipa到蒲公英 | Cheng Dong's Blog </title>
+  <title> 在Xcode9中使用Xcode server & bot自动化持续集成并上传ipa到蒲公英 | CodeV </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -181,7 +181,7 @@
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="site-title">CodeV</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -263,7 +263,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/">
+  <link itemprop="mainEntityOfPage" href="http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Cheng Dong">
@@ -272,9 +272,9 @@
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Cheng Dong's Blog">
+    <meta itemprop="name" content="CodeV">
     <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+      <img style="display:none;" itemprop="url image" alt="CodeV" src="">
     </span>
   </span>
 

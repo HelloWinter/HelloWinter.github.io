@@ -88,28 +88,28 @@
 <meta name="keywords" content="深入学习路径">
 <meta property="og:type" content="article">
 <meta property="og:title" content="5.9-绘制阴影">
-<meta property="og:url" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/index.html">
-<meta property="og:site_name" content="Cheng Dong&#39;s Blog">
+<meta property="og:url" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/index.html">
+<meta property="og:site_name" content="CodeV">
 <meta property="og:description" content="Quartz上下文支持阴影绘制作为可选的特定上下文功能。绘制在您指定的路径偏移处，阴影绘制模拟物理对象上光源的效果。图5-8演示了阴影在绘制到上下文时的外观。绘制阴影需要频繁的CPU计算，但是它们为你的界面增加了美丽的细节。  图5-8 您可以添加阴影到上下文 与所有其他上下文状态更改一样，阴影会影响任何后续绘制操作。如果要在应用阴影之后重置状态，请确保执行保存并恢复上下文图形状态（GState）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-8.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.1.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.2.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.3.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.4.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.5.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.6.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.7.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5.9.8.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-9.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-10.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-11.jpg">
-<meta property="og:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-12.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5-8.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5.9.1.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5.9.2.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5.9.3.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5.9.4.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5.9.5.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5.9.6.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5.9.7.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5.9.8.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5-9.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5-10.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5-11.jpg">
+<meta property="og:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5-12.jpg">
 <meta property="og:updated_time" content="2018-01-16T02:49:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="5.9-绘制阴影">
 <meta name="twitter:description" content="Quartz上下文支持阴影绘制作为可选的特定上下文功能。绘制在您指定的路径偏移处，阴影绘制模拟物理对象上光源的效果。图5-8演示了阴影在绘制到上下文时的外观。绘制阴影需要频繁的CPU计算，但是它们为你的界面增加了美丽的细节。  图5-8 您可以添加阴影到上下文 与所有其他上下文状态更改一样，阴影会影响任何后续绘制操作。如果要在应用阴影之后重置状态，请确保执行保存并恢复上下文图形状态（GState）">
-<meta name="twitter:image" content="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/图5-8.jpg">
+<meta name="twitter:image" content="http://codev.top/2017/02/21/5-9-Drawing-Shadows/图5-8.jpg">
 
 
 
@@ -138,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/"/>
+  <link rel="canonical" href="http://codev.top/2017/02/21/5-9-Drawing-Shadows/"/>
 
 
 
 
 
-  <title> 5.9-绘制阴影 | Cheng Dong's Blog </title>
+  <title> 5.9-绘制阴影 | CodeV </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -184,7 +184,7 @@
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Cheng Dong's Blog</span>
+      <span class="site-title">CodeV</span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -266,7 +266,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://chengdong.top/2017/02/21/5-9-Drawing-Shadows/">
+  <link itemprop="mainEntityOfPage" href="http://codev.top/2017/02/21/5-9-Drawing-Shadows/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Cheng Dong">
@@ -275,9 +275,9 @@
   </span>
 
   <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Cheng Dong's Blog">
+    <meta itemprop="name" content="CodeV">
     <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Cheng Dong's Blog" src="">
+      <img style="display:none;" itemprop="url image" alt="CodeV" src="">
     </span>
   </span>
 
