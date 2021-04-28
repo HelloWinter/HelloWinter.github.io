@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://codev.top/2021/04/28/support/</loc>
-    <lastmod>2021-04-28T13:26:22.055Z</lastmod>
+    <loc>http://codev.top/2021/04/28/emojiji-support/</loc>
+    <lastmod>2021-04-28T13:34:40.182Z</lastmod>
     <data>
         <display>
-        <title>Support</title>
-        <pubTime>2021-04-28T13:16:40.000Z</pubTime>
+        <title>emojiji_support</title>
+        <pubTime>2021-04-28T13:34:14.000Z</pubTime>
         
          
            
@@ -19,12 +19,12 @@
 
     
   <url>
-    <loc>http://codev.top/2021/03/21/Flutter-Development-Study-Notes-1/</loc>
-    <lastmod>2021-03-21T06:01:14.381Z</lastmod>
+    <loc>http://codev.top/2021/04/28/emojiji-privacy/</loc>
+    <lastmod>2021-04-28T13:33:45.881Z</lastmod>
     <data>
         <display>
-        <title>Flutter Development Study Notes 1</title>
-        <pubTime>2021-03-21T05:52:46.000Z</pubTime>
+        <title>emojiji_privacy</title>
+        <pubTime>2021-04-28T13:32:57.000Z</pubTime>
         
          
            
@@ -204,6 +204,7 @@
     </url>
 
     
+    
   <url>
     <loc>http://codev.top/2017/01/06/chapter-1-Drawing-Contexts/</loc>
     <lastmod>2018-01-16T02:49:36.000Z</lastmod>
@@ -220,7 +221,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://codev.top/2017/04/05/8-5-Drawing-with-Core-Text/</loc>
@@ -886,23 +886,6 @@
 
     
   <url>
-    <loc>http://codev.top/2017/01/14/2-1-Points-Versus-Pixels/</loc>
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>2.1-点与像素</title>
-        <pubTime>2017-01-14T01:07:32.000Z</pubTime>
-        
-        <tag>几何术语</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
@@ -920,14 +903,14 @@
 
     
   <url>
-    <loc>http://codev.top/2017/01/10/1-8-UIKit-and-Quartz-Colors/</loc>
+    <loc>http://codev.top/2017/01/14/2-1-Points-Versus-Pixels/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.8-UIKit和Quartz的颜色属性</title>
-        <pubTime>2017-01-10T11:21:55.000Z</pubTime>
+        <title>2.1-点与像素</title>
+        <pubTime>2017-01-14T01:07:32.000Z</pubTime>
         
-        <tag>绘图上下文</tag>
+        <tag>几何术语</tag>
          
          
            
@@ -1039,12 +1022,12 @@
 
     
   <url>
-    <loc>http://codev.top/2017/01/10/1-7-Drawing-Within-a-UIKit-Context/</loc>
+    <loc>http://codev.top/2017/01/10/1-8-UIKit-and-Quartz-Colors/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.7-使用UIKit上下文绘图</title>
-        <pubTime>2017-01-10T11:16:41.000Z</pubTime>
+        <title>1.8-UIKit和Quartz的颜色属性</title>
+        <pubTime>2017-01-10T11:21:55.000Z</pubTime>
         
         <tag>绘图上下文</tag>
          
@@ -1056,12 +1039,12 @@
 
     
   <url>
-    <loc>http://codev.top/2017/01/09/1-5-Building-Contexts-in-Quartz/</loc>
+    <loc>http://codev.top/2017/01/10/1-7-Drawing-Within-a-UIKit-Context/</loc>
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     <data>
         <display>
-        <title>1.5-在Quartz中构建上下文</title>
-        <pubTime>2017-01-09T14:07:26.000Z</pubTime>
+        <title>1.7-使用UIKit上下文绘图</title>
+        <pubTime>2017-01-10T11:16:41.000Z</pubTime>
         
         <tag>绘图上下文</tag>
          
@@ -1098,6 +1081,23 @@
         <pubTime>2017-03-11T08:55:19.000Z</pubTime>
         
         <tag>蒙版，模糊和动画</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://codev.top/2017/01/09/1-5-Building-Contexts-in-Quartz/</loc>
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.5-在Quartz中构建上下文</title>
+        <pubTime>2017-01-09T14:07:26.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
          
          
            
@@ -1362,23 +1362,6 @@
 
     
   <url>
-    <loc>http://codev.top/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>5.10-绘制内部和外部发光</title>
-        <pubTime>2017-02-22T11:15:19.000Z</pubTime>
-        
-        <tag>深入学习路径</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://codev.top/2017/01/20/chapter-2-Summary/</loc>
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     <data>
@@ -1396,14 +1379,14 @@
 
     
   <url>
-    <loc>http://codev.top/2017/01/10/1-9-The-Painter%E2%80%99s-Model/</loc>
+    <loc>http://codev.top/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/</loc>
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     <data>
         <display>
-        <title>1.9-画家模型</title>
-        <pubTime>2017-01-10T15:24:42.000Z</pubTime>
+        <title>5.10-绘制内部和外部发光</title>
+        <pubTime>2017-02-22T11:15:19.000Z</pubTime>
         
-        <tag>绘图上下文</tag>
+        <tag>深入学习路径</tag>
          
          
            
@@ -1421,6 +1404,23 @@
         <pubTime>2017-01-21T00:59:16.000Z</pubTime>
         
         <tag>绘制图像</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://codev.top/2017/01/10/1-9-The-Painter%E2%80%99s-Model/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>1.9-画家模型</title>
+        <pubTime>2017-01-10T15:24:42.000Z</pubTime>
+        
+        <tag>绘图上下文</tag>
          
          
            
@@ -1549,23 +1549,6 @@
 
     
   <url>
-    <loc>http://codev.top/2017/03/13/7-3-Complex-Masking/</loc>
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    <data>
-        <display>
-        <title>7.3-复杂蒙版</title>
-        <pubTime>2017-03-13T08:56:52.000Z</pubTime>
-        
-        <tag>蒙版，模糊和动画</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://codev.top/2017/03/19/chapter-7-Summary/</loc>
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     <data>
@@ -1608,6 +1591,23 @@
         <pubTime>2017-04-13T09:24:01.000Z</pubTime>
         
         <tag>绘制文本</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://codev.top/2017/03/13/7-3-Complex-Masking/</loc>
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    <data>
+        <display>
+        <title>7.3-复杂蒙版</title>
+        <pubTime>2017-03-13T08:56:52.000Z</pubTime>
+        
+        <tag>蒙版，模糊和动画</tag>
          
          
            

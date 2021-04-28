@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://codev.top/2021/04/28/support/</loc>
+    <loc>http://codev.top/2021/04/28/emojiji-support/</loc>
     
-    <lastmod>2021-04-28T13:26:22.055Z</lastmod>
+    <lastmod>2021-04-28T13:34:40.182Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://codev.top/2021/03/21/Flutter-Development-Study-Notes-1/</loc>
+    <loc>http://codev.top/2021/04/28/emojiji-privacy/</loc>
     
-    <lastmod>2021-03-21T06:01:14.381Z</lastmod>
+    <lastmod>2021-04-28T13:33:45.881Z</lastmod>
     
   </url>
   
@@ -93,14 +93,14 @@
   </url>
   
   <url>
-    <loc>http://codev.top/2017/01/06/chapter-1-Drawing-Contexts/</loc>
+    <loc>http://codev.top/about/index.html</loc>
     
     <lastmod>2018-01-16T02:49:36.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://codev.top/about/index.html</loc>
+    <loc>http://codev.top/2017/01/06/chapter-1-Drawing-Contexts/</loc>
     
     <lastmod>2018-01-16T02:49:36.000Z</lastmod>
     
@@ -380,13 +380,6 @@
   </url>
   
   <url>
-    <loc>http://codev.top/2017/01/14/2-1-Points-Versus-Pixels/</loc>
-    
-    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://codev.top/2017/11/29/Use-Xcode-Server-to-Continuous-Integration-in-Xcode9/</loc>
     
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
@@ -394,7 +387,7 @@
   </url>
   
   <url>
-    <loc>http://codev.top/2017/01/10/1-8-UIKit-and-Quartz-Colors/</loc>
+    <loc>http://codev.top/2017/01/14/2-1-Points-Versus-Pixels/</loc>
     
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     
@@ -443,14 +436,14 @@
   </url>
   
   <url>
-    <loc>http://codev.top/2017/01/10/1-7-Drawing-Within-a-UIKit-Context/</loc>
+    <loc>http://codev.top/2017/01/10/1-8-UIKit-and-Quartz-Colors/</loc>
     
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://codev.top/2017/01/09/1-5-Building-Contexts-in-Quartz/</loc>
+    <loc>http://codev.top/2017/01/10/1-7-Drawing-Within-a-UIKit-Context/</loc>
     
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     
@@ -465,6 +458,13 @@
   
   <url>
     <loc>http://codev.top/2017/03/11/chapter-7-Masks-Blurs-and-Animation/</loc>
+    
+    <lastmod>2018-01-16T02:49:35.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codev.top/2017/01/09/1-5-Building-Contexts-in-Quartz/</loc>
     
     <lastmod>2018-01-16T02:49:35.000Z</lastmod>
     
@@ -576,13 +576,6 @@
   </url>
   
   <url>
-    <loc>http://codev.top/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/</loc>
-    
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://codev.top/2017/01/20/chapter-2-Summary/</loc>
     
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
@@ -590,7 +583,7 @@
   </url>
   
   <url>
-    <loc>http://codev.top/2017/01/10/1-9-The-Painter%E2%80%99s-Model/</loc>
+    <loc>http://codev.top/2017/02/22/5-10-Drawing-Inner-and-Outer-Glows/</loc>
     
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     
@@ -598,6 +591,13 @@
   
   <url>
     <loc>http://codev.top/2017/01/21/chapter-3-Drawing-Images/</loc>
+    
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codev.top/2017/01/10/1-9-The-Painter%E2%80%99s-Model/</loc>
     
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     
@@ -653,13 +653,6 @@
   </url>
   
   <url>
-    <loc>http://codev.top/2017/03/13/7-3-Complex-Masking/</loc>
-    
-    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://codev.top/2017/03/19/chapter-7-Summary/</loc>
     
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
@@ -675,6 +668,13 @@
   
   <url>
     <loc>http://codev.top/2017/04/13/chapter-8-Summary/</loc>
+    
+    <lastmod>2018-01-16T02:49:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codev.top/2017/03/13/7-3-Complex-Masking/</loc>
     
     <lastmod>2018-01-16T02:49:34.000Z</lastmod>
     
