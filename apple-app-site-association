@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID":"QP8BV47SWP.top.chengdong.emojiji",
+                "paths": [ "/Emojiji/*"]
+            }
+        ]
+    }
+}
