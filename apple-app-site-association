@@ -4,7 +4,7 @@
         "details": [
             {
                 "appID":"QP8BV47SWP.top.chengdong.emojiji",
-                "paths": [ "/about/*"]
+                "paths": [ "/about/*","/qq_conn/1106571623"]
             }
         ]
     }
